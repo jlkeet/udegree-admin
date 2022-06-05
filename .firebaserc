@@ -1,0 +1,15 @@
+{
+  "projects": {},
+  "targets": {
+    "udegree-angular": {
+      "hosting": {
+        "udegree-angular": [
+          "udegree-admin.web.app"
+        ],
+        "udegree-admin": [
+          "udegree-admin"
+        ]
+      }
+    }
+  }
+}

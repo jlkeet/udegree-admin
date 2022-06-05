@@ -84,3 +84,6 @@ Angular version: 10.0.6
 I reccomend using nvm (node version manager) in order to set the node environment up. Also note that if setting environment up on an M1 apple you have to launch terminal using Rosetta in order to be able to use the correct Node version.
 
 At some point we will package this all into Docker, but until then use these environment specs.
+
+
+To deploy to firebase run this command: firebase deploy --only hosting:udegree-admin
