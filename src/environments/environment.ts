@@ -12,7 +12,7 @@ export const environment = {
   production: false,
     firebase: {
       apiKey: "AIzaSyB_-zvddGTVsnNhKj4rT10BSs6g_kU4PUE",
-      authDomain: "udegree-angular.firebaseapp.com",
+      authDomain: "udegree-admin.firebaseapp.com",
       databaseURL: "https://udegree-angular-courses-us-5d785.firebaseio.com/",
       projectId: "udegree-angular",
       storageBucket: "udegree-angular.appspot.com",
