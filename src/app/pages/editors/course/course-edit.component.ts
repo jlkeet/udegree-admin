@@ -28,48 +28,46 @@ import { CourseService } from '../../../@core/data/courses'
         <div *ngFor="let courseinfo of course | keyvalue">
 
         <div *ngIf="courseinfo.key === 'id'"> <b>ID</b>:  {{courseinfo.value}} </div>
-        <div *ngIf="courseinfo.key === 'name'"> <b>Name</b>:  {{courseinfo.value}}  <button class="btn_edit" (click)="courseinfo.canEditName = true">Edit Name</button> <button (click)="courseNameDel()">Delete</button> <button (click)="courseinfo.canEditName = false">Cancel</button></div>
-        <input *ngIf="courseinfo.canEditName" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseNameEdit($event)"/>
+
+        <div *ngIf="courseinfo.key === 'name'"> <b>Name</b>:  {{courseinfo.value}}  <button class="btn_edit" (click)="courseinfo.canEditName = true">Edit Name</button> <button (click)="courseNameDel()">Delete</button> <button class="btn_save" [(ngModel)]="courseinfo.value" *ngIf="courseinfo.canEditName === true" (click)="courseNameEditSaveBtn()">Save</button> <button *ngIf="courseinfo.canEditName === true" (click)="courseinfo.canEditName = false">Cancel</button></div>
+        <input (keyup)="onKey($event)" *ngIf="courseinfo.canEditName" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseNameEdit($event)"/>
        
-        <div *ngIf="courseinfo.key === 'faculties'"> <b>Faculty</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditFac = true">Edit Faculty</button>  <button class="btn_add" (click)="courseinfo.canAddFac = true">Add Faculty</button>  <button (click)="courseinfo.canEditFac = false;courseinfo.canAddFac = false">Cancel</button></div>
-        <input *ngIf="courseinfo.canEditFac" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseFacEdit($event)"/>
-        <input *ngIf="courseinfo.canAddFac" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseFacAdd($event)"/>
+        <div *ngIf="courseinfo.key === 'title'"> <b>Title</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditTitle = true">Edit Title</button> <button class="btn_save" [(ngModel)]="courseinfo.value" *ngIf="courseinfo.canEditTitle === true" (click)="courseTitleEditSaveBtn()">Save</button> <button *ngIf="courseinfo.canEditTitle === true" (click)="courseinfo.canEditTitle = false">Cancel</button></div>
+        <input (keyup)="onKey($event)" *ngIf="courseinfo.canEditTitle" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseTitleEdit($event)"/>
 
+        <div *ngIf="courseinfo.key === 'desc'"> <b>Description</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditDesc = true">Edit Description</button> <button class="btn_save" [(ngModel)]="courseinfo.value" *ngIf="courseinfo.canEditDesc === true" (click)="courseDescEditSaveBtn()">Save</button> <button *ngIf="courseinfo.canEditDesc === true" (click)="courseinfo.canEditDesc = false">Cancel</button></div>
+        <input (keyup)="onKey($event)" *ngIf="courseinfo.canEditDesc" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseDescEdit($event)"/>
 
-        <div *ngIf="courseinfo.key === 'department'"> <b>Department</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditDept = true">Edit Department</button> <button class="btn_add" (click)="courseinfo.canAddDept = true">Add Department</button> <button (click)="courseinfo.canAddDept = false">Cancel</button></div>
-        <input *ngIf="courseinfo.canEditDept" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseDeptEdit($event)"/>
-        <input *ngIf="courseinfo.canAddDept" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseDeptAdd($event)"/>
+        <div *ngIf="courseinfo.key === 'department'"> <b>Department</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditDept = true">Edit Department</button> <button class="btn_add" (click)="courseinfo.canAddDept = true">Add Department</button> <button class="btn_save" [(ngModel)]="courseinfo.value" *ngIf="courseinfo.canEditDept === true" (click)="courseDeptEditSaveBtn()">Save</button> <button *ngIf="courseinfo.canEditDept === true" (click)="courseinfo.canEditDept = false;courseinfo.canAddDept = false">Cancel</button></div>
+        <input (keyup)="onKey($event)" *ngIf="courseinfo.canEditDept" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseDeptEdit($event)"/>
+        <input (keyup)="onKey($event)" *ngIf="courseinfo.canAddDept" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseDeptAdd($event)"/>
 
-        <div *ngIf="courseinfo.key === 'desc'"> <b>Description</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditDesc = true">Edit Description</button><button (click)="courseinfo.canEditDesc = false">Cancel</button></div>
-        <input *ngIf="courseinfo.canEditDesc" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseDescEdit($event)"/>
+        <div *ngIf="courseinfo.key === 'faculties'"> <b>Faculty</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditFac = true">Edit Faculty</button>  <button class="btn_add" (click)="courseinfo.canAddFac = true">Add Faculty</button> <button class="btn_save" [(ngModel)]="courseinfo.value" *ngIf="courseinfo.canEditFac === true" (click)="courseFacEditSaveBtn()">Save</button> <button *ngIf="courseinfo.canEditFac === true" (click)="courseinfo.canEditFac = false;courseinfo.canAddFac = false">Cancel</button></div>
+        <input (keyup)="onKey($event)" *ngIf="courseinfo.canEditFac" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseFacEdit($event)"/>
+        <input (keyup)="onKey($event)" *ngIf="courseinfo.canAddFac" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseFacAdd($event)"/>
 
-        <div *ngIf="courseinfo.key === 'points'"> <b>Points</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditPoints = true">Edit Points</button><button (click)="courseinfo.canEditPoints = false">Cancel</button></div>
-        <input *ngIf="courseinfo.canEditPoints" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="coursePointsEdit($event)"/>
+        <div *ngIf="courseinfo.key === 'stage'"> <b>Stage</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditStage = true">Edit Stage</button> <button class="btn_save" [(ngModel)]="courseinfo.value" *ngIf="courseinfo.canEditStage === true" (click)="courseStageEditSaveBtn()">Save</button> <button *ngIf="courseinfo.canEditStage === true" (click)="courseinfo.canEditStage = false">Cancel</button></div>
+        <input (keyup)="onKey($event)" *ngIf="courseinfo.canEditStage" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseStageEdit($event)"/>
+
+        <div *ngIf="courseinfo.key === 'points'"> <b>Points</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditPoints = true">Edit Points</button> <button class="btn_save" [(ngModel)]="courseinfo.value" *ngIf="courseinfo.canEditPoints === true" (click)="coursePointsEditSaveBtn()">Save</button> <button *ngIf="courseinfo.canEditPoints === true" (click)="courseinfo.canEditPoints = false">Cancel</button></div>
+        <input (keyup)="onKey($event)" *ngIf="courseinfo.canEditPoints" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="coursePointsEdit($event)"/>
 
         <div *ngIf="courseinfo.key === 'requirements'">
         <b>Requirements</b>:
         <BR>
         <BR>
           <div *ngFor="let req of courseinfo.value | keyvalue ; index as i">
-              <b>Papers</b>:  {{req.value.papers}} <button class="btn_edit" (click)="courseinfo.canEditReqCourse = true">Edit Papers</button>  <button class="btn_add" (click)="courseinfo.canAddReqCourse = true">Add Papers</button>  <button (click)="courseinfo.canEditReqCourse = false">Cancel</button><BR> 
-              <input *ngIf="courseinfo.canEditReqCourse" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseReqCourseEdit($event, i)"/><BR>
-              <input *ngIf="courseinfo.canAddReqCourse" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseReqCourseAdd($event, i)"/><BR>
+              <b>Papers</b>:  {{req.value.papers}} <button class="btn_edit" (click)="courseinfo.canEditReqCourse = true">Edit Papers</button>  <button class="btn_add" (click)="courseinfo.canAddReqCourse = true">Add Papers</button> <button class="btn_save" [(ngModel)]="courseinfo.value" *ngIf="courseinfo.canEditReqCourse === true" (click)="courseReqCourseEditSaveBtn(index)">Save</button> <button *ngIf="courseinfo.canEditReqCourse === true" (click)="courseinfo.canEditReqCourse = false">Cancel</button><BR> 
+              <input (keyup)="onKey($event)" *ngIf="courseinfo.canEditReqCourse" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseReqCourseEdit($event, i)"/><BR>
+              <input (keyup)="onKey($event)" *ngIf="courseinfo.canAddReqCourse" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseReqCourseAdd($event, i)"/><BR>
 
-              <b>Points/Papers required</b>:  {{req.value.required}} <button class="btn_edit" (click)="courseinfo.canEditReqPoints = true">Edit Points</button><button (click)="courseinfo.canEditReqPoints = false">Cancel</button>
-              <input *ngIf="courseinfo.canEditReqPoints" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseReqPointsEdit($event, i)"/><BR>
+              <b>Points/Papers required</b>:  {{req.value.required}} <button class="btn_edit" (click)="courseinfo.canEditReqPoints = true">Edit Points</button> <button class="btn_save" [(ngModel)]="courseinfo.value" *ngIf="courseinfo.canEditReqPoints === true" (click)="courseReqPointsEditSaveBtn(index)">Save</button> <button *ngIf="courseinfo.canEditReqPoints === true" (click)="courseinfo.canEditReqPoints = false">Cancel</button>
+              <input (keyup)="onKey($event)" *ngIf="courseinfo.canEditReqPoints" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseReqPointsEdit($event, i)"/><BR>
               <BR>
           </div>
         </div>
 
-        <div *ngIf="courseinfo.key === 'stage'"> <b>Stage</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditStage = true">Edit Stage</button><button (click)="courseinfo.canEditStage = false">Cancel</button></div>
-        <input *ngIf="courseinfo.canEditStage" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseStageEdit($event)"/>
-
-        <div *ngIf="courseinfo.key === 'title'"> <b>Title</b>:  {{courseinfo.value}} <button class="btn_edit" (click)="courseinfo.canEditTitle = true">Edit Title</button><button (click)="courseinfo.canEditTitle = false">Cancel</button></div>
-        <input *ngIf="courseinfo.canEditTitle" [(ngModel)]="courseinfo.value" type="text" class="form-control" (keydown.enter)="courseTitleEdit($event)"/>
-
-        <div *ngIf="courseinfo.key === 'year'"> <b>Year</b>:  {{courseinfo.value}} </div>
-        <div *ngIf="courseinfo.key === 'period'"> <b>Period</b>:  {{courseinfo.value}} </div>
-        <div *ngIf="courseinfo.key === 'status'"> <b>Status</b>:  {{courseinfo.value}} </div>
+        <div *ngIf="courseinfo.key === 'periods'"> <b>Period</b>:  {{courseinfo.value}} </div>
         </div>
 </ul>
 </nb-card>
@@ -88,6 +86,7 @@ export class CourseEditComponent {
   public listRef;
   public courseRef;
   public showCourse;
+  public inputValue;
 
 
   constructor(public courseService: CourseService,  private db: AngularFireDatabase) {
@@ -121,8 +120,7 @@ export class CourseEditComponent {
 
     searchFirebase(val) {
       if (val !== '') {
-      this.db.list('/', ref => ref.orderByChild('name').equalTo(val)).valueChanges().subscribe(result => this.course = result[0])
-
+      this.db.list('/', ref => ref.orderByChild('name').equalTo(val)).valueChanges().subscribe(result => this.course = result[0] )
       } else {
       //  this.db.list('/').valueChanges().subscribe(result => console.log(result))
       }
@@ -155,10 +153,17 @@ export class CourseEditComponent {
       item.canAddReqCourse = this.showCourse;
     }
 
+    onKey(event) { this.inputValue = event.target.value;}
+
     courseNameEdit(newName) {
-      console.log(newName.target.value)
-      this.db.list('/' + (this.course.id - 1)).set('name', newName.target.value)     
+     console.log(newName.target.value)
+     this.db.list('/' + (this.course.id - 1)).set('name', newName.target.value)     
     }
+
+    courseNameEditSaveBtn() {
+      console.log(this.inputValue)
+      this.db.list('/' + (this.course.id - 1)).set('name', this.inputValue)     
+     }
 
     courseNameDel() {
       console.log(this.course.name)
@@ -168,6 +173,11 @@ export class CourseEditComponent {
     courseFacEdit(newName) {
       console.log(newName.target.value) 
       this.db.list('/' + (this.course.id - 1) + '/' + 'faculties').set('0', newName.target.value)    
+    }
+
+    courseFacEditSaveBtn() {
+      console.log(this.inputValue)
+      this.db.list('/' + (this.course.id - 1) + '/' + 'faculties').set('0', this.inputValue)    
     }
 
     courseFacAdd(newName) {
@@ -180,39 +190,64 @@ export class CourseEditComponent {
       this.db.list('/' + (this.course.id - 1)).set('department', newName.target.value)     
     }
 
+    courseDeptEditSaveBtn() {
+      console.log(this.inputValue)
+      this.db.list('/' + (this.course.id - 1)).set('department', this.inputValue)     
+    }
+
     courseDeptAdd(newName) {
       console.log(newName.target.value)
       this.db.list('/' + (this.course.id - 1) + '/' + 'department').set('' + this.course.department.length, newName.target.value)     
     }
-
 
     courseDescEdit(newName) {
       console.log(newName.target.value)
       this.db.list('/' + (this.course.id - 1)).set('desc', newName.target.value)     
     }
 
+    courseDescEditSaveBtn() {
+      console.log(this.inputValue)
+      this.db.list('/' + (this.course.id - 1)).set('desc', this.inputValue)     
+    }
 
     coursePointsEdit(newName) {
       console.log(newName.target.value)
       this.db.list('/' + (this.course.id - 1)).set('points', newName.target.value)     
     }
 
+    coursePointsEditSaveBtn() {
+      console.log(this.inputValue)
+      this.db.list('/' + (this.course.id - 1)).set('points', this.inputValue)     
+    }
 
     courseStageEdit(newName) {
       console.log(newName.target.value)
       this.db.list('/' + (this.course.id - 1)).set('stage', newName.target.value)     
     }
 
+    courseStageEditSaveBtn() {
+      console.log(this.inputValue)
+      this.db.list('/' + (this.course.id - 1)).set('stage', this.inputValue)     
+    }
 
     courseTitleEdit(newName) {
       console.log(newName.target.value)
       this.db.list('/' + (this.course.id - 1)).set('title', newName.target.value)     
     }
 
+    courseTitleEditSaveBtn() {
+      console.log(this.inputValue)
+      this.db.list('/' + (this.course.id - 1)).set('title', this.inputValue)     
+    }
 
     courseReqPointsEdit(newName, index) {
       console.log(newName.target.value)
       this.db.list('/' + (this.course.id - 1) + '/' + 'requirements' + '/' + index).set('required', newName.target.value)  
+    }
+
+    courseReqPointsEditSaveBtn(index) {
+      console.log(this.inputValue)
+      this.db.list('/' + (this.course.id - 1) + '/' + 'requirements' + '/' + index).set('required', this.inputValue)  
     }
 
     courseReqCourseEdit(newName, index) {
@@ -224,6 +259,16 @@ export class CourseEditComponent {
        console.log(i)
       }
      }
+
+     courseReqCourseEditSaveBtn(index) {
+      console.log(this.inputValue)
+     let i;
+     let newArray = this.inputValue.split(',')
+     for (i=0; i < newArray.length; i++) {
+      this.db.list('/' + (this.course.id - 1) + '/' + 'requirements' + '/' + index + '/' + 'papers').set("" + i, newArray[i])
+      console.log(i)
+     }
+    }
 
      courseReqCourseAdd(newName, index) {
       console.log(newName.target.value)
