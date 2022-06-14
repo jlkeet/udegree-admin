@@ -5,6 +5,7 @@ import { EditorsComponent } from './editors.component';
 // import { TinyMCEComponent } from './tiny-mce/tiny-mce.component';
 import { CKEditorComponent } from './ckeditor/ckeditor.component';
 import { CourseEditComponent } from './course/course-edit.component';
+import { CourseNewComponent } from './course/course-new.component';
 
 const routes: Routes = [{
   path: '',
@@ -30,4 +31,5 @@ export const routedComponents = [
   EditorsComponent,
   CKEditorComponent,
   CourseEditComponent,
+  CourseNewComponent,
 ];

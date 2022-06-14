@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { CourseService } from '../../../@core/data/courses'
+import { CourseNewComponent } from './course-new.component';
 
 @Component({
   selector: 'course-edit',
@@ -108,18 +109,11 @@ import { CourseService } from '../../../@core/data/courses'
           <button *ngIf="courseValues[9] === true" (click)="courseDeactivate()">Deactivate Course</button>
         </div>
 
-
     </div>
     </div>
 </ul>
 </nb-card>
-
-<nb-card>
-<nb-card-header>
-<button>Add New Course</button>
-</nb-card-header>
-</nb-card>
-
+<course-new></course-new>
   `,
 })
 export class CourseEditComponent {
@@ -188,14 +182,9 @@ export class CourseEditComponent {
     }
 
     orderCourse(course) {
-      console.log(Object.keys(course), Object.values(course))
+     // console.log(Object.keys(course), Object.values(course))
       this.courseKeys = Object.keys(course);
       this.courseValues = Object.values(course);
-      // .forEach(function(v, i) {
-      //  // console.log(v, course[v])
-      //  });
-
-
     }
 
     searchFirebase(val) {
@@ -209,7 +198,7 @@ export class CourseEditComponent {
 
     save(event) {
      console.log("You entered: ", event.target.value);
-     this.searchFirebase(event.target.value)
+     this.searchFirebase(event.target.value.toUpperCase())
      this.showCourse = true;
     }
 
@@ -220,19 +209,6 @@ export class CourseEditComponent {
 
 
     setTitleEdit(item) {
-      item.canEditName = this.showCourse;
-      item.canEditFac = this.showCourse;
-      item.canAddFac = this.showCourse;
-      item.canEditDept = this.showCourse;
-      item.canAddDept = this.showCourse;
-      item.canEditDesc = this.showCourse;
-      item.canEditPoints = this.showCourse;
-      item.canEditStage = this.showCourse;
-      item.canEditTitle = this.showCourse;
-      item.canEditReqPoints = this.showCourse;
-      item.canEditReqCourse = this.showCourse;
-      item.canAddReqCourse = this.showCourse;
-
       this.canEditName = true;
       this.canEditTitle = true;
       this.canEditFac = true;
@@ -311,12 +287,12 @@ export class CourseEditComponent {
 
     coursePointsEdit(newName) {
       console.log(newName.target.value)
-      this.db.list('/' + (this.course.id - 1)).set('points', newName.target.value)     
+      this.db.list('/' + (this.course.id - 1)).set('points', parseInt(newName.target.value))     
     }
 
     coursePointsEditSaveBtn() {
       console.log(this.inputValue)
-      this.db.list('/' + (this.course.id - 1)).set('points', this.inputValue)     
+      this.db.list('/' + (this.course.id - 1)).set('points', parseInt(this.inputValue))     
     }
 
     courseStageEdit(newName) {
@@ -326,7 +302,7 @@ export class CourseEditComponent {
 
     courseStageEditSaveBtn() {
       console.log(this.inputValue)
-      this.db.list('/' + (this.course.id - 1)).set('stage', this.inputValue)     
+      this.db.list('/' + (this.course.id - 1)).set('stage', parseInt(this.inputValue))     
     }
 
     courseTitleEdit(newName) {
