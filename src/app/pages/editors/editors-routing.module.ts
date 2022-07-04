@@ -6,6 +6,9 @@ import { EditorsComponent } from './editors.component';
 import { CKEditorComponent } from './ckeditor/ckeditor.component';
 import { CourseEditComponent } from './course/course-edit.component';
 import { CourseNewComponent } from './course/course-new.component';
+import { DepartmentEditComponent } from './department/department-edit.component';
+import { FacultyEditComponent } from './faculties/faculty-edit.component';
+// import { DepartmentNewComponent } from './department/department-new.component';
 
 const routes: Routes = [{
   path: '',
@@ -13,7 +16,16 @@ const routes: Routes = [{
   children: [{
     path: 'course-edit',
     component: CourseEditComponent,
-  }, {
+  },
+  {
+    path: 'faculty-edit',
+    component: FacultyEditComponent,
+  },  
+  {
+    path: 'department-edit',
+    component: DepartmentEditComponent,
+  }, 
+  {
     path: 'ckeditor',
     component: CKEditorComponent,
   }
@@ -32,4 +44,7 @@ export const routedComponents = [
   CKEditorComponent,
   CourseEditComponent,
   CourseNewComponent,
+  DepartmentEditComponent,
+  FacultyEditComponent,
+  // DepartmentNewComponent
 ];

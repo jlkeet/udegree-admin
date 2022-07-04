@@ -7,13 +7,14 @@
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
+import { AngularFireModule } from '@angular/fire';
 
 export const environment = {
   production: false,
     firebase: {
       apiKey: "AIzaSyB_-zvddGTVsnNhKj4rT10BSs6g_kU4PUE",
       authDomain: "udegree-angular.firebaseapp.com",
-      databaseURL: "https://udegree-angular-courses-us-5d785.firebaseio.com/",
+      databaseURL: "https://udegree-angular.asia-southeast1.firebasedatabase.app/",
       projectId: "udegree-angular",
       storageBucket: "udegree-angular.appspot.com",
       messagingSenderId: "708718176430",

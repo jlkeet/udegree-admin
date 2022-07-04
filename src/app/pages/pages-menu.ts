@@ -43,15 +43,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Degree',
-        link: '/pages/editors/degree-edit',
+        link: '/pages/editors/faculty-edit',
       },
       {
         title: 'Major',
-        link: '/pages/editors/major-edit',
+        link: '/pages/editors/department-edit',
       },
       {
-        title: 'Module',
-        link: '/pages/editors/module-edit',
+        title: 'Conjoint',
+        link: '/pages/editors/conjoint-edit',
       },
     ],
   },
