@@ -84,12 +84,12 @@ import { FacultyService } from "../../../@core/data/faculty.service";
             <b>Name</b>: {{ facultyValues[4] }}
 
             <button class="btn_edit" (click)="this.canEditName = true">
-              Edit Major Requirements
+              Edit Name
             </button>
             <button
               class="btn_save"
               *ngIf="this.canEditName === true"
-              (click)="departmentNameEditSaveBtn()"
+              (click)="facultyNameEditSaveBtn()"
             >
               Save
             </button>
@@ -105,7 +105,7 @@ import { FacultyService } from "../../../@core/data/faculty.service";
             *ngIf="this.canEditName"
             type="text"
             class="form-control"
-            (keydown.enter)="departmentNameEdit($event)"
+            (keydown.enter)="facultyNameEdit($event)"
           />
 
           <div *ngIf="facultyKeys[3] === 'majors'">
@@ -135,17 +135,17 @@ import { FacultyService } from "../../../@core/data/faculty.service";
             class="form-control"
             (keydown.enter)="courseDescEdit($event)"
           />
-
+          <BR />
           <div *ngIf="facultyKeys[2] === 'majorRequirements'">
             <b>Major Requirements</b>
             <BR />
             <div *ngFor="let req of facultyValues[2]; index as i">
               <b>Faculties</b>: {{ req.faculties }}
               <button class="btn_edit" (click)="this.canEditReqCourse = true">
-                Edit Departments
+                Edit Faculties
               </button>
               <button class="btn_add" (click)="this.canAddReqCourse = true">
-                Add Departments
+                Add Faculties
               </button>
               <button
                 class="btn_save"
@@ -202,7 +202,120 @@ import { FacultyService } from "../../../@core/data/faculty.service";
               />
             </div>
           </div>
+
+          <div *ngIf="facultyKeys[5] === 'conjointTotal'">
+          <b>Conjoint Total</b>: {{ facultyValues[5][0].required }}
+
+          <button class="btn_edit" (click)="this.canEditDesc = true">
+            Edit Conjoint Total
+          </button>
+          <button
+            class="btn_save"
+            *ngIf="this.canEditDesc === true"
+            (click)="courseDescEditSaveBtn()"
+          >
+            Save
+          </button>
+          <button
+            *ngIf="this.canEditDesc === true"
+            (click)="this.canEditDesc = false"
+          >
+            Cancel
+          </button>
         </div>
+        <input
+          (keyup)="onKey($event)"
+          *ngIf="this.canEditDesc"
+          type="text"
+          class="form-control"
+          (keydown.enter)="courseDescEdit($event)"
+        />
+        
+        <BR />
+        <div *ngIf="facultyKeys[6] === 'doubleMajorRequirements'">
+        <b>Second Major Requirements</b>
+
+        <BR />
+        <div *ngFor="let req of facultyValues[6]; index as i">
+
+          <b>Required</b>: {{ req.required }}
+          <button class="btn_edit" (click)="this.canEditSecReqPoints = true">
+            Edit Points
+          </button>
+          <button
+            class="btn_save"
+            *ngIf="this.canEditSecReqPoints === true"
+            (click)="facultySecReqPointsEditSaveBtn(index)"
+          >
+            Save
+          </button>
+          <button
+            *ngIf="this.canEditSecReqPoints === true"
+            (click)="this.canEditSecReqPoints = false"
+          >
+            Cancel
+          </button>
+          <input
+            (keyup)="onKey($event)"
+            *ngIf="this.canEditSecReqPoints"
+            type="text"
+            class="form-control"
+            (keydown.enter)="facultySecReqPointsEdit($event, i)"
+          />
+
+          <b>Faculties</b>: {{ req.faculties }}
+          <button class="btn_edit" (click)="this.canEditSecReqFac = true">
+            Edit Faculties
+          </button>
+          <button
+            class="btn_save"
+            *ngIf="this.canEditSecReqFac === true"
+            (click)="facultySecReqFacEditSaveBtn(index)"
+          >
+            Save
+          </button>
+          <button
+            *ngIf="this.canEditSecReqFac === true"
+            (click)="this.canEditSecReqFac = false"
+          >
+            Cancel
+          </button>
+          <input
+            (keyup)="onKey($event)"
+            *ngIf="this.canEditSecReqFac"
+            type="text"
+            class="form-control"
+            (keydown.enter)="facultySecReqFacEdit($event, i)"
+          />
+
+          <b>Above Stage</b>: {{ req.aboveStage }}
+          <button class="btn_edit" (click)="this.canEditSecReqAboveStage = true">
+            Edit Above Stage
+          </button>
+          <button
+            class="btn_save"
+            *ngIf="this.canEditSecReqAboveStage === true"
+            (click)="facultySecReqAboveStageEditSaveBtn(index)"
+          >
+            Save
+          </button>
+          <button
+            *ngIf="this.canEditSecReqAboveStage === true"
+            (click)="this.canEditSecReqAboveStage = false"
+          >
+            Cancel
+          </button>
+          <input
+            (keyup)="onKey($event)"
+            *ngIf="this.canEditSecReqAboveStage"
+            type="text"
+            class="form-control"
+            (keydown.enter)="facultySecReqAboveStageEdit($event, i)"
+          />
+
+        </div>
+      </div>
+      </div>
       </ul>
     </nb-card>
   `,
@@ -230,6 +343,10 @@ export class FacultyEditComponent {
   public canEditReqCourse = false;
   public canAddReqCourse = false;
 
+  public canEditSecReqFac = false;  
+  public canEditSecReqPoints = false;
+  public canEditSecReqAboveStage = false;
+
   constructor(
     public facultyService: FacultyService,
     private db: AngularFireDatabase
@@ -242,6 +359,9 @@ export class FacultyEditComponent {
       majorRequirements: null,
       majors: null,
       name: null,
+      conjointTotal: null,
+      doubleMajorRequirements: null,
+
     };
   }
 
@@ -265,8 +385,6 @@ export class FacultyEditComponent {
   }
 
   ngOnInit() {
-    //   this.db.list('/', ref => ref.orderByChild('name').equalTo("Drama")).valueChanges().subscribe((result: any) => console.log(result))
-    //  this.db.list('/' + '2' + '/' + 'departments_admin' + '/', ref => ref.orderByChild('name').equalTo("Drama")).valueChanges().subscribe((result: any) => console.log(result[0]))
   }
 
   orderCourse(faculty) {
@@ -315,61 +433,65 @@ export class FacultyEditComponent {
     this.canEditReqPoints = true;
     this.canEditReqCourse = true;
     this.canAddReqCourse = true;
+
+    this.canEditSecReqPoints = true;
+    this.canEditSecReqFac = true;
+    this.canEditSecReqAboveStage = true;
   }
 
   onKey(event) {
     this.inputValue = event.target.value;
   }
 
-  departmentNameEdit(newName) {
+  facultyNameEdit(newName) {
     console.log(newName.target.value);
-    this.db.list("/" + (this.faculty.id - 1)).set("name", newName.target.value);
+    this.db.list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1)).set("name", newName.target.value);
   }
 
-  departmentNameEditSaveBtn() {
+  facultyNameEditSaveBtn() {
     console.log(this.inputValue);
-    this.db.list("/" + (this.faculty.id - 1)).set("name", this.inputValue);
+    this.db.list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1)).set("name", this.inputValue);
   }
 
-  departmentDeactivate() {
+  facultyDeactivate() {
     console.log(this.faculty.name);
-    this.db.list("/" + (this.faculty.id - 1)).set("isActive", false);
+    this.db.list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1)).set("isActive", false);
   }
 
-  departmentActivate() {
+  facultyActivate() {
     console.log(this.faculty.name);
-    this.db.list("/" + (this.faculty.id - 1)).set("isActive", true);
+    this.db.list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1)).set("isActive", true);
   }
 
-  departmentFacEdit(newName) {
+  facultyFacEdit(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + (this.faculty.id - 1) + "/" + "faculties")
+      .list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1) + "/" + "faculties")
       .set("0", newName.target.value);
   }
 
-  departmentFacEditSaveBtn() {
+  facultyFacEditSaveBtn() {
     console.log(this.inputValue);
     this.db
-      .list("/" + (this.faculty.id - 1) + "/" + "faculties")
+      .list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1) + "/" + "faculties")
       .set("0", this.inputValue);
   }
 
-  departmentFacAdd(newName) {
+  facultyFacAdd(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + (this.faculty.id - 1) + "/" + "faculties")
+      .list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1) + "/" + "faculties")
       .set("" + this.faculty.faculties.length, newName.target.value);
   }
 
-  departmentReqCourseEdit(newName, index) {
+  facultyReqCourseEdit(newName, index) {
     console.log(newName.target.value);
     let i;
     let newArray = newName.target.value.split(",");
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
+          "/" + "1" + "/" + "faculties_admin" + "/" +
             (this.faculty.id - 1) +
             "/" +
             "requirements" +
@@ -383,14 +505,14 @@ export class FacultyEditComponent {
     }
   }
 
-  departmentReqCourseEditSaveBtn(index) {
+  facultyReqCourseEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
     let newArray = this.inputValue.split(",");
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
+          "/" + "1" + "/" + "faculties_admin" + "/" +
             (this.faculty.id - 1) +
             "/" +
             "requirements" +
@@ -404,11 +526,11 @@ export class FacultyEditComponent {
     }
   }
 
-  departmentReqCourseAdd(newName, index) {
+  facultyReqCourseAdd(newName, index) {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" +
+        "/" + "1" + "/" + "faculties_admin" + "/" +
           (this.faculty.id - 1) +
           "/" +
           "requirements" +
@@ -422,4 +544,140 @@ export class FacultyEditComponent {
         newName.target.value
       );
   }
+
+  facultySecReqPointsEdit(newName, index) {
+    console.log(newName.target.value);
+    let i;
+    let newArray = newName.target.value.split(",");
+    for (i = 0; i < newArray.length; i++) {
+      this.db
+        .list(
+            "/" +
+            +"1" +
+            "/" +
+            "faculties_admin" +
+            "/" +
+            (this.faculty.id - 1) +
+            "/" +
+            "doubleMajorRequirements" +
+            "/" +
+            index +
+            "/" +
+            "required"
+        )
+        .set("" + i, parseInt(newArray[i]));
+      console.log(i);
+    }
+  }
+
+  facultySecReqPointsEditSaveBtn(index) {
+    console.log(this.inputValue);
+    console.log(index)
+    let i;
+    let newArray = this.inputValue.split(",");
+    for (i = 0; i < newArray.length; i++) {
+      this.db
+        .list(
+            "/" +
+            +"1" +
+            "/" +
+            "faculties_admin" +
+            "/" +
+            (this.faculty.id - 1) +
+            "/" +
+            "doubleMajorRequirements" +
+            "/" +
+            index +
+            "/" +
+            "required"
+        )
+        .set("" + i, parseInt(newArray[i]));
+      console.log(i);
+    }
+  }
+
+  facultySecReqFacEdit(newName, index) {
+    console.log(newName.target.value);
+    let i;
+    let newArray = newName.target.value.split(",");
+    for (i = 0; i < newArray.length; i++) {
+      this.db
+        .list(
+          "/" + "1" + "/" + "faculties_admin" + "/" +
+            (this.faculty.id - 1) +
+            "/" +
+            "doubleMajorRequirements" +
+            "/" +
+            index +
+            "/" +
+            "faculties"
+        )
+        .set("" + i, newArray[i]);
+      console.log(i);
+    }
+  }
+
+  facultySecReqFacEditSaveBtn(index) {
+    console.log(this.inputValue);
+    let i;
+    let newArray = this.inputValue.split(",");
+    for (i = 0; i < newArray.length; i++) {
+      this.db
+        .list(
+          "/" + "1" + "/" + "faculties_admin" + "/" +
+            (this.faculty.id - 1) +
+            "/" +
+            "doubleMajorRequirements" +
+            "/" +
+            index +
+            "/" +
+            "faculties"
+        )
+        .set("" + i, newArray[i]);
+      console.log(i);
+    }
+  }
+
+  facultySecReqAboveStageEdit(newName, index) {
+    console.log(newName.target.value);
+    let i;
+    let newArray = newName.target.value.split(",");
+    for (i = 0; i < newArray.length; i++) {
+      this.db
+        .list(
+          "/" + "1" + "/" + "faculties_admin" + "/" +
+            (this.faculty.id - 1) +
+            "/" +
+            "doubleMajorRequirements" +
+            "/" +
+            index +
+            "/" +
+            "aboveStage"
+        )
+        .set("" + i, parseInt(newArray[i]));
+      console.log(i);
+    }
+  }
+
+  facultySecReqAboveStageEditSaveBtn(index) {
+    console.log(this.inputValue);
+    let i;
+    let newArray = this.inputValue.split(",");
+    for (i = 0; i < newArray.length; i++) {
+      this.db
+        .list(
+          "/" + "1" + "/" + "faculties_admin" + "/" +
+            (this.faculty.id - 1) +
+            "/" +
+            "doubleMajorRequirements" +
+            "/" +
+            index +
+            "/" +
+            "aboveStage"
+        )
+        .set("" + i, parseInt(newArray[i]));
+      console.log(i);
+    }
+  }
+
 }

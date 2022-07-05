@@ -839,7 +839,7 @@ export class DepartmentEditComponent {
             "/" +
             "required"
         )
-        .set("" + i, newArray[i]);
+        .set("" + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
@@ -865,7 +865,7 @@ export class DepartmentEditComponent {
             "/" +
             "required"
         )
-        .set("" + i, newArray[i]);
+        .set("" + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
@@ -990,7 +990,7 @@ export class DepartmentEditComponent {
             "/" +
             "stage"
         )
-        .set("" + i, newArray[i]);
+        .set("" + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
@@ -1015,7 +1015,7 @@ export class DepartmentEditComponent {
             "/" +
             "stage"
         )
-        .set("" + i, newArray[i]);
+        .set("" + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
