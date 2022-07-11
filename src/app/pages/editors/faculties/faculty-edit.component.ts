@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { AngularFireDatabase } from "@angular/fire/database";
 import { FacultyService } from "../../../@core/data/faculty.service";
-// import { FacultyNewComponent } from './faculty-new.component';
+import { FacultyNewComponent } from './faculty-new.component';
 
 @Component({
   selector: "faculty-edit",
@@ -318,6 +318,7 @@ import { FacultyService } from "../../../@core/data/faculty.service";
       </div>
       </ul>
     </nb-card>
+    <faculty-new></faculty-new>
   `,
 })
 export class FacultyEditComponent {

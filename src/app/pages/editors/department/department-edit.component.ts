@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { AngularFireDatabase } from "@angular/fire/database";
 import { DepartmentService } from "../../../@core/data/department.service";
-// import { DepartmentNewComponent } from './department-new.component';
+import { DepartmentNewComponent } from './department-new.component';
 
 @Component({
   selector: "department-edit",
@@ -359,6 +359,7 @@ import { DepartmentService } from "../../../@core/data/department.service";
         </div>
       </ul>
     </nb-card>
+    <department-new></department-new>
   `,
 })
 export class DepartmentEditComponent {

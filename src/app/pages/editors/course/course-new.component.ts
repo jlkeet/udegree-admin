@@ -206,6 +206,7 @@ export class CourseNewComponent {
   public dbIndexNew;
 
   public reqIndex = 0;
+  public reqCourseIndex = 0;
   public reqFacIndex = 0;
   public reqDeptIndex = 0;
   public reqComplexIndex = 0;
@@ -241,6 +242,7 @@ export class CourseNewComponent {
 
   public reqFacValueArray = [];
   public reqDeptValueArray = [];
+  public reqCourseValueArray = [];
 
   public newReqsArray = [];
   public newReqsObject = {};
@@ -255,7 +257,7 @@ export class CourseNewComponent {
     private db: AngularFireDatabase
   ) {
     this.listRef = this.db
-      .list("/", (ref) => ref.orderByChild("id"))
+      .list("/" + "0" + "/" + "courses_admin" + "/", (ref) => ref.orderByChild("id"))
       .valueChanges();
   }
 
@@ -387,27 +389,27 @@ export class CourseNewComponent {
   newCourseName() {
     console.log(this.courseNameValue);
     this.db
-      .list("/" + (this.dbIndexNew - 1))
+      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1))
       .set("name", this.courseNameValue.toUpperCase());
   }
 
   newCourseTitle() {
     console.log(this.courseTitleValue);
     this.db
-      .list("/" + (this.dbIndexNew - 1))
+      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1))
       .set("title", this.courseTitleValue);
   }
 
   newCourseDesc() {
     console.log(this.courseDescValue);
-    this.db.list("/" + (this.dbIndexNew - 1)).set("desc", this.courseDescValue);
+    this.db.list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1)).set("desc", this.courseDescValue);
   }
 
   newCourseDept() {
     console.log(this.courseDeptValue);
     // this.db.list('/' + (this.dbIndexNew - 1)).set('department', this.courseDeptValue)
     this.db
-      .list("/" + (this.dbIndexNew - 1) + "/" + "department")
+      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1) + "/" + "department")
       .set("0", this.courseDeptValue);
   }
 
@@ -415,33 +417,33 @@ export class CourseNewComponent {
     console.log(this.courseFacValue);
     // this.db.list('/' + (this.dbIndexNew - 1)).set('faculties', this.courseFacValue)
     this.db
-      .list("/" + (this.dbIndexNew - 1) + "/" + "faculties")
+      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1) + "/" + "faculties")
       .set("0", this.courseFacValue);
   }
 
   newCourseStage() {
     console.log(this.courseStageValue);
     this.db
-      .list("/" + (this.dbIndexNew - 1))
+      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1))
       .set("stage", parseInt(this.courseStageValue));
   }
 
   newCoursePoints() {
     console.log(this.coursePointsValue);
     this.db
-      .list("/" + (this.dbIndexNew - 1))
+      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1))
       .set("points", parseInt(this.coursePointsValue));
   }
 
   newCourseActive() {
     console.log(this.courseActiveValue);
     this.db
-      .list("/" + (this.dbIndexNew - 1))
+      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1))
       .set("isActive", this.courseActiveValue.toLowerCase() === "true");
   }
 
   newCourseId() {
-    this.db.list("/" + (this.dbIndexNew - 1)).set("id", this.dbIndexNew);
+    this.db.list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1)).set("id", this.dbIndexNew);
   }
 
   reqTypeNewSaveBtn() {
@@ -449,7 +451,7 @@ export class CourseNewComponent {
         if (this.newReqsArray[i].type) {
         this.db
           .list(
-            "/" +
+            "/" + "0" + "/" + "courses_admin" + "/" +
               (this.dbIndexNew - 1) +
               "/" +
               "requirements" +
@@ -466,7 +468,7 @@ export class CourseNewComponent {
         if (this.newReqsArray[i].required) {
         this.db
           .list(
-            "/" +
+            "/" + "0" + "/" + "courses_admin" + "/" +
               (this.dbIndexNew - 1) +
               "/" +
               "requirements" +
@@ -479,18 +481,24 @@ export class CourseNewComponent {
   }
 
   reqCourseNewSaveBtn() {
-      for (let i = 0; i < this.newReqsArray.length; i++) {
-        if (this.newReqsArray[i].papers) {
+      for (let j = 0; j < this.newReqsArray.length; j++) {
+        if (this.newReqsArray[j].papers) {
+          this.reqCourseValueArray = this.newReqsArray[j].papers.split(",");
+          this.reqCourseIndex = this.reqCourseValueArray.length;
+          for (let i = 0; i < this.reqCourseIndex; i++) {
         this.db
           .list(
-            "/" +
+            "/" + "0" + "/" + "courses_admin" + "/" +
               (this.dbIndexNew - 1) +
               "/" +
               "requirements" +
               "/" +
-              this.newReqsArray[i].id
+              (j) +
+              "/" +
+              "papers"
           )
-          .set("papers", this.newReqsArray[i].papers);
+          .set("" + i, this.reqCourseValueArray[i].trim());
+        }
       }
     }
   }
@@ -503,7 +511,7 @@ export class CourseNewComponent {
         for (let i = 0; i < this.reqFacIndex; i++) {
           this.db
             .list(
-              "/" +
+              "/" + "0" + "/" + "courses_admin" + "/" +
                 (this.dbIndexNew - 1) +
                 "/" +
                 "requirements" +
@@ -526,7 +534,7 @@ export class CourseNewComponent {
         for (let i = 0; i < this.reqFacIndex; i++) {
           this.db
             .list(
-              "/" +
+              "/" + "0" + "/" + "courses_admin" + "/" +
                 (this.dbIndexNew - 1) +
                 "/" +
                 "requirements" +
@@ -546,7 +554,7 @@ export class CourseNewComponent {
         if (this.newReqsArray[i].stage) {
         this.db
           .list(
-            "/" +
+            "/" + "0" + "/" + "courses_admin" + "/" +
               (this.dbIndexNew - 1) +
               "/" +
               "requirements" +
@@ -563,7 +571,7 @@ export class CourseNewComponent {
         if (this.newReqsArray[i].aboveStage) {
         this.db
           .list(
-            "/" +
+            "/" + "0" + "/" + "courses_admin" + "/" +
               (this.dbIndexNew - 1) +
               "/" +
               "requirements" +
@@ -579,7 +587,7 @@ export class CourseNewComponent {
     for (let i = 0; i < this.newReqsComplexArray.length; i++) {
         this.db
           .list(
-            "/" +
+            "/" + "0" + "/" + "courses_admin" + "/" +
               (this.dbIndexNew - 1) +
               "/" +
               "requirements" +
@@ -593,7 +601,7 @@ export class CourseNewComponent {
     for (let i = 0; i < this.newReqsComplexArray.length; i++) {
         this.db
           .list(
-            "/" +
+            "/" + "0" + "/" + "courses_admin" + "/" +
               (this.dbIndexNew - 1) +
               "/" +
               "requirements" +
@@ -608,7 +616,7 @@ export class CourseNewComponent {
     for (let i = 0; i < this.newReqsComplexArray.length; i++) {
         this.db
           .list(
-            "/" +
+            "/" + "0" + "/" + "courses_admin" + "/" +
               (this.dbIndexNew - 1) +
               "/" +
               "requirements" +
@@ -628,7 +636,7 @@ export class CourseNewComponent {
         for (let i = 0; i < reqFacComplexIndex; i++) {
           this.db
             .list(
-              "/" +
+              "/" + "0" + "/" + "courses_admin" + "/" +
                 (this.dbIndexNew - 1) +
                 "/" +
                 "requirements" +
@@ -655,7 +663,7 @@ export class CourseNewComponent {
         for (let i = 0; i < reqDeptComplexIndex; i++) {
           this.db
             .list(
-              "/" +
+              "/" + "0" + "/" + "courses_admin" + "/" +
                 (this.dbIndexNew - 1) +
                 "/" +
                 "requirements" +

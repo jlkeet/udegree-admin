@@ -409,10 +409,6 @@ export class CourseEditComponent {
   }
 
   ngOnInit() {
-    this.db
-      .list("/", (ref) => ref.orderByChild("name"))
-      .valueChanges()
-      .subscribe((result: any) => console.log(result[0].courses_admin));
   }
 
   orderCourse(course) {

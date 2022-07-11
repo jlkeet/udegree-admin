@@ -7,8 +7,9 @@ import { CKEditorComponent } from './ckeditor/ckeditor.component';
 import { CourseEditComponent } from './course/course-edit.component';
 import { CourseNewComponent } from './course/course-new.component';
 import { DepartmentEditComponent } from './department/department-edit.component';
+import { DepartmentNewComponent } from './department/department-new.component';
 import { FacultyEditComponent } from './faculties/faculty-edit.component';
-// import { DepartmentNewComponent } from './department/department-new.component';
+import { FacultyNewComponent } from './faculties/faculty-new.component';
 
 const routes: Routes = [{
   path: '',
@@ -46,5 +47,7 @@ export const routedComponents = [
   CourseNewComponent,
   DepartmentEditComponent,
   FacultyEditComponent,
-  // DepartmentNewComponent
+  DepartmentNewComponent,
+  FacultyNewComponent,
+
 ];
