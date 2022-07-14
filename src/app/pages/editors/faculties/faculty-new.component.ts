@@ -34,7 +34,7 @@ import {
           class="form-control"
         />
   
-        <button (click)="addNewReq()">Add New Requirement</button><button (click)="addComplexReq();">Add New Conjoint Requirement</button>
+        <button (click)="addNewReq()">Add New Requirement</button><button (click)="addConjointReq();">Add New Conjoint Requirement</button>
         <div *ngFor="let req of [].constructor(reqIndex); let i = index">
           <input
             *ngIf="this.addingReq === true"
@@ -98,7 +98,7 @@ import {
   
         <div *ngFor="let req of [].constructor(reqComplexIndex); let i = index">
         <input
-        *ngIf="this.addingReqComplex === true"
+        *ngIf="this.addingReqConjoint === true"
         placeholder="How many need to be satisfied"
         (keyup)="onKeyComplexRequirements($event)"
         type="text"
@@ -541,14 +541,14 @@ import {
       }
     }
   
-    reqComplexInitialRequiredSave() {
+    facultyConReqPoints() {
       for (let i = 0; i < this.newReqsComplexArray.length; i++) {
           this.db
             .list(
               "/" + "1" + "/" + "faculties_admin" + "/"+
                 (this.dbIndexNew - 1) +
                 "/" +
-                "majorRequirements" +
+                "doubleMajorRequirements" +
                 "/" + this.reqIndex 
             )
             .set('required',this.newReqsComplexArray[i].required)
@@ -682,7 +682,7 @@ import {
       console.log(this.newReqsArray);
     }
   
-    addComplexReq() {
+    addConjointReq() {
         console.log("firing ")
         this.addingReqComplex = true;
   

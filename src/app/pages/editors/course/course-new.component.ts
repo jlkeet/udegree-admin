@@ -407,19 +407,23 @@ export class CourseNewComponent {
 
   newCourseDept() {
     console.log(this.courseDeptValue);
-    // this.db.list('/' + (this.dbIndexNew - 1)).set('department', this.courseDeptValue)
+    let deptArray = this.courseDeptValue.split(",");
+    for (let j = 0; j < deptArray.length; j++) {  
     this.db
       .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1) + "/" + "department")
-      .set("0", this.courseDeptValue);
+      .set("" + j, deptArray[j].trim());
   }
+}
 
   newCourseFac() {
     console.log(this.courseFacValue);
-    // this.db.list('/' + (this.dbIndexNew - 1)).set('faculties', this.courseFacValue)
+    let facArray = this.courseFacValue.split(",");
+  for (let j = 0; j < facArray.length; j++) {  
     this.db
       .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1) + "/" + "faculties")
-      .set("0", this.courseFacValue);
+      .set("" + j, facArray[j].trim());
   }
+}
 
   newCourseStage() {
     console.log(this.courseStageValue);

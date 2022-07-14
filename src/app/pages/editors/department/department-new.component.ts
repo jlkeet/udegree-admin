@@ -402,7 +402,7 @@ import {
     }
   
     newDepartmentId() {
-      this.db.list("/" + "2" + "/" + "departments_admin" + (this.dbIndexNew - 1)).set("id", this.dbIndexNew);
+      this.db.list("/" + "2" + "/" + "departments_admin" + "/" + (this.dbIndexNew - 1)).set("id", this.dbIndexNew);
     }
   
     reqTypeNewSaveBtn() {
@@ -441,8 +441,6 @@ import {
     }
   
     reqCourseNewSaveBtn() {
-
-
       for (let j = 0; j < this.newReqsArray.length; j++) {
         if (this.newReqsArray[j].papers) {
           this.reqCourseValueArray = this.newReqsArray[j].papers.split(",");
