@@ -96,67 +96,66 @@ import {
           >
         </div>
   
-        <div *ngFor="let req of [].constructor(reqComplexIndex); let i = index">
-        <input
-        *ngIf="this.addingReqConjoint === true"
-        placeholder="How many need to be satisfied"
-        (keyup)="onKeyComplexRequirements($event)"
-        type="text"
-        class="form-control-complex"
-      />
-      <button *ngIf="this.reqComplex" (click)="complexRuleMulti();">Complex rule</button>
-      <div *ngFor="let req of [].constructor(reqComplexRuleIndex); let i = index">
-      <input
-      *ngIf="this.complexRuleParameters === true"
-      placeholder="0 for points or 1 for Facultys"
-      (keyup)="onKeyTypeRequirementsComplex($event)"
-      type="text"
-      class="form-control-complex"
-    />
-    <input
-      *ngIf="this.complexRuleParameters === true"
-      placeholder="Number Required for pre-req"
-      (keyup)="onKeyPointRequirementsComplex($event)"
-      type="text"
-      class="form-control-complex"
-    />
+        <div *ngFor="let req of [].constructor(reqConIndex); let i = index">
+          <input
+            *ngIf="this.addingConReq === true"
+            placeholder="0 for points or 1 for Courses"
+            (keyup)="onKeyTypeRequirementsConjoint($event, i)"
+            type="text"
+            class="form-control"
+          />
+          <input
+            *ngIf="this.addingConReq === true"
+            placeholder="Number Required for pre-req"
+            (keyup)="onKeyPointRequirementsConjoint($event, i)"
+            type="text"
+            class="form-control"
+          />
   
-    <input
-      *ngIf="this.complexRuleParameters"
-      placeholder="Facultys required"
-      (keyup)="onKeyFacultysRequirementsComplex($event)"
-      type="text"
-      class="form-control-complex"
-    />
-    <input
-      *ngIf="this.complexRuleParameters"
-      placeholder="Require Faculty(s)"
-      (keyup)="onKeyFacRequirementsComplex($event)"
-      type="text"
-      class="form-control-complex"
-    />
-    <input
-      *ngIf="this.complexRuleParameters"
-      placeholder="Require Faculty(s)"
-      (keyup)="onKeyDeptRequirementsComplex($event)"
-      type="text"
-      class="form-control-complex"
-    />
-    <input
-      *ngIf="this.complexRuleParameters"
-      placeholder="Require Stage"
-      (keyup)="onKeyStageRequirementsComplex($event)"
-      type="text"
-      class="form-control-complex"
-    />
-    <input
-      *ngIf="this.complexRuleParameters"
-      placeholder="Above Stage"
-      (keyup)="onKeyAboveStageRequirementsComplex($event)"
-      type="text"
-      class="form-control-complex"
-    />      <BR />
-    </div>
+          <input
+            *ngIf="this.addingConReqCourse"
+            placeholder="Courses required"
+            (keyup)="onKeyCourseRequirementsConjoint($event, i)"
+            type="text"
+            class="form-control"
+          />
+          <input
+            *ngIf="this.addingConReqFac"
+            placeholder="Require Faculty(s)"
+            (keyup)="onKeyFacRequirementsConjoint($event, i)"
+            type="text"
+            class="form-control"
+          />
+          <input
+            *ngIf="this.addingConReqDept"
+            placeholder="Require Department(s)"
+            (keyup)="onKeyDeptRequirementsConjoint($event, i)"
+            type="text"
+            class="form-control"
+          />
+          <input
+            *ngIf="this.addingConReqStage"
+            placeholder="Require Stage"
+            (keyup)="onKeyStageRequirementsConjoint($event, i)"
+            type="text"
+            class="form-control"
+          />
+          <input
+            *ngIf="this.addingConReqAboveStage"
+            placeholder="Above Stage"
+            (keyup)="onKeyAboveStageRequirementsConjoint($event, i)"
+            type="text"
+            class="form-control"
+          />
+  
+          <button (click)="addingConReqCourse = true">Require Course</button
+          ><button (click)="addingConReqFac = true">Require Faculty(s)</button
+          ><button (click)="addingConReqDept = true">Require Department(s)</button
+          ><button (click)="addingConReqStage = true">Require Stage</button
+          ><button (click)="addingConReqAboveStage = true">
+            Require Above Stage</button
+          >
+
     </div>
   
   
@@ -172,8 +171,15 @@ import {
     public reqIndex = 0;
     public reqFacIndex = 0;
     public reqDeptIndex = 0;
-    public reqComplexIndex = 0;
-    public reqComplexRuleIndex = 0;
+
+
+    public reqConIndex = 0;
+    public reqConRuleIndex = 0;
+
+
+    public reqConFacIndex = 0;
+    public reqConDeptIndex = 0;
+    public reqConCourseIndex = 0;
   
     public facultyNameValue;
     public facultyTitleValue;
@@ -192,7 +198,14 @@ import {
     public addingReqDept = false;
     public addingReqStage = false;
     public addingReqAboveStage = false;
-    public addingReqComplex = false;
+
+    public addingConReq = false;
+
+    public addingConReqCourse = false;
+    public addingConReqFac = false;
+    public addingConReqDept = false;
+    public addingConReqStage = false;
+    public addingConReqAboveStage = false;
   
     public reqTypeValue;
     public reqPointValue;
@@ -201,18 +214,32 @@ import {
     public reqDeptValue;
     public reqStageValue;
     public reqAboveStageValue;
+
+    public reqConTypeValue;
+    public reqConPointValue;
+    public reqConCourseValue;
+    public reqConFacValue;
+    public reqConDeptValue;
+    public reqConStageValue;
+    public reqConAboveStageValue;
+
+
     public reqComplex;
   
     public reqFacValueArray = [];
     public reqDeptValueArray = [];
+
+    public reqConFacValueArray = [];
+    public reqConDeptValueArray = [];
+    public reqConCourseValueArray = [];
   
     public newReqsArray = [];
     public newReqsObject = {};
   
     public complexRuleParameters = false;
-    public newReqsComplexArray = [];
-    public newReqsComplexObject = {};
-    public newReqsComplexRuleObject = {};
+    public newConReqsArray = [];
+    public newConReqsObject = {};
+    public newConReqsRuleObject = {};
   
     constructor(
       public facultyService: FacultyService,
@@ -303,40 +330,27 @@ import {
   
   
   
-    onKeyComplexRequirements(event, index) { this.reqComplex = true, this.newReqsComplexArray[0].required = parseInt(event.target.value);
+    onKeyTypeRequirementsConjoint(event, index) {
+      this.newConReqsArray[index].type = event.target.value;
     }
-  
-    onKeyTypeRequirementsComplex(event, index) {
-      this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].type = parseInt(event.target.value);
-      console.log(this.newReqsComplexArray)
+    onKeyPointRequirementsConjoint(event, index) {
+      this.newConReqsArray[index].required = event.target.value;
     }
-    onKeyPointRequirementsComplex(event, index) {
-      this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].required = parseInt(event.target.value);
-      console.log(this.newReqsComplexArray)
+    onKeyCourseRequirementsConjoint(event, index) {
+      this.newConReqsArray[index].papers = event.target.value;
     }
-    onKeyFacultysRequirementsComplex(event, index) {
-      this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].papers = event.target.value;
-      console.log(this.newReqsComplexArray)
+    onKeyFacRequirementsConjoint(event, index) {
+      this.newConReqsArray[index].faculties = event.target.value;
     }
-    onKeyFacRequirementsComplex(event, index) {
-      this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].faculties = event.target.value;
-      console.log(this.newReqsComplexArray)
+    onKeyDeptRequirementsConjoint(event, index) {
+      this.newConReqsArray[index].department = event.target.value;
     }
-    onKeyDeptRequirementsComplex(event, index) {
-      this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].department = event.target.value;
-      console.log(this.newReqsComplexArray)
+    onKeyStageRequirementsConjoint(event, index) {
+      this.newConReqsArray[index].stage = event.target.value;
     }
-    onKeyStageRequirementsComplex(event, index) {
-      this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].stage = parseInt(event.target.value);
-      console.log(this.newReqsComplexArray)
+    onKeyAboveStageRequirementsConjoint(event, index) {
+      this.newConReqsArray[index].aboveStage = event.target.value;
     }
-    onKeyAboveStageRequirementsComplex(event, index) {
-      this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].aboveStage = parseInt(event.target.value);
-      console.log(this.newReqsComplexArray)
-    }
-  
-  
-  
   
   
     addNewFaculty() {
@@ -541,104 +555,153 @@ import {
       }
     }
   
-    facultyConReqPoints() {
-      for (let i = 0; i < this.newReqsComplexArray.length; i++) {
+    
+
+
+
+
+
+
+
+
+
+    reqConTypeNewSaveBtn() {
+      for (let i = 0; i < this.newConReqsArray.length; i++) {
+          console.log(this.newConReqsArray)
+        if (this.newConReqsArray[i].type) {
+        this.db
+          .list(
+            "/" + "1" + "/" + "faculties_admin" + "/"+
+              (this.dbIndexNew - 1) +
+              "/" +
+              "doubleMajorRequirements" +
+              "/" +
+              this.newConReqsArray[i].id
+          )
+          .set("type", parseInt(this.newConReqsArray[i].type));
+      }
+    }
+  }
+
+  reqConPointsNewSaveBtn() {
+      for (let i = 0; i < this.newConReqsArray.length; i++) {
+        if (this.newConReqsArray[i].required) {
+        this.db
+          .list(
+            "/" + "1" + "/" + "faculties_admin" + "/"+
+              (this.dbIndexNew - 1) +
+              "/" +
+              "doubleMajorRequirements" +
+              "/" +
+              this.newConReqsArray[i].id
+          )
+          .set("required", parseInt(this.newConReqsArray[i].required));
+      }
+    }
+  }
+
+  reqConCourseNewSaveBtn() {
+    for (let j = 0; j < this.newConReqsArray.length; j++) {
+      if (this.newConReqsArray[j].papers) {
+        this.reqConCourseValueArray = this.newConReqsArray[j].papers.split(",");
+        this.reqConCourseIndex = this.reqConCourseValueArray.length;
+        for (let i = 0; i < this.reqConCourseIndex; i++) {
+      this.db
+        .list(
+          "/" + "1" + "/" + "faculties_admin" + "/" +
+            (this.dbIndexNew - 1) +
+            "/" +
+            "doubleMajorRequirements" +
+            "/" +
+            (j) +
+            "/" +
+            "papers"
+        )
+        .set("" + i, this.reqConCourseValueArray[i].trim());
+      }
+    }
+  }
+}
+
+  reqConFacNewSaveBtn() {
+    for (let j = 0; j < this.newConReqsArray.length; j++) {
+      if (this.newConReqsArray[j].faculties) {
+        this.reqConFacValueArray = this.newConReqsArray[j].faculties.split(",");
+        this.reqConFacIndex = this.reqConFacValueArray.length;
+        for (let i = 0; i < this.reqConFacIndex; i++) {
           this.db
             .list(
               "/" + "1" + "/" + "faculties_admin" + "/"+
                 (this.dbIndexNew - 1) +
                 "/" +
                 "doubleMajorRequirements" +
-                "/" + this.reqIndex 
+                "/" +
+                (j) +
+                "/" +
+                "faculties"
             )
-            .set('required',this.newReqsComplexArray[i].required)
+            .set("" + i, this.reqConFacValueArray[i].trim());
+        }
       }
     }
-  
-    reqComplexInitialTypeSave() {
-      for (let i = 0; i < this.newReqsComplexArray.length; i++) {
+  }
+
+  reqConDeptNewSaveBtn() {
+    for (let j = 0; j < this.newConReqsArray.length; j++) {
+      if (this.newConReqsArray[j].department) {
+        this.reqConDeptValueArray = this.newConReqsArray[j].department.split(",");
+        this.reqConDeptIndex = this.reqConDeptValueArray.length;
+        for (let i = 0; i < this.reqConDeptIndex; i++) {
           this.db
             .list(
               "/" + "1" + "/" + "faculties_admin" + "/"+
                 (this.dbIndexNew - 1) +
                 "/" +
-                "majorRequirements" +
-                "/" + this.reqIndex 
-            )
-            .set('type',this.newReqsComplexArray[i].type)
-      }
-    }
-  
-  
-    reqComplexSave() {
-      for (let i = 0; i < this.newReqsComplexArray.length; i++) {
-          this.db
-            .list(
-              "/" + "1" + "/" + "faculties_admin" + "/"+
-                (this.dbIndexNew - 1) +
+                "doubleMajorRequirements" +
                 "/" +
-                "majorRequirements" +
-                "/" + this.reqIndex 
+                (j) +
+                "/" +
+                "department"
             )
-            .set('complex',this.newReqsComplexArray[i].complex);
-      }
-      this.reqDeptComplexSaveBtn();
-      this.reqFacComplexSaveBtn();
-    }
-  
-    reqFacComplexSaveBtn() {
-      for (let j = 0; j < this.newReqsComplexArray.length; j++) {
-        if (this.newReqsComplexArray[j].complex[this.reqComplexRuleIndex - 1].faculties) {
-          let reqFacValueComplexArray = this.newReqsComplexArray[j].complex[this.reqComplexRuleIndex - 1].faculties.split(",");
-          let reqFacComplexIndex = reqFacValueComplexArray.length;
-          for (let i = 0; i < reqFacComplexIndex; i++) {
-            this.db
-              .list(
-                "/" + "1" + "/" + "faculties_admin" + "/"+
-                  (this.dbIndexNew - 1) +
-                  "/" +
-                  "majorRequirements" +
-                  "/" +
-                  (j) +
-                  "/" +
-                  "complex" +
-                  "/" +
-                  0 +
-                  "/" +
-                  "faculties"
-              )
-              .set("" + i, reqFacValueComplexArray[i].trim());
-          }
+            .set("" + i, this.reqConDeptValueArray[i].trim());
         }
       }
     }
-  
-    reqDeptComplexSaveBtn() {
-      for (let j = 0; j < this.newReqsComplexArray.length; j++) {
-        if (this.newReqsComplexArray[j].complex[this.reqComplexRuleIndex - 1].department) {
-          let reqDeptValueComplexArray = this.newReqsComplexArray[j].complex[this.reqComplexRuleIndex - 1].department.split(",");
-          let reqDeptComplexIndex = reqDeptValueComplexArray.length;
-          for (let i = 0; i < reqDeptComplexIndex; i++) {
-            this.db
-              .list(
-                "/" + "1" + "/" + "faculties_admin" + "/"+
-                  (this.dbIndexNew - 1) +
-                  "/" +
-                  "majorRequirements" +
-                  "/" +
-                  (j) +
-                  "/" +
-                  "complex" +
-                  "/" +
-                  0 +
-                  "/" +
-                  "department"
-              )
-              .set("" + i, reqDeptValueComplexArray[i].trim());
-          }
-        }
+  }
+
+  reqConStageNewSaveBtn() {
+      for (let i = 0; i < this.newConReqsArray.length; i++) {
+        if (this.newConReqsArray[i].stage) {
+        this.db
+          .list(
+            "/" + "1" + "/" + "faculties_admin" + "/"+
+              (this.dbIndexNew - 1) +
+              "/" +
+              "doubleMajorRequirements" +
+              "/" +
+              this.newConReqsArray[i].id
+          )
+          .set("stage", parseInt(this.newConReqsArray[i].stage));
       }
     }
+  }
+
+  reqConAboveStageNewSaveBtn() {
+      for (let i = 0; i < this.newConReqsArray.length; i++) {
+        if (this.newConReqsArray[i].aboveStage) {
+        this.db
+          .list(
+            "/" + "1" + "/" + "faculties_admin" + "/"+
+              (this.dbIndexNew - 1) +
+              "/" +
+              "doubleMajorRequirements" +
+              "/" +
+              this.newConReqsArray[i].id
+          )
+          .set("aboveStage", parseInt(this.newConReqsArray[i].aboveStage));
+      }
+    }
+  }
   
   
   
@@ -654,13 +717,19 @@ import {
       this.reqPointsNewSaveBtn();
       this.reqCourseNewSaveBtn();
       this.reqFacNewSaveBtn();
-    //   this.reqDeptNewSaveBtn();
+      this.reqDeptNewSaveBtn();
       this.reqStageNewSaveBtn();
       this.reqAboveStageNewSaveBtn();
-    //   this.reqComplexInitialTypeSave();
-    //   this.reqComplexInitialRequiredSave();
-    //   this.reqComplexSave();
       // this.addingReq = false;
+
+      this.reqConTypeNewSaveBtn();
+      this.reqConPointsNewSaveBtn();
+      this.reqConCourseNewSaveBtn();
+      this.reqConFacNewSaveBtn();
+      this.reqConDeptNewSaveBtn();
+      this.reqConStageNewSaveBtn();
+      this.reqConAboveStageNewSaveBtn();
+
     }
   
     addNewReq() {
@@ -684,35 +753,22 @@ import {
   
     addConjointReq() {
         console.log("firing ")
-        this.addingReqComplex = true;
+        this.addingConReq = true;
   
-        this.newReqsComplexObject = {
-          id: this.reqIndex,
-          type: 0,
+        this.newConReqsObject = {
+          id: this.reqConIndex,
+          type: null,
+          papers: null,
+          department: null,
+          faculties: null,
           required: null,
-          complex: [],
+          stage: null,
+          aboveStage: null,
         };
-        this.reqComplexIndex++;
-        this.newReqsComplexArray.push(this.newReqsComplexObject);
+        this.newConReqsArray.push(this.newConReqsObject);
+        this.reqConIndex++;
+        console.log(this.newConReqsArray);
   
-    }
-  
-    complexRuleMulti() {
-      this.complexRuleParameters = true;
-  
-      this.newReqsComplexRuleObject = {
-        id: this.reqComplexRuleIndex,
-        type: null,
-        papers: null,
-        department: null,
-        faculties: null,
-        required: null,
-        stage: null,
-        aboveStage: null,
-      };
-      this.newReqsComplexArray[0].complex.push(this.newReqsComplexRuleObject)
-      console.log(this.newReqsComplexArray);
-      this.reqComplexRuleIndex++;
     }
   }
   
