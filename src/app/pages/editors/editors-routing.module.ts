@@ -10,6 +10,8 @@ import { DepartmentEditComponent } from './department/department-edit.component'
 import { DepartmentNewComponent } from './department/department-new.component';
 import { FacultyEditComponent } from './faculties/faculty-edit.component';
 import { FacultyNewComponent } from './faculties/faculty-new.component';
+import { ConjointNewComponent } from './conjoint/conjoint-new.component';
+import { ConjointEditComponent } from './conjoint/conjoint-edit.component';
 
 const routes: Routes = [{
   path: '',
@@ -27,8 +29,8 @@ const routes: Routes = [{
     component: DepartmentEditComponent,
   }, 
   {
-    path: 'ckeditor',
-    component: CKEditorComponent,
+    path: 'conjoint-edit',
+    component: ConjointEditComponent,
   }
 ],
 }];
@@ -49,5 +51,7 @@ export const routedComponents = [
   FacultyEditComponent,
   DepartmentNewComponent,
   FacultyNewComponent,
+  ConjointEditComponent,
+  ConjointNewComponent
 
 ];
