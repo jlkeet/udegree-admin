@@ -55,4 +55,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
+  {
+    title: 'Administration',
+    icon: 'settings-outline',
+    children: [
+      {
+        title: 'Manage Users',
+        link: '/pages/administration/manage-users',
+      },
+    ],
+  },
 ];

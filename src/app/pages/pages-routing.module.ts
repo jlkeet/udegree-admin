@@ -18,6 +18,11 @@ const routes: Routes = [{
         .then(m => m.EditorsModule),
     },
     {
+      path: 'administration',
+      loadChildren: () => import('./administration/administration.module')
+      .then(m => m.AdministrationModule),
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

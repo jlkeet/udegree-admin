@@ -39,7 +39,7 @@ export class NgxLoginComponent {
       .then((res) => {
         this.getAdminRole(res).then((sub) => {if (sub === "admin") {
           this.submitted = false;
-          this.messages = [res.toString()];
+          this.messages = [res.user.displayName];
           this.redirectToDashboard();
         } else {
           this.submitted = false;
