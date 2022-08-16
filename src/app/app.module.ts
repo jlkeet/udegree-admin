@@ -26,12 +26,34 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { NgxLoginComponent } from './auth/login/login.component';
+import { FormsModule } from '@angular/forms';
+
+
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { NbAuthModule } from '@nebular/auth';
+import { 
+  NbAlertModule,
+  NbButtonModule,
+  NbCheckboxModule,
+  NbInputModule
+} from '@nebular/theme';
+import { AuthService } from './auth/auth-service.service';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NgxLoginComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    CommonModule,
+    RouterModule,
+    NbAuthModule,
+    NbAlertModule,
+    NbButtonModule,
+    NbCheckboxModule,
+    NbInputModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     NbSidebarModule.forRoot(),
@@ -52,7 +74,9 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
   ],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
+
 export class AppModule {
 }

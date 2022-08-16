@@ -200,6 +200,34 @@ import { FacultyNewComponent } from './faculty-new.component';
                 class="form-control"
                 (keydown.enter)="courseReqPointsEdit($event, i)"
               />
+
+              <b>Flags</b>: {{ req.flags }}
+
+              <button class="btn_edit" (click)="this.canEditReqPoints = true">
+              Edit Flags
+            </button>
+            <button
+              class="btn_save"
+              *ngIf="this.canEditReqPoints === true"
+              (click)="courseReqPointsEditSaveBtn(index)"
+            >
+              Save
+            </button>
+            <button
+              *ngIf="this.canEditReqPoints === true"
+              (click)="this.canEditReqPoints = false"
+            >
+              Cancel
+            </button>
+            <input
+              (keyup)="onKey($event)"
+              *ngIf="this.canEditReqPoints"
+              type="text"
+              class="form-control"
+              (keydown.enter)="courseReqPointsEdit($event, i)"
+            />
+
+
             </div>
           </div>
 
@@ -312,7 +340,6 @@ import { FacultyNewComponent } from './faculty-new.component';
             class="form-control"
             (keydown.enter)="facultySecReqAboveStageEdit($event, i)"
           />
-
         </div>
       </div>
       </div>
@@ -542,6 +569,46 @@ export class FacultyEditComponent {
       )
       .set(
         "" + this.faculty.requirements[index].papers.length,
+        newName.target.value
+      );
+  }
+
+  facultyReqFlagEditSaveBtn(index) {
+    console.log(this.inputValue);
+    let i;
+    let newArray = this.inputValue.split(",");
+    for (i = 0; i < newArray.length; i++) {
+      this.db
+        .list(
+          "/" + "1" + "/" + "faculties_admin" + "/" +
+            (this.faculty.id - 1) +
+            "/" +
+            "requirements" +
+            "/" +
+            index +
+            "/" +
+            "flags"
+        )
+        .set("" + i, newArray[i]);
+      console.log(i);
+    }
+  }
+
+  facultyReqFlagAdd(newName, index) {
+    console.log(newName.target.value);
+    this.db
+      .list(
+        "/" + "1" + "/" + "faculties_admin" + "/" +
+          (this.faculty.id - 1) +
+          "/" +
+          "requirements" +
+          "/" +
+          index +
+          "/" +
+          "flags"
+      )
+      .set(
+        "" + this.faculty.requirements[index].flags.length,
         newName.target.value
       );
   }

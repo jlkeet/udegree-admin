@@ -230,6 +230,35 @@ import { CourseNewComponent } from "./course-new.component";
             (keydown.enter)="courseStageEdit($event)"
           />
 
+          <div *ngIf="courseKeys[11] === 'periods'">
+          <b>Periods</b>: {{ courseValues[11] }}
+          <button class="btn_edit" (click)="this.canEditPeriods = true">
+            Edit Periods
+          </button>
+          <button
+            class="btn_save"
+            *ngIf="this.canEditPeriods === true"
+            (click)="coursePeriodEditSaveBtn()"
+          >
+            Save
+          </button>
+          <button
+            *ngIf="this.canEditPeriods === true"
+            (click)="this.canEditPeriods = false"
+          >
+            Cancel
+          </button>
+        </div>
+        <input
+          (keyup)="onKey($event)"
+          *ngIf="this.canEditPeriods"
+          type="text"
+          class="form-control"
+          (keydown.enter)="coursePeriodsEdit($event)"
+        />
+
+          
+
           <div *ngIf="courseKeys[7] === 'points'">
             <b>Points</b>: {{ courseValues[7] }}
             <button class="btn_edit" (click)="this.canEditPoints = true">
@@ -262,10 +291,10 @@ import { CourseNewComponent } from "./course-new.component";
             <BR />
             <div *ngFor="let req of courseValues[8]; index as i">
               <b>Papers</b>: {{ req.papers }}
-              <button class="btn_edit" (click)="this.canEditReqCourse = true">
+              <button class="btn_edit" (click)="req.hideme = !req.hideme">
                 Edit Papers
               </button>
-              <button class="btn_add" (click)="this.canAddReqCourse = true">
+              <button class="btn_add" (click)="req.hideme = !req.hideme">
                 Add Papers
               </button>
               <button
@@ -284,7 +313,7 @@ import { CourseNewComponent } from "./course-new.component";
 
               <input
                 (keyup)="onKey($event)"
-                *ngIf="this.canEditReqCourse"
+                [hidden]="!req.hideme"
                 type="text"
                 class="form-control"
                 (keydown.enter)="courseReqCourseEdit($event, i)"
@@ -298,7 +327,7 @@ import { CourseNewComponent } from "./course-new.component";
               />
 
               <b>Required</b>: {{ req.required }}
-              <button class="btn_edit" (click)="this.canEditReqPoints = true">
+              <button class="btn_edit" (click)="req.hideme = !req.hideme">
                 Edit Points
               </button>
               <button
@@ -316,7 +345,7 @@ import { CourseNewComponent } from "./course-new.component";
               </button>
               <input
                 (keyup)="onKey($event)"
-                *ngIf="this.canEditReqPoints"
+                [hidden]="!req.hideme"
                 type="text"
                 class="form-control"
                 (keydown.enter)="courseReqPointsEdit($event, i)"
@@ -340,6 +369,25 @@ import { CourseNewComponent } from "./course-new.component";
                 Deactivate Course
               </button>
             </div>
+
+
+            <div *ngIf="courseKeys[10] === 'general'">
+              <b>General?</b>: {{ courseValues[10] }}
+
+              <button
+                *ngIf="courseValues[10] === false"
+                class="btn_edit"
+                (click)="courseGeneralActivate()"
+              >
+                Make General
+              </button>
+              <button
+                *ngIf="courseValues[10] === true"
+                (click)="courseGeneralDeactivate()"
+              >
+                Deactivate General
+              </button>
+          </div>
           </div>
         </div>
       </ul>
@@ -367,8 +415,17 @@ export class CourseEditComponent {
   public canEditPoints = false;
   public canEditStage = false;
   public canEditReqPoints = false;
-  public canEditReqCourse = false;
+
   public canAddReqCourse = false;
+
+  public canEditReqCourse = false;
+  public canEditReqCourse1 = false;
+  public canEditReqCourse2 = false;
+  public canEditReqCourse3 = false;
+  public canEditReqCourse4 = false;
+  public canEditReqCourse5 = false;
+  public canEditReqCourse6 = false;
+  public canEditReqCourse7 = false;
 
   constructor(
     public courseService: CourseService,
@@ -386,6 +443,9 @@ export class CourseEditComponent {
       stage: null,
       points: null,
       requirements: null,
+      isActive: null,
+      general: null,
+      periods: null,
     };
   }
 
@@ -488,6 +548,20 @@ export class CourseEditComponent {
     this.db
       .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
       .set("isActive", true);
+  }
+
+  courseGeneralActivate() {
+    console.log(this.course.name);
+    this.db
+      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
+      .set("general", true);
+  }
+
+  courseGeneralDeactivate() {
+    console.log(this.course.name);
+    this.db
+      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
+      .set("general", false);
   }
 
   courseFacEdit(newName) {
@@ -624,6 +698,33 @@ export class CourseEditComponent {
       .set("title", this.inputValue);
   }
 
+  coursePeriodsEdit(newName) {
+    console.log(newName.target.value);
+      let i;
+      let newArray = newName.target.value.split(",");
+      for (i = 0; i < newArray.length; i++) {
+        this.db
+          .list(
+            "/" +
+              "0" +
+              "/" +
+              "courses_admin" +
+              "/" +
+              (this.course.id - 1) +
+              "/" +
+              "periods" 
+          )
+          .set("" + i, parseInt(newArray[i]));
+      }
+  }
+
+  coursePeriodsEditSaveBtn() {
+    console.log(this.inputValue);
+    this.db
+      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
+      .set("periods", parseInt(this.inputValue));
+  }
+
   courseReqPointsEdit(newName, index) {
     console.log(newName.target.value);
     this.db
@@ -732,4 +833,23 @@ export class CourseEditComponent {
         newName.target.value
       );
   }
+
+  // public coursePapersEdit(index) {
+  //   switch(index){
+  //     case 0:
+  //       this.canEditReqCourse1 = true;
+  //     case 1:
+  //       this.canEditReqCourse2 = true;
+  //     case 1:
+  //       this.canEditReqCourse3 = true;
+  //     case 1:
+  //       this.canEditReqCourse4 = true;
+  //     case 1:
+  //       this.canEditReqCourse5 = true;
+  //     case 1:
+  //       this.canEditReqCourse6 = true;
+  //     case 1:
+  //       this.canEditReqCourse7 = true;
+  //     case 1:
+  // }
 }

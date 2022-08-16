@@ -12,20 +12,18 @@ import { MockDataModule } from './mock/mock-data.module';
 
 const socialLinks = [
   {
-    url: 'https://github.com/akveo/nebular',
-    target: '_blank',
-    icon: 'github',
+    name: "facebook",
+    icon: 'socicon-facebook',
   },
   {
-    url: 'https://www.facebook.com/akveo/',
-    target: '_blank',
-    icon: 'facebook',
+    name: "google",
+    icon: 'socicon-google',
   },
-  {
-    url: 'https://twitter.com/akveo_inc',
-    target: '_blank',
-    icon: 'twitter',
-  },
+  // {
+  //   url: 'https://twitter.com/akveo_inc',
+  //   target: '_blank',
+  //   icon: 'twitter',
+  // },
 ];
 
 const DATA_SERVICES = [
@@ -56,6 +54,26 @@ export const NB_CORE_PROVIDERS = [
       },
       register: {
         socialLinks: socialLinks,
+      },
+      validation: {
+        password: {
+          required: true,
+          minLength: 8,
+          maxLength: 42,
+        },
+        email: {
+          required: true,
+        },
+        fullName: {
+          required: true,
+          minLength: 4,
+          maxLenght: 42,
+        },
+        company: {
+          required: false,
+          minLength: 3,
+          maxLength: 42,
+        }
       },
     },
   }).providers,
