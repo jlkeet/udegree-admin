@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { NbActionsModule, NbCardModule, NbSearchModule } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
-import { ManageUsersComponent } from './manage-users.component';
+import { ManageUsersComponent } from './users/manage-users.component';
 
 import { AdministrationRoutingModule, routedComponents } from './administration-routing.module';
 

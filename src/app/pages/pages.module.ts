@@ -5,7 +5,6 @@ import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
-import { AdministrationModule } from './administration/administration.module';
 
 @NgModule({
   imports: [
@@ -13,7 +12,6 @@ import { AdministrationModule } from './administration/administration.module';
     ThemeModule,
     NbMenuModule,
     DashboardModule,
-    AdministrationModule
   ],
   declarations: [
     PagesComponent,

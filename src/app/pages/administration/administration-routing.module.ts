@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdministrationComponent } from './administration.component';
-import { ManageUsersComponent } from './manage-users.component';
+import { ManageUsersComponent } from './users/manage-users.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,5 +22,6 @@ const routes: Routes = [{
 export class AdministrationRoutingModule { }
 
 export const routedComponents = [
-
+    AdministrationComponent,
+    ManageUsersComponent
 ];
