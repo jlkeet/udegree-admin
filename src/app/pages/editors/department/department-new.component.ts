@@ -4,168 +4,168 @@ import {
     EventEmitter,
     Output,
     ViewChild,
-  } from "@angular/core";
-  import { AngularFireDatabase } from "@angular/fire/database";
-  import postInstall from "@nebular/theme/schematics/ng-add/post-install";
-  import { DepartmentService } from "../../../@core/data/department.service";
-  
+  } from '@angular/core';
+  import { AngularFireDatabase } from '@angular/fire/database';
+  import postInstall from '@nebular/theme/schematics/ng-add/post-install';
+  import { DepartmentService } from '../../../@core/data/department.service';
+
   @Component({
-    selector: "department-new",
-    styleUrls: ["department-new.component.scss"],
+    selector: 'department-new',
+    styleUrls: ['department-new.component.scss'],
     template: ` <nb-card>
       <nb-card-header>
-        <button *ngIf="addingDepartment === false" (click)="addNewDepartment()">
+        <button *ngIf='addingDepartment === false' (click)='addNewDepartment()'>
           Add New Department
         </button>
       </nb-card-header>
   
-      <div *ngIf="addingDepartment === true">
+      <div *ngIf='addingDepartment === true'>
         ID: {{ this.dbIndexNew }}
         <input
-          placeholder="Type Department Name Here..."
-          (keyup)="onKeyDepartmentName($event)"
-          type="text"
-          class="form-control"
+          placeholder='Type Department Name Here...'
+          (keyup)='onKeyDepartmentName($event)'
+          type='text'
+          class='form-control'
         />
         <input
-          placeholder="Type Papers Here..."
-          (keyup)="onKeyDepartmentDesc($event)"
-          type="text"
-          class="form-control"
+          placeholder='Type Papers Here...'
+          (keyup)='onKeyDepartmentDesc($event)'
+          type='text'
+          class='form-control'
         />
         <input
-          placeholder="Type Faculties(s) Here..."
-          (keyup)="onKeyDepartmentFac($event)"
-          type="text"
-          class="form-control"
+          placeholder='Type Faculties(s) Here...'
+          (keyup)='onKeyDepartmentFac($event)'
+          type='text'
+          class='form-control'
         />
   
-        <button (click)="addNewReq()">Add New Requirement</button><button (click)="addConjointReq();">Add New Conjoint Requirement</button>
-        <div *ngFor="let req of [].constructor(reqIndex); let i = index">
+        <button (click)='addNewReq()'>Add New Requirement</button><button (click)='addConjointReq();'>Add New Conjoint Requirement</button>
+        <div *ngFor='let req of [].constructor(reqIndex); let i = index'>
           <input
-            *ngIf="this.addingReq === true"
-            placeholder="0 for points or 1 for Courses"
-            (keyup)="onKeyTypeRequirements($event, i)"
-            type="text"
-            class="form-control"
+            *ngIf='this.addingReq === true'
+            placeholder='0 for points or 1 for Courses'
+            (keyup)='onKeyTypeRequirements($event, i)'
+            type='text'
+            class='form-control'
           />
           <input
-            *ngIf="this.addingReq === true"
-            placeholder="Number Required for pre-req"
-            (keyup)="onKeyPointRequirements($event, i)"
-            type="text"
-            class="form-control"
-          />
-  
-          <input
-            *ngIf="this.addingReqCourse"
-            placeholder="Courses required"
-            (keyup)="onKeyCourseRequirements($event, i)"
-            type="text"
-            class="form-control"
-          />
-          <input
-            *ngIf="this.addingReqFac"
-            placeholder="Require Faculty(s)"
-            (keyup)="onKeyFacRequirements($event, i)"
-            type="text"
-            class="form-control"
-          />
-          <input
-            *ngIf="this.addingReqDept"
-            placeholder="Require Department(s)"
-            (keyup)="onKeyDeptRequirements($event, i)"
-            type="text"
-            class="form-control"
-          />
-          <input
-            *ngIf="this.addingReqStage"
-            placeholder="Require Stage"
-            (keyup)="onKeyStageRequirements($event, i)"
-            type="text"
-            class="form-control"
-          />
-          <input
-            *ngIf="this.addingReqAboveStage"
-            placeholder="Above Stage"
-            (keyup)="onKeyAboveStageRequirements($event, i)"
-            type="text"
-            class="form-control"
+            *ngIf='this.addingReq === true'
+            placeholder='Number Required for pre-req'
+            (keyup)='onKeyPointRequirements($event, i)'
+            type='text'
+            class='form-control'
           />
   
-          <button (click)="addingReqCourse = true">Require Course</button
-          ><button (click)="addingReqFac = true">Require Faculty(s)</button
-          ><button (click)="addingReqDept = true">Require Department(s)</button
-          ><button (click)="addingReqStage = true">Require Stage</button
-          ><button (click)="addingReqAboveStage = true">
+          <input
+            *ngIf='this.addingReqCourse'
+            placeholder='Courses required'
+            (keyup)='onKeyCourseRequirements($event, i)'
+            type='text'
+            class='form-control'
+          />
+          <input
+            *ngIf='this.addingReqFac'
+            placeholder='Require Faculty(s)'
+            (keyup)='onKeyFacRequirements($event, i)'
+            type='text'
+            class='form-control'
+          />
+          <input
+            *ngIf='this.addingReqDept'
+            placeholder='Require Department(s)'
+            (keyup)='onKeyDeptRequirements($event, i)'
+            type='text'
+            class='form-control'
+          />
+          <input
+            *ngIf='this.addingReqStage'
+            placeholder='Require Stage'
+            (keyup)='onKeyStageRequirements($event, i)'
+            type='text'
+            class='form-control'
+          />
+          <input
+            *ngIf='this.addingReqAboveStage'
+            placeholder='Above Stage'
+            (keyup)='onKeyAboveStageRequirements($event, i)'
+            type='text'
+            class='form-control'
+          />
+  
+          <button (click)='addingReqCourse = true'>Require Course</button
+          ><button (click)='addingReqFac = true'>Require Faculty(s)</button
+          ><button (click)='addingReqDept = true'>Require Department(s)</button
+          ><button (click)='addingReqStage = true'>Require Stage</button
+          ><button (click)='addingReqAboveStage = true'>
             Require Above Stage</button
           >
         </div>
   
-        <div *ngFor="let req of [].constructor(reqConIndex); let i = index">
+        <div *ngFor='let req of [].constructor(reqConIndex); let i = index'>
         <input
-          *ngIf="this.addingConReq === true"
-          placeholder="0 for points or 1 for Courses"
-          (keyup)="onKeyTypeRequirementsConjoint($event, i)"
-          type="text"
-          class="form-control"
+          *ngIf='this.addingConReq === true'
+          placeholder='0 for points or 1 for Courses'
+          (keyup)='onKeyTypeRequirementsConjoint($event, i)'
+          type='text'
+          class='form-control'
         />
         <input
-          *ngIf="this.addingConReq === true"
-          placeholder="Number Required for pre-req"
-          (keyup)="onKeyPointRequirementsConjoint($event, i)"
-          type="text"
-          class="form-control"
-        />
-
-        <input
-          *ngIf="this.addingConReqCourse"
-          placeholder="Courses required"
-          (keyup)="onKeyCourseRequirementsConjoint($event, i)"
-          type="text"
-          class="form-control"
-        />
-        <input
-          *ngIf="this.addingConReqFac"
-          placeholder="Require Faculty(s)"
-          (keyup)="onKeyFacRequirementsConjoint($event, i)"
-          type="text"
-          class="form-control"
-        />
-        <input
-          *ngIf="this.addingConReqDept"
-          placeholder="Require Department(s)"
-          (keyup)="onKeyDeptRequirementsConjoint($event, i)"
-          type="text"
-          class="form-control"
-        />
-        <input
-          *ngIf="this.addingConReqStage"
-          placeholder="Require Stage"
-          (keyup)="onKeyStageRequirementsConjoint($event, i)"
-          type="text"
-          class="form-control"
-        />
-        <input
-          *ngIf="this.addingConReqAboveStage"
-          placeholder="Above Stage"
-          (keyup)="onKeyAboveStageRequirementsConjoint($event, i)"
-          type="text"
-          class="form-control"
+          *ngIf='this.addingConReq === true'
+          placeholder='Number Required for pre-req'
+          (keyup)='onKeyPointRequirementsConjoint($event, i)'
+          type='text'
+          class='form-control'
         />
 
-        <button (click)="addingConReqCourse = true">Require Course</button
-        ><button (click)="addingConReqFac = true">Require Faculty(s)</button
-        ><button (click)="addingConReqDept = true">Require Department(s)</button
-        ><button (click)="addingConReqStage = true">Require Stage</button
-        ><button (click)="addingConReqAboveStage = true">
+        <input
+          *ngIf='this.addingConReqCourse'
+          placeholder='Courses required'
+          (keyup)='onKeyCourseRequirementsConjoint($event, i)'
+          type='text'
+          class='form-control'
+        />
+        <input
+          *ngIf='this.addingConReqFac'
+          placeholder='Require Faculty(s)'
+          (keyup)='onKeyFacRequirementsConjoint($event, i)'
+          type='text'
+          class='form-control'
+        />
+        <input
+          *ngIf='this.addingConReqDept'
+          placeholder='Require Department(s)'
+          (keyup)='onKeyDeptRequirementsConjoint($event, i)'
+          type='text'
+          class='form-control'
+        />
+        <input
+          *ngIf='this.addingConReqStage'
+          placeholder='Require Stage'
+          (keyup)='onKeyStageRequirementsConjoint($event, i)'
+          type='text'
+          class='form-control'
+        />
+        <input
+          *ngIf='this.addingConReqAboveStage'
+          placeholder='Above Stage'
+          (keyup)='onKeyAboveStageRequirementsConjoint($event, i)'
+          type='text'
+          class='form-control'
+        />
+
+        <button (click)='addingConReqCourse = true'>Require Course</button
+        ><button (click)='addingConReqFac = true'>Require Faculty(s)</button
+        ><button (click)='addingConReqDept = true'>Require Department(s)</button
+        ><button (click)='addingConReqStage = true'>Require Stage</button
+        ><button (click)='addingConReqAboveStage = true'>
           Require Above Stage</button
         >
 
   </div>
   
   
-        <button (click)="saveNewDepartment()">Save New Department</button>
+        <button (click)='saveNewDepartment()'>Save New Department</button>
       </div>
     </nb-card>`,
   })
@@ -255,11 +255,11 @@ import {
       private db: AngularFireDatabase
     ) {
       this.listRef = this.db
-        .list("/" + "2" + "/" + "departments_admin" + "/", (ref) => ref.orderByChild("id"))
+        .list('/' + '2' + '/' + 'departments_admin' + '/', (ref) => ref.orderByChild('id'))
         .valueChanges();
     }
   
-    @ViewChild("input", { static: true }) input: ElementRef;
+    @ViewChild('input', { static: true }) input: ElementRef;
   
     @Output() search: EventEmitter<string> = new EventEmitter<string>();
   
@@ -375,49 +375,49 @@ import {
     newDepartmentName() {
       console.log(this.departmentNameValue);
       this.db
-        .list("/" + "2" + "/" + "departments_admin" + "/" + (this.dbIndexNew - 1))
-        .set("name", this.departmentNameValue.toUpperCase());
+        .list('/' + '2' + '/' + 'departments_admin' + '/' + (this.dbIndexNew - 1))
+        .set('name', this.departmentNameValue.toUpperCase());
     }
   
     newCourseDept() {
       console.log(this.departmentCourseValue);
       // this.db.list('/' + (this.dbIndexNew - 1)).set('department', this.DepartmentDeptValue)
       this.db
-        .list("/" + "2" + "/" + "departments_admin" + "/" + (this.dbIndexNew - 1) + "/" + "department")
-        .set("0", this.departmentDeptValue);
+        .list('/' + '2' + '/' + 'departments_admin' + '/' + (this.dbIndexNew - 1) + '/' + 'department')
+        .set('0', this.departmentDeptValue);
     }
   
     newDepartmentFac() {
       console.log(this.departmentFacValue);
       // this.db.list('/' + (this.dbIndexNew - 1)).set('faculties', this.DepartmentFacValue)
       this.db
-        .list("/" + "2" + "/" + "departments_admin" + "/" + (this.dbIndexNew - 1) + "/" + "faculties")
-        .set("0", this.departmentFacValue);
+        .list('/' + '2' + '/' + 'departments_admin' + '/' + (this.dbIndexNew - 1) + '/' + 'faculties')
+        .set('0', this.departmentFacValue);
     }
   
     newDepartmentStage() {
       console.log(this.departmentStageValue);
       this.db
-        .list("/" + "2" + "/" + "departments_admin" + "/" + (this.dbIndexNew - 1))
-        .set("stage", parseInt(this.departmentStageValue));
+        .list('/' + '2' + '/' + 'departments_admin' + '/' + (this.dbIndexNew - 1))
+        .set('stage', parseInt(this.departmentStageValue));
     }
   
     newDepartmentPoints() {
       console.log(this.departmentPointsValue);
       this.db
-        .list("/" + "2" + "/" + "departments_admin" + "/" + (this.dbIndexNew - 1))
-        .set("points", parseInt(this.departmentPointsValue));
+        .list('/' + '2' + '/' + 'departments_admin' + '/' + (this.dbIndexNew - 1))
+        .set('points', parseInt(this.departmentPointsValue));
     }
   
     newDepartmentActive() {
       console.log(this.departmentActiveValue);
       this.db
-        .list("/" + "2" + "/" + "departments_admin" + "/" + (this.dbIndexNew - 1))
-        .set("isActive", this.departmentActiveValue.toLowerCase() === "true");
+        .list('/' + '2' + '/' + 'departments_admin' + '/' + (this.dbIndexNew - 1))
+        .set('isActive', this.departmentActiveValue.toLowerCase() === 'true');
     }
   
     newDepartmentId() {
-      this.db.list("/" + "2" + "/" + "departments_admin" + "/" + (this.dbIndexNew - 1)).set("id", this.dbIndexNew);
+      this.db.list('/' + '2' + '/' + 'departments_admin' + '/' + (this.dbIndexNew - 1)).set('id', this.dbIndexNew);
     }
   
     reqTypeNewSaveBtn() {
@@ -426,14 +426,14 @@ import {
           if (this.newReqsArray[i].type) {
           this.db
             .list(
-              "/" + "2" + "/" + "departments_admin" + "/" +
+              '/' + '2' + '/' + 'departments_admin' + '/' +
                 (this.dbIndexNew - 1) +
-                "/" +
-                "requirements" +
-                "/" +
+                '/' +
+                'requirements' +
+                '/' +
                 this.newReqsArray[i].id
             )
-            .set("type", parseInt(this.newReqsArray[i].type));
+            .set('type', parseInt(this.newReqsArray[i].type));
         }
       }
     }
@@ -443,14 +443,14 @@ import {
           if (this.newReqsArray[i].required) {
           this.db
             .list(
-              "/" + "2" + "/" + "departments_admin" + "/" +
+              '/' + '2' + '/' + 'departments_admin' + '/' +
                 (this.dbIndexNew - 1) +
-                "/" +
-                "requirements" +
-                "/" +
+                '/' +
+                'requirements' +
+                '/' +
                 this.newReqsArray[i].id
             )
-            .set("required", parseInt(this.newReqsArray[i].required));
+            .set('required', parseInt(this.newReqsArray[i].required));
         }
       }
     }
@@ -458,21 +458,21 @@ import {
     reqCourseNewSaveBtn() {
       for (let j = 0; j < this.newReqsArray.length; j++) {
         if (this.newReqsArray[j].papers) {
-          this.reqCourseValueArray = this.newReqsArray[j].papers.split(",");
+          this.reqCourseValueArray = this.newReqsArray[j].papers.split(',');
           this.reqCourseIndex = this.reqCourseValueArray.length;
           for (let i = 0; i < this.reqCourseIndex; i++) {
         this.db
           .list(
-            "/" + "2" + "/" + "departments_admin" + "/" +
+            '/' + '2' + '/' + 'departments_admin' + '/' +
               (this.dbIndexNew - 1) +
-              "/" +
-              "requirements" +
-              "/" +
+              '/' +
+              'requirements' +
+              '/' +
               (j) +
-              "/" +
-              "papers"
+              '/' +
+              'papers'
           )
-          .set("" + i, this.reqCourseValueArray[i].trim());
+          .set('' + i, this.reqCourseValueArray[i].trim());
         }
       }
     }
@@ -481,21 +481,21 @@ import {
     reqFacNewSaveBtn() {
       for (let j = 0; j < this.newReqsArray.length; j++) {
         if (this.newReqsArray[j].faculties) {
-          this.reqFacValueArray = this.newReqsArray[j].faculties.split(",");
+          this.reqFacValueArray = this.newReqsArray[j].faculties.split(',');
           this.reqFacIndex = this.reqFacValueArray.length;
           for (let i = 0; i < this.reqFacIndex; i++) {
             this.db
               .list(
-                "/" + "2" + "/" + "departments_admin" + "/" +
+                '/' + '2' + '/' + 'departments_admin' + '/' +
                   (this.dbIndexNew - 1) +
-                  "/" +
-                  "requirements" +
-                  "/" +
+                  '/' +
+                  'requirements' +
+                  '/' +
                   (j) +
-                  "/" +
-                  "faculties"
+                  '/' +
+                  'faculties'
               )
-              .set("" + i, this.reqFacValueArray[i].trim());
+              .set('' + i, this.reqFacValueArray[i].trim());
           }
         }
       }
@@ -504,21 +504,21 @@ import {
     reqDeptNewSaveBtn() {
       for (let j = 0; j < this.newReqsArray.length; j++) {
         if (this.newReqsArray[j].department) {
-          this.reqDeptValueArray = this.newReqsArray[j].department.split(",");
+          this.reqDeptValueArray = this.newReqsArray[j].department.split(',');
           this.reqDeptIndex = this.reqDeptValueArray.length;
           for (let i = 0; i < this.reqDeptIndex; i++) {
             this.db
               .list(
-                "/" + "2" + "/" + "departments_admin" + "/" +
+                '/' + '2' + '/' + 'departments_admin' + '/' +
                   (this.dbIndexNew - 1) +
-                  "/" +
-                  "requirements" +
-                  "/" +
+                  '/' +
+                  'requirements' +
+                  '/' +
                   (j) +
-                  "/" +
-                  "department"
+                  '/' +
+                  'department'
               )
-              .set("" + i, this.reqDeptValueArray[i].trim());
+              .set('' + i, this.reqDeptValueArray[i].trim());
           }
         }
       }
@@ -529,14 +529,14 @@ import {
           if (this.newReqsArray[i].stage) {
           this.db
             .list(
-              "/" + "2" + "/" + "departments_admin" + "/" +
+              '/' + '2' + '/' + 'departments_admin' + '/' +
                 (this.dbIndexNew - 1) +
-                "/" +
-                "requirements" +
-                "/" +
+                '/' +
+                'requirements' +
+                '/' +
                 this.newReqsArray[i].id
             )
-            .set("stage", parseInt(this.newReqsArray[i].stage));
+            .set('stage', parseInt(this.newReqsArray[i].stage));
         }
       }
     }
@@ -546,14 +546,14 @@ import {
           if (this.newReqsArray[i].aboveStage) {
           this.db
             .list(
-              "/" + "2" + "/" + "departments_admin" + "/" +
+              '/' + '2' + '/' + 'departments_admin' + '/' +
                 (this.dbIndexNew - 1) +
-                "/" +
-                "requirements" +
-                "/" +
+                '/' +
+                'requirements' +
+                '/' +
                 this.newReqsArray[i].id
             )
-            .set("aboveStage", parseInt(this.newReqsArray[i].aboveStage));
+            .set('aboveStage', parseInt(this.newReqsArray[i].aboveStage));
         }
       }
     }
@@ -569,14 +569,14 @@ import {
         if (this.newConReqsArray[i].type) {
         this.db
           .list(
-            "/" + "2" + "/" + "departments_admin" + "/"+
+            '/' + '2' + '/' + 'departments_admin' + '/'+
               (this.dbIndexNew - 1) +
-              "/" +
-              "conjointRequirements" +
-              "/" +
+              '/' +
+              'conjointRequirements' +
+              '/' +
               this.newConReqsArray[i].id
           )
-          .set("type", parseInt(this.newConReqsArray[i].type));
+          .set('type', parseInt(this.newConReqsArray[i].type));
       }
     }
   }
@@ -586,14 +586,14 @@ import {
         if (this.newConReqsArray[i].required) {
         this.db
           .list(
-            "/" + "2" + "/" + "departments_admin" + "/"+
+            '/' + '2' + '/' + 'departments_admin' + '/'+
               (this.dbIndexNew - 1) +
-              "/" +
-              "conjointRequirements" +
-              "/" +
+              '/' +
+              'conjointRequirements' +
+              '/' +
               this.newConReqsArray[i].id
           )
-          .set("required", parseInt(this.newConReqsArray[i].required));
+          .set('required', parseInt(this.newConReqsArray[i].required));
       }
     }
   }
@@ -601,21 +601,21 @@ import {
   reqConCourseNewSaveBtn() {
     for (let j = 0; j < this.newConReqsArray.length; j++) {
       if (this.newConReqsArray[j].papers) {
-        this.reqConCourseValueArray = this.newConReqsArray[j].papers.split(",");
+        this.reqConCourseValueArray = this.newConReqsArray[j].papers.split(',');
         this.reqConCourseIndex = this.reqConCourseValueArray.length;
         for (let i = 0; i < this.reqConCourseIndex; i++) {
       this.db
         .list(
-          "/" + "2" + "/" + "departments_admin" + "/" +
+          '/' + '2' + '/' + 'departments_admin' + '/' +
             (this.dbIndexNew - 1) +
-            "/" +
-            "conjointRequirements" +
-            "/" +
+            '/' +
+            'conjointRequirements' +
+            '/' +
             (j) +
-            "/" +
-            "papers"
+            '/' +
+            'papers'
         )
-        .set("" + i, this.reqConCourseValueArray[i].trim());
+        .set('' + i, this.reqConCourseValueArray[i].trim());
       }
     }
   }
@@ -624,21 +624,21 @@ import {
   reqConFacNewSaveBtn() {
     for (let j = 0; j < this.newConReqsArray.length; j++) {
       if (this.newConReqsArray[j].faculties) {
-        this.reqConFacValueArray = this.newConReqsArray[j].faculties.split(",");
+        this.reqConFacValueArray = this.newConReqsArray[j].faculties.split(',');
         this.reqConFacIndex = this.reqConFacValueArray.length;
         for (let i = 0; i < this.reqConFacIndex; i++) {
           this.db
             .list(
-              "/" + "2" + "/" + "departments_admin" + "/"+
+              '/' + '2' + '/' + 'departments_admin' + '/'+
                 (this.dbIndexNew - 1) +
-                "/" +
-                "conjointRequirements" +
-                "/" +
+                '/' +
+                'conjointRequirements' +
+                '/' +
                 (j) +
-                "/" +
-                "faculties"
+                '/' +
+                'faculties'
             )
-            .set("" + i, this.reqConFacValueArray[i].trim());
+            .set('' + i, this.reqConFacValueArray[i].trim());
         }
       }
     }
@@ -647,21 +647,21 @@ import {
   reqConDeptNewSaveBtn() {
     for (let j = 0; j < this.newConReqsArray.length; j++) {
       if (this.newConReqsArray[j].department) {
-        this.reqConDeptValueArray = this.newConReqsArray[j].department.split(",");
+        this.reqConDeptValueArray = this.newConReqsArray[j].department.split(',');
         this.reqConDeptIndex = this.reqConDeptValueArray.length;
         for (let i = 0; i < this.reqConDeptIndex; i++) {
           this.db
             .list(
-              "/" + "2" + "/" + "departments_admin" + "/"+
+              '/' + '2' + '/' + 'departments_admin' + '/'+
                 (this.dbIndexNew - 1) +
-                "/" +
-                "conjointRequirements" +
-                "/" +
+                '/' +
+                'conjointRequirements' +
+                '/' +
                 (j) +
-                "/" +
-                "departments"
+                '/' +
+                'departments'
             )
-            .set("" + i, this.reqConDeptValueArray[i].trim());
+            .set('' + i, this.reqConDeptValueArray[i].trim());
         }
       }
     }
@@ -672,14 +672,14 @@ import {
         if (this.newConReqsArray[i].stage) {
         this.db
           .list(
-            "/" + "2" + "/" + "departments_admin" + "/"+
+            '/' + '2' + '/' + 'departments_admin' + '/'+
               (this.dbIndexNew - 1) +
-              "/" +
-              "conjointRequirements" +
-              "/" +
+              '/' +
+              'conjointRequirements' +
+              '/' +
               this.newConReqsArray[i].id
           )
-          .set("stage", parseInt(this.newConReqsArray[i].stage));
+          .set('stage', parseInt(this.newConReqsArray[i].stage));
       }
     }
   }
@@ -689,14 +689,14 @@ import {
         if (this.newConReqsArray[i].aboveStage) {
         this.db
           .list(
-            "/" + "2" + "/" + "departments_admin" + "/"+
+            '/' + '2' + '/' + 'departments_admin' + '/'+
               (this.dbIndexNew - 1) +
-              "/" +
-              "conjointRequirements" +
-              "/" +
+              '/' +
+              'conjointRequirements' +
+              '/' +
               this.newConReqsArray[i].id
           )
-          .set("aboveStage", parseInt(this.newConReqsArray[i].aboveStage));
+          .set('aboveStage', parseInt(this.newConReqsArray[i].aboveStage));
       }
     }
   }
@@ -745,7 +745,7 @@ import {
     }
 
     addConjointReq() {
-      console.log("firing ")
+      console.log('firing ')
       this.addingConReq = true;
 
       this.newConReqsObject = {
