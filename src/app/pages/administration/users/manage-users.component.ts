@@ -7,70 +7,37 @@ import {
 } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { FacultyService } from "app/@core/data/faculty.service";
+import { DepartmentService } from "app/@core/data/department.service";
+import { AuthService } from "../../../auth/auth-service.service"
 
 @Component({
   selector: "manage-users",
   styleUrls: ["./manage-users.component.scss"],
-  template: `
-    <nb-card>
-      <nb-card-header> Manage Users </nb-card-header>
-      <nb-card-header>
-        Search by User Email
-        <button
-          class="btn_close"
-          [routerLink]="['/manage-users']"
-          (click)="close()"
-        >
-          Close
-        </button>
-      </nb-card-header>
-      <nb-card-body>
-        <i class="control-icon ion ion-ios-search" (click)="showInput()"></i>
-        <input
-          (keydown.enter)="save($event)"
-          placeholder="Type your search request here..."
-          #input
-          (blur)="hideInput()"
-          (input)="onInput($event)"
-        />
-      </nb-card-body>
-      <ul>
-        <div *ngIf="user">
-          <div *ngIf="userOrder.email"><b>Email</b>: {{ userOrder.email }}</div>
-
-          <div *ngIf="userOrder.name"><b>Name</b>: {{ userOrder.name }}</div>
-
-          <div *ngIf="userOrder.role"><b>Role</b>: {{ userOrder.role }}
-            <button class="btn_edit" (click)="this.canEditRole = true">
-              Edit Role
-            </button>
-          </div>
-          <input
-          (keyup)="onKey($event)"
-          *ngIf="this.canEditRole"
-          type="text"
-          class="form-control"
-          (keydown.enter)="editRole(userOrder.email, $event)"
-        />
-          
-        </div>
-      </ul>
-    </nb-card>
-  `,
+  templateUrl: "./manage-users.component.html",
 })
 export class ManageUsersComponent {
   public user;
   public userOrder;
   public inputValue;
 
+  public isAdmin;
+
+  public faculties;
+  public departments;
+
   public canEditRole = false;
 
-  constructor(private db: AngularFirestore, public afAuth: AngularFireAuth) {
+  constructor(private db: AngularFirestore, public afAuth: AngularFireAuth, public facultyService: FacultyService, public departmentService: DepartmentService, public authService: AuthService) {
     this.userOrder = {
       name: null,
       email: null,
       role: null,
     };
+
+    this.faculties = this.facultyService.getFaculties();
+    this.departments = this.departmentService.getDepartments();
+
   }
 
   @ViewChild("input", { static: true }) input: ElementRef;
@@ -119,18 +86,17 @@ export class ManageUsersComponent {
 
   assignUserResult(user) {
     this.user = Object.assign(this.userOrder, user);
-    console.log(this.user);
+    console.log(this.user.faculties)
+    this.facultyService.getSingleFac(this.user.faculties[0])
   }
 
-
   editRole(email, val) {
-
-    console.log("Email: ", email, " val: ", val.target.value)
+    console.log("Email: ", email, " val: ", val.target.value);
 
     this.db
-    .collection("users") 
-    .doc(email) // Here is where we set the docID to the email so its accessible in the database.
-    .update({role: val.target.value})
+      .collection("users")
+      .doc(email) // Here is where we set the docID to the email so its accessible in the database.
+      .update({ role: val.target.value });
 
     this.userOrder = {};
     this.db
@@ -140,7 +106,22 @@ export class ManageUsersComponent {
       .toPromise()
       .then((result) => this.assignUserResult(result.data()));
 
-      this.canEditRole = false;
-
+    this.canEditRole = false;
   }
+
+  public onFacChange(event) {
+    this.db
+    .collection("users")
+    .doc("jackson.keet@knowledge-basket.co.nz") // Here is where we set the docID to the email so its accessible in the database.
+    .update({faculties: event.source.value})
+  }
+
+  public onDeptChange(event) {
+    this.db
+    .collection("users")
+    .doc("jackson.keet@knowledge-basket.co.nz") // Here is where we set the docID to the email so its accessible in the database.
+    .update({department: event.source.value})
+    console.log(event.source.value)
+  }
+
 }

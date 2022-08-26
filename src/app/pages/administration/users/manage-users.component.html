@@ -1,0 +1,48 @@
+<nb-card>
+    <nb-card-header> Manage Users </nb-card-header>
+    <nb-card-header>
+        Search by User Email
+        <button class="btn_close" [routerLink]="['/manage-users']" (click)="close()">
+            Close
+        </button>
+    </nb-card-header>
+    <nb-card-body>
+        <i class="control-icon ion ion-ios-search" (click)="showInput()"></i>
+        <input (keydown.enter)="save($event)" placeholder="Type your search request here..." #input (blur)="hideInput()"
+            (input)="onInput($event)" />
+    </nb-card-body>
+    <ul>
+        <div *ngIf="user">
+            <div *ngIf="userOrder.email"><b>Email</b>: {{ userOrder.email }}</div>
+
+            <div *ngIf="userOrder.name"><b>Name</b>: {{ userOrder.name }}</div>
+
+            <div *ngIf="userOrder.role">
+                <b>Role</b>: {{ userOrder.role }}
+                <button class="btn_edit" (click)="this.canEditRole = true">
+                    Edit Role
+                </button>
+            </div>
+            <input (keyup)="onKey($event)" *ngIf="this.canEditRole" type="text" class="form-control"
+                (keydown.enter)="editRole(userOrder.email, $event)" />
+            <div *ngIf="this.user.role === 'admin'">
+                <mat-form-field>
+                    <mat-select multiple placeholder="Faculties" [(ngModel)]="user.faculties" (selectionChange)="onFacChange($event)" disableOptionCentering
+                        panelClass="">
+                        <mat-option *ngFor="let fac of facultyService.faculty" [value]="fac.name" (click)="departmentService.departmentsInFaculty(fac)">
+                            {{ fac.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select multiple placeholder="Departments" [(ngModel)]="user.department" (selectionChange)="onDeptChange($event)" disableOptionCentering
+                        panelClass="">
+                        <mat-option *ngFor="let dept of departmentService.filteredDepts" [value]="dept.name">
+                            {{ dept.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </ul>
+</nb-card>
