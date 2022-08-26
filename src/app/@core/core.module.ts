@@ -12,11 +12,11 @@ import { MockDataModule } from './mock/mock-data.module';
 
 const socialLinks = [
   {
-    name: "facebook",
+    name: 'facebook',
     icon: 'socicon-facebook',
   },
   {
-    name: "google",
+    name: 'google',
     icon: 'socicon-google',
   },
   // {
@@ -73,7 +73,7 @@ export const NB_CORE_PROVIDERS = [
           required: false,
           minLength: 3,
           maxLength: 42,
-        }
+        },
       },
     },
   }).providers,

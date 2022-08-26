@@ -4,15 +4,15 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DepartmentService {
-  
+
     messages: AngularFireList<any>;
    public department;
 
    public filteredDepts;
-  
+
    constructor(private http: HttpClient, private db: AngularFireDatabase) { }
 
    /**
@@ -20,22 +20,22 @@ export class DepartmentService {
      */
     getMessages() {
     return new Promise(resolve => {
-      this.db.list('/').valueChanges().subscribe(result => { resolve(result) });
-         })
+      this.db.list('/').valueChanges().subscribe(result => { resolve(result); });
+         });
     }
 
     public getDepartments() {
       return this.db
-      .list("/" + "2" + "/" + "departments_admin" + "/", (ref) =>
-        ref.orderByChild("name")
+      .list('/' + '2' + '/' + 'departments_admin' + '/', (ref) =>
+        ref.orderByChild('name'),
       )
       .valueChanges()
-      .subscribe((result) => {this.department = result})
+      .subscribe((result) => {this.department = result;});
     }
 
     public departmentsInFaculty(faculty) {
-      this.department.filter((department) => {faculty.majors.includes(department.name)})
-      return this.filteredDepts = this.department.filter((department) => faculty.name.includes(department.faculties[0]))
+      this.department.filter((department) => {faculty.majors.includes(department.name);});
+      return this.filteredDepts = this.department.filter((department) => faculty.name.includes(department.faculties[0]));
     }
 
 

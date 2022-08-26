@@ -4,14 +4,14 @@ import {
   EventEmitter,
   Output,
   ViewChild,
-} from "@angular/core";
-import { AngularFireDatabase } from "@angular/fire/database";
-import { CourseService } from "../../../@core/data/courses";
-import { CourseNewComponent } from "./course-new.component";
+} from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { CourseService } from '../../../@core/data/courses';
+import { CourseNewComponent } from './course-new.component';
 
 @Component({
-  selector: "course-edit",
-  styleUrls: ["./course-edit.component.scss"],
+  selector: 'course-edit',
+  styleUrls: ['./course-edit.component.scss'],
   template: `
     <nb-card>
       <nb-card-header> Course Editor </nb-card-header>
@@ -257,7 +257,7 @@ import { CourseNewComponent } from "./course-new.component";
           (keydown.enter)="coursePeriodsEdit($event)"
         />
 
-          
+
 
           <div *ngIf="courseKeys[7] === 'points'">
             <b>Points</b>: {{ courseValues[7] }}
@@ -429,9 +429,9 @@ export class CourseEditComponent {
 
   constructor(
     public courseService: CourseService,
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
   ) {
-    this.listRef = this.db.list("/", (ref) => ref.orderByChild("id"));
+    this.listRef = this.db.list('/', (ref) => ref.orderByChild('id'));
 
     this.courseOrder = {
       id: null,
@@ -449,7 +449,7 @@ export class CourseEditComponent {
     };
   }
 
-  @ViewChild("input", { static: true }) input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
@@ -478,10 +478,10 @@ export class CourseEditComponent {
   }
 
   searchFirebase(val) {
-    if (val !== "") {
+    if (val !== '') {
       this.db
-        .list("/" + "0" + "/" + "courses_admin" + "/", (ref) =>
-          ref.orderByChild("name").equalTo(val)
+        .list('/' + '0' + '/' + 'courses_admin' + '/', (ref) =>
+          ref.orderByChild('name').equalTo(val),
         )
         .valueChanges()
         .subscribe((result) => {
@@ -494,7 +494,7 @@ export class CourseEditComponent {
   }
 
   save(event) {
-    console.log("You entered: ", event.target.value);
+    console.log('You entered: ', event.target.value);
     this.searchFirebase(event.target.value.toUpperCase());
     this.showCourse = true;
   }
@@ -525,263 +525,263 @@ export class CourseEditComponent {
   courseNameEdit(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("name", newName.target.value);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('name', newName.target.value);
   }
 
   courseNameEditSaveBtn() {
     console.log(this.inputValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("name", this.inputValue);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('name', this.inputValue);
   }
 
   courseDeactivate() {
     console.log(this.course.name);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("isActive", false);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('isActive', false);
   }
 
   courseActivate() {
     console.log(this.course.name);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("isActive", true);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('isActive', true);
   }
 
   courseGeneralActivate() {
     console.log(this.course.name);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("general", true);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('general', true);
   }
 
   courseGeneralDeactivate() {
     console.log(this.course.name);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("general", false);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('general', false);
   }
 
   courseFacEdit(newName) {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" +
-          "0" +
-          "/" +
-          "courses_admin" +
-          "/" +
+        '/' +
+          '0' +
+          '/' +
+          'courses_admin' +
+          '/' +
           (this.course.id - 1) +
-          "/" +
-          "faculties"
+          '/' +
+          'faculties',
       )
-      .set("0", newName.target.value);
+      .set('0', newName.target.value);
   }
 
   courseFacEditSaveBtn() {
     console.log(this.inputValue);
     this.db
       .list(
-        "/" +
-          "0" +
-          "/" +
-          "courses_admin" +
-          "/" +
+        '/' +
+          '0' +
+          '/' +
+          'courses_admin' +
+          '/' +
           (this.course.id - 1) +
-          "/" +
-          "faculties"
+          '/' +
+          'faculties',
       )
-      .set("0", this.inputValue);
+      .set('0', this.inputValue);
   }
 
   courseFacAdd(newName) {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" +
-          "0" +
-          "/" +
-          "courses_admin" +
-          "/" +
+        '/' +
+          '0' +
+          '/' +
+          'courses_admin' +
+          '/' +
           (this.course.id - 1) +
-          "/" +
-          "faculties"
+          '/' +
+          'faculties',
       )
-      .set("" + this.course.faculties.length, newName.target.value);
+      .set('' + this.course.faculties.length, newName.target.value);
   }
 
   courseDeptEdit(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("department", newName.target.value);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('department', newName.target.value);
   }
 
   courseDeptEditSaveBtn() {
     console.log(this.inputValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("department", this.inputValue);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('department', this.inputValue);
   }
 
   courseDeptAdd(newName) {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" +
-          "0" +
-          "/" +
-          "courses_admin" +
-          "/" +
+        '/' +
+          '0' +
+          '/' +
+          'courses_admin' +
+          '/' +
           (this.course.id - 1) +
-          "/" +
-          "department"
+          '/' +
+          'department',
       )
-      .set("" + this.course.department.length, newName.target.value);
+      .set('' + this.course.department.length, newName.target.value);
   }
 
   courseDescEdit(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("desc", newName.target.value);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('desc', newName.target.value);
   }
 
   courseDescEditSaveBtn() {
     console.log(this.inputValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("desc", this.inputValue);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('desc', this.inputValue);
   }
 
   coursePointsEdit(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("points", parseInt(newName.target.value));
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('points', parseInt(newName.target.value));
   }
 
   coursePointsEditSaveBtn() {
     console.log(this.inputValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("points", parseInt(this.inputValue));
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('points', parseInt(this.inputValue));
   }
 
   courseStageEdit(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("stage", newName.target.value);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('stage', newName.target.value);
   }
 
   courseStageEditSaveBtn() {
     console.log(this.inputValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("stage", parseInt(this.inputValue));
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('stage', parseInt(this.inputValue));
   }
 
   courseTitleEdit(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("title", newName.target.value);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('title', newName.target.value);
   }
 
   courseTitleEditSaveBtn() {
     console.log(this.inputValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("title", this.inputValue);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('title', this.inputValue);
   }
 
   coursePeriodsEdit(newName) {
     console.log(newName.target.value);
       let i;
-      let newArray = newName.target.value.split(",");
+      const newArray = newName.target.value.split(',');
       for (i = 0; i < newArray.length; i++) {
         this.db
           .list(
-            "/" +
-              "0" +
-              "/" +
-              "courses_admin" +
-              "/" +
+            '/' +
+              '0' +
+              '/' +
+              'courses_admin' +
+              '/' +
               (this.course.id - 1) +
-              "/" +
-              "periods" 
+              '/' +
+              'periods',
           )
-          .set("" + i, parseInt(newArray[i]));
+          .set('' + i, parseInt(newArray[i]));
       }
   }
 
   coursePeriodsEditSaveBtn() {
     console.log(this.inputValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.course.id - 1))
-      .set("periods", parseInt(this.inputValue));
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.course.id - 1))
+      .set('periods', parseInt(this.inputValue));
   }
 
   courseReqPointsEdit(newName, index) {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" +
-          "0" +
-          "/" +
-          "courses_admin" +
-          "/" +
+        '/' +
+          '0' +
+          '/' +
+          'courses_admin' +
+          '/' +
           (this.course.id - 1) +
-          "/" +
-          "requirements" +
-          "/" +
-          index
+          '/' +
+          'requirements' +
+          '/' +
+          index,
       )
-      .set("required", newName.target.value);
+      .set('required', newName.target.value);
   }
 
   courseReqPointsEditSaveBtn(index) {
     console.log(this.inputValue);
     this.db
       .list(
-        "/" +
-          "0" +
-          "/" +
-          "courses_admin" +
-          "/" +
+        '/' +
+          '0' +
+          '/' +
+          'courses_admin' +
+          '/' +
           (this.course.id - 1) +
-          "/" +
-          "requirements" +
-          "/" +
-          index
+          '/' +
+          'requirements' +
+          '/' +
+          index,
       )
-      .set("required", this.inputValue);
+      .set('required', this.inputValue);
   }
 
   courseReqCourseEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            "0" +
-            "/" +
-            "courses_admin" +
-            "/" +
+          '/' +
+            '0' +
+            '/' +
+            'courses_admin' +
+            '/' +
             (this.course.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "papers"
+            '/' +
+            'papers',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -789,24 +789,24 @@ export class CourseEditComponent {
   courseReqCourseEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            "0" +
-            "/" +
-            "courses_admin" +
-            "/" +
+          '/' +
+            '0' +
+            '/' +
+            'courses_admin' +
+            '/' +
             (this.course.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "papers"
+            '/' +
+            'papers',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -815,22 +815,22 @@ export class CourseEditComponent {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" +
-          "0" +
-          "/" +
-          "courses_admin" +
-          "/" +
+        '/' +
+          '0' +
+          '/' +
+          'courses_admin' +
+          '/' +
           (this.course.id - 1) +
-          "/" +
-          "requirements" +
-          "/" +
+          '/' +
+          'requirements' +
+          '/' +
           index +
-          "/" +
-          "papers"
+          '/' +
+          'papers',
       )
       .set(
-        "" + this.course.requirements[index].papers.length,
-        newName.target.value
+        '' + this.course.requirements[index].papers.length,
+        newName.target.value,
       );
   }
 

@@ -4,14 +4,14 @@ import {
   EventEmitter,
   Output,
   ViewChild,
-} from "@angular/core";
-import { AngularFireDatabase } from "@angular/fire/database";
-import postInstall from "@nebular/theme/schematics/ng-add/post-install";
-import { CourseService } from "../../../@core/data/courses";
+} from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/database';
+import postInstall from '@nebular/theme/schematics/ng-add/post-install';
+import { CourseService } from '../../../@core/data/courses';
 
 @Component({
-  selector: "course-new",
-  styleUrls: ["course-new.component.scss"],
+  selector: 'course-new',
+  styleUrls: ['course-new.component.scss'],
   template: ` <nb-card>
     <nb-card-header>
       <button *ngIf="addingCourse === false" (click)="addNewCourse()">
@@ -254,14 +254,14 @@ export class CourseNewComponent {
 
   constructor(
     public courseService: CourseService,
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
   ) {
     this.listRef = this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/", (ref) => ref.orderByChild("id"))
+      .list('/' + '0' + '/' + 'courses_admin' + '/', (ref) => ref.orderByChild('id'))
       .valueChanges();
   }
 
-  @ViewChild("input", { static: true }) input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
@@ -346,31 +346,31 @@ export class CourseNewComponent {
 
   onKeyTypeRequirementsComplex(event, index) {
     this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].type = parseInt(event.target.value);
-    console.log(this.newReqsComplexArray)
+    console.log(this.newReqsComplexArray);
   }
   onKeyPointRequirementsComplex(event, index) {
     this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].required = parseInt(event.target.value);
-    console.log(this.newReqsComplexArray)
+    console.log(this.newReqsComplexArray);
   }
   onKeyCoursesRequirementsComplex(event, index) {
     this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].papers = event.target.value;
-    console.log(this.newReqsComplexArray)
+    console.log(this.newReqsComplexArray);
   }
   onKeyFacRequirementsComplex(event, index) {
     this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].faculties = event.target.value;
-    console.log(this.newReqsComplexArray)
+    console.log(this.newReqsComplexArray);
   }
   onKeyDeptRequirementsComplex(event, index) {
     this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].department = event.target.value;
-    console.log(this.newReqsComplexArray)
+    console.log(this.newReqsComplexArray);
   }
   onKeyStageRequirementsComplex(event, index) {
     this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].stage = parseInt(event.target.value);
-    console.log(this.newReqsComplexArray)
+    console.log(this.newReqsComplexArray);
   }
   onKeyAboveStageRequirementsComplex(event, index) {
     this.newReqsComplexArray[0].complex[this.reqComplexRuleIndex - 1].aboveStage = parseInt(event.target.value);
-    console.log(this.newReqsComplexArray)
+    console.log(this.newReqsComplexArray);
   }
 
 
@@ -389,65 +389,65 @@ export class CourseNewComponent {
   newCourseName() {
     console.log(this.courseNameValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1))
-      .set("name", this.courseNameValue.toUpperCase());
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.dbIndexNew - 1))
+      .set('name', this.courseNameValue.toUpperCase());
   }
 
   newCourseTitle() {
     console.log(this.courseTitleValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1))
-      .set("title", this.courseTitleValue);
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.dbIndexNew - 1))
+      .set('title', this.courseTitleValue);
   }
 
   newCourseDesc() {
     console.log(this.courseDescValue);
-    this.db.list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1)).set("desc", this.courseDescValue);
+    this.db.list('/' + '0' + '/' + 'courses_admin' + '/' + (this.dbIndexNew - 1)).set('desc', this.courseDescValue);
   }
 
   newCourseDept() {
     console.log(this.courseDeptValue);
-    let deptArray = this.courseDeptValue.split(",");
-    for (let j = 0; j < deptArray.length; j++) {  
+    const deptArray = this.courseDeptValue.split(',');
+    for (let j = 0; j < deptArray.length; j++) {
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1) + "/" + "department")
-      .set("" + j, deptArray[j].trim());
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.dbIndexNew - 1) + '/' + 'department')
+      .set('' + j, deptArray[j].trim());
   }
 }
 
   newCourseFac() {
     console.log(this.courseFacValue);
-    let facArray = this.courseFacValue.split(",");
-  for (let j = 0; j < facArray.length; j++) {  
+    const facArray = this.courseFacValue.split(',');
+  for (let j = 0; j < facArray.length; j++) {
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1) + "/" + "faculties")
-      .set("" + j, facArray[j].trim());
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.dbIndexNew - 1) + '/' + 'faculties')
+      .set('' + j, facArray[j].trim());
   }
 }
 
   newCourseStage() {
     console.log(this.courseStageValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1))
-      .set("stage", parseInt(this.courseStageValue));
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.dbIndexNew - 1))
+      .set('stage', parseInt(this.courseStageValue));
   }
 
   newCoursePoints() {
     console.log(this.coursePointsValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1))
-      .set("points", parseInt(this.coursePointsValue));
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.dbIndexNew - 1))
+      .set('points', parseInt(this.coursePointsValue));
   }
 
   newCourseActive() {
     console.log(this.courseActiveValue);
     this.db
-      .list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1))
-      .set("isActive", this.courseActiveValue.toLowerCase() === "true");
+      .list('/' + '0' + '/' + 'courses_admin' + '/' + (this.dbIndexNew - 1))
+      .set('isActive', this.courseActiveValue.toLowerCase() === 'true');
   }
 
   newCourseId() {
-    this.db.list("/" + "0" + "/" + "courses_admin" + "/" + (this.dbIndexNew - 1)).set("id", this.dbIndexNew);
+    this.db.list('/' + '0' + '/' + 'courses_admin' + '/' + (this.dbIndexNew - 1)).set('id', this.dbIndexNew);
   }
 
   reqTypeNewSaveBtn() {
@@ -455,14 +455,14 @@ export class CourseNewComponent {
         if (this.newReqsArray[i].type) {
         this.db
           .list(
-            "/" + "0" + "/" + "courses_admin" + "/" +
+            '/' + '0' + '/' + 'courses_admin' + '/' +
               (this.dbIndexNew - 1) +
-              "/" +
-              "requirements" +
-              "/" +
-              this.newReqsArray[i].id
+              '/' +
+              'requirements' +
+              '/' +
+              this.newReqsArray[i].id,
           )
-          .set("type", parseInt(this.newReqsArray[i].type));
+          .set('type', parseInt(this.newReqsArray[i].type));
       }
     }
   }
@@ -472,14 +472,14 @@ export class CourseNewComponent {
         if (this.newReqsArray[i].required) {
         this.db
           .list(
-            "/" + "0" + "/" + "courses_admin" + "/" +
+            '/' + '0' + '/' + 'courses_admin' + '/' +
               (this.dbIndexNew - 1) +
-              "/" +
-              "requirements" +
-              "/" +
-              this.newReqsArray[i].id
+              '/' +
+              'requirements' +
+              '/' +
+              this.newReqsArray[i].id,
           )
-          .set("required", parseInt(this.newReqsArray[i].required));
+          .set('required', parseInt(this.newReqsArray[i].required));
       }
     }
   }
@@ -487,21 +487,21 @@ export class CourseNewComponent {
   reqCourseNewSaveBtn() {
       for (let j = 0; j < this.newReqsArray.length; j++) {
         if (this.newReqsArray[j].papers) {
-          this.reqCourseValueArray = this.newReqsArray[j].papers.split(",");
+          this.reqCourseValueArray = this.newReqsArray[j].papers.split(',');
           this.reqCourseIndex = this.reqCourseValueArray.length;
           for (let i = 0; i < this.reqCourseIndex; i++) {
         this.db
           .list(
-            "/" + "0" + "/" + "courses_admin" + "/" +
+            '/' + '0' + '/' + 'courses_admin' + '/' +
               (this.dbIndexNew - 1) +
-              "/" +
-              "requirements" +
-              "/" +
+              '/' +
+              'requirements' +
+              '/' +
               (j) +
-              "/" +
-              "papers"
+              '/' +
+              'papers',
           )
-          .set("" + i, this.reqCourseValueArray[i].trim());
+          .set('' + i, this.reqCourseValueArray[i].trim());
         }
       }
     }
@@ -510,21 +510,21 @@ export class CourseNewComponent {
   reqFacNewSaveBtn() {
     for (let j = 0; j < this.newReqsArray.length; j++) {
       if (this.newReqsArray[j].faculties) {
-        this.reqFacValueArray = this.newReqsArray[j].faculties.split(",");
+        this.reqFacValueArray = this.newReqsArray[j].faculties.split(',');
         this.reqFacIndex = this.reqFacValueArray.length;
         for (let i = 0; i < this.reqFacIndex; i++) {
           this.db
             .list(
-              "/" + "0" + "/" + "courses_admin" + "/" +
+              '/' + '0' + '/' + 'courses_admin' + '/' +
                 (this.dbIndexNew - 1) +
-                "/" +
-                "requirements" +
-                "/" +
+                '/' +
+                'requirements' +
+                '/' +
                 (j) +
-                "/" +
-                "faculties"
+                '/' +
+                'faculties',
             )
-            .set("" + i, this.reqFacValueArray[i].trim());
+            .set('' + i, this.reqFacValueArray[i].trim());
         }
       }
     }
@@ -533,21 +533,21 @@ export class CourseNewComponent {
   reqDeptNewSaveBtn() {
     for (let j = 0; j < this.newReqsArray.length; j++) {
       if (this.newReqsArray[j].department) {
-        this.reqFacValueArray = this.newReqsArray[j].department.split(",");
+        this.reqFacValueArray = this.newReqsArray[j].department.split(',');
         this.reqFacIndex = this.reqFacValueArray.length;
         for (let i = 0; i < this.reqFacIndex; i++) {
           this.db
             .list(
-              "/" + "0" + "/" + "courses_admin" + "/" +
+              '/' + '0' + '/' + 'courses_admin' + '/' +
                 (this.dbIndexNew - 1) +
-                "/" +
-                "requirements" +
-                "/" +
+                '/' +
+                'requirements' +
+                '/' +
                 (j) +
-                "/" +
-                "department"
+                '/' +
+                'department',
             )
-            .set("" + i, this.reqFacValueArray[i].trim());
+            .set('' + i, this.reqFacValueArray[i].trim());
         }
       }
     }
@@ -558,14 +558,14 @@ export class CourseNewComponent {
         if (this.newReqsArray[i].stage) {
         this.db
           .list(
-            "/" + "0" + "/" + "courses_admin" + "/" +
+            '/' + '0' + '/' + 'courses_admin' + '/' +
               (this.dbIndexNew - 1) +
-              "/" +
-              "requirements" +
-              "/" +
-              this.newReqsArray[i].id
+              '/' +
+              'requirements' +
+              '/' +
+              this.newReqsArray[i].id,
           )
-          .set("stage", parseInt(this.newReqsArray[i].stage));
+          .set('stage', parseInt(this.newReqsArray[i].stage));
       }
     }
   }
@@ -575,14 +575,14 @@ export class CourseNewComponent {
         if (this.newReqsArray[i].aboveStage) {
         this.db
           .list(
-            "/" + "0" + "/" + "courses_admin" + "/" +
+            '/' + '0' + '/' + 'courses_admin' + '/' +
               (this.dbIndexNew - 1) +
-              "/" +
-              "requirements" +
-              "/" +
-              this.newReqsArray[i].id
+              '/' +
+              'requirements' +
+              '/' +
+              this.newReqsArray[i].id,
           )
-          .set("aboveStage", parseInt(this.newReqsArray[i].aboveStage));
+          .set('aboveStage', parseInt(this.newReqsArray[i].aboveStage));
       }
     }
   }
@@ -591,13 +591,13 @@ export class CourseNewComponent {
     for (let i = 0; i < this.newReqsComplexArray.length; i++) {
         this.db
           .list(
-            "/" + "0" + "/" + "courses_admin" + "/" +
+            '/' + '0' + '/' + 'courses_admin' + '/' +
               (this.dbIndexNew - 1) +
-              "/" +
-              "requirements" +
-              "/" + this.reqIndex 
+              '/' +
+              'requirements' +
+              '/' + this.reqIndex,
           )
-          .set('required',this.newReqsComplexArray[i].required)
+          .set('required', this.newReqsComplexArray[i].required);
     }
   }
 
@@ -605,13 +605,13 @@ export class CourseNewComponent {
     for (let i = 0; i < this.newReqsComplexArray.length; i++) {
         this.db
           .list(
-            "/" + "0" + "/" + "courses_admin" + "/" +
+            '/' + '0' + '/' + 'courses_admin' + '/' +
               (this.dbIndexNew - 1) +
-              "/" +
-              "requirements" +
-              "/" + this.reqIndex 
+              '/' +
+              'requirements' +
+              '/' + this.reqIndex,
           )
-          .set('type',this.newReqsComplexArray[i].type)
+          .set('type', this.newReqsComplexArray[i].type);
     }
   }
 
@@ -620,13 +620,13 @@ export class CourseNewComponent {
     for (let i = 0; i < this.newReqsComplexArray.length; i++) {
         this.db
           .list(
-            "/" + "0" + "/" + "courses_admin" + "/" +
+            '/' + '0' + '/' + 'courses_admin' + '/' +
               (this.dbIndexNew - 1) +
-              "/" +
-              "requirements" +
-              "/" + this.reqIndex 
+              '/' +
+              'requirements' +
+              '/' + this.reqIndex,
           )
-          .set('complex',this.newReqsComplexArray[i].complex);
+          .set('complex', this.newReqsComplexArray[i].complex);
     }
     this.reqDeptComplexSaveBtn();
     this.reqFacComplexSaveBtn();
@@ -635,25 +635,25 @@ export class CourseNewComponent {
   reqFacComplexSaveBtn() {
     for (let j = 0; j < this.newReqsComplexArray.length; j++) {
       if (this.newReqsComplexArray[j].complex[this.reqComplexRuleIndex - 1].faculties) {
-        let reqFacValueComplexArray = this.newReqsComplexArray[j].complex[this.reqComplexRuleIndex - 1].faculties.split(",");
-        let reqFacComplexIndex = reqFacValueComplexArray.length;
+        const reqFacValueComplexArray = this.newReqsComplexArray[j].complex[this.reqComplexRuleIndex - 1].faculties.split(',');
+        const reqFacComplexIndex = reqFacValueComplexArray.length;
         for (let i = 0; i < reqFacComplexIndex; i++) {
           this.db
             .list(
-              "/" + "0" + "/" + "courses_admin" + "/" +
+              '/' + '0' + '/' + 'courses_admin' + '/' +
                 (this.dbIndexNew - 1) +
-                "/" +
-                "requirements" +
-                "/" +
+                '/' +
+                'requirements' +
+                '/' +
                 (j) +
-                "/" +
-                "complex" +
-                "/" +
+                '/' +
+                'complex' +
+                '/' +
                 0 +
-                "/" +
-                "faculties"
+                '/' +
+                'faculties',
             )
-            .set("" + i, reqFacValueComplexArray[i].trim());
+            .set('' + i, reqFacValueComplexArray[i].trim());
         }
       }
     }
@@ -662,25 +662,25 @@ export class CourseNewComponent {
   reqDeptComplexSaveBtn() {
     for (let j = 0; j < this.newReqsComplexArray.length; j++) {
       if (this.newReqsComplexArray[j].complex[this.reqComplexRuleIndex - 1].department) {
-        let reqDeptValueComplexArray = this.newReqsComplexArray[j].complex[this.reqComplexRuleIndex - 1].department.split(",");
-        let reqDeptComplexIndex = reqDeptValueComplexArray.length;
+        const reqDeptValueComplexArray = this.newReqsComplexArray[j].complex[this.reqComplexRuleIndex - 1].department.split(',');
+        const reqDeptComplexIndex = reqDeptValueComplexArray.length;
         for (let i = 0; i < reqDeptComplexIndex; i++) {
           this.db
             .list(
-              "/" + "0" + "/" + "courses_admin" + "/" +
+              '/' + '0' + '/' + 'courses_admin' + '/' +
                 (this.dbIndexNew - 1) +
-                "/" +
-                "requirements" +
-                "/" +
+                '/' +
+                'requirements' +
+                '/' +
                 (j) +
-                "/" +
-                "complex" +
-                "/" +
+                '/' +
+                'complex' +
+                '/' +
                 0 +
-                "/" +
-                "department"
+                '/' +
+                'department',
             )
-            .set("" + i, reqDeptValueComplexArray[i].trim());
+            .set('' + i, reqDeptValueComplexArray[i].trim());
         }
       }
     }
@@ -732,7 +732,7 @@ export class CourseNewComponent {
   }
 
   addComplexReq() {
-      console.log("firing ")
+      console.log('firing ');
       this.addingReqComplex = true;
 
       this.newReqsComplexObject = {
@@ -759,7 +759,7 @@ export class CourseNewComponent {
       stage: null,
       aboveStage: null,
     };
-    this.newReqsComplexArray[0].complex.push(this.newReqsComplexRuleObject)
+    this.newReqsComplexArray[0].complex.push(this.newReqsComplexRuleObject);
     console.log(this.newReqsComplexArray);
     this.reqComplexRuleIndex++;
   }

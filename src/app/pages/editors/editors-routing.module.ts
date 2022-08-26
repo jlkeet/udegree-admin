@@ -23,15 +23,15 @@ const routes: Routes = [{
   {
     path: 'faculty-edit',
     component: FacultyEditComponent,
-  },  
+  },
   {
     path: 'department-edit',
     component: DepartmentEditComponent,
-  }, 
+  },
   {
     path: 'conjoint-edit',
     component: ConjointEditComponent,
-  }
+  },
 ],
 }];
 
@@ -52,6 +52,6 @@ export const routedComponents = [
   DepartmentNewComponent,
   FacultyNewComponent,
   ConjointEditComponent,
-  ConjointNewComponent
+  ConjointNewComponent,
 
 ];

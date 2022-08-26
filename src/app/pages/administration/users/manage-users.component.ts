@@ -4,17 +4,17 @@ import {
   EventEmitter,
   Output,
   ViewChild,
-} from "@angular/core";
-import { AngularFirestore } from "@angular/fire/firestore";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { FacultyService } from "app/@core/data/faculty.service";
-import { DepartmentService } from "app/@core/data/department.service";
-import { AuthService } from "../../../auth/auth-service.service"
+} from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { FacultyService } from 'app/@core/data/faculty.service';
+import { DepartmentService } from 'app/@core/data/department.service';
+import { AuthService } from '../../../auth/auth-service.service';
 
 @Component({
-  selector: "manage-users",
-  styleUrls: ["./manage-users.component.scss"],
-  templateUrl: "./manage-users.component.html",
+  selector: 'manage-users',
+  styleUrls: ['./manage-users.component.scss'],
+  templateUrl: './manage-users.component.html',
 })
 export class ManageUsersComponent {
   public user;
@@ -40,7 +40,7 @@ export class ManageUsersComponent {
 
   }
 
-  @ViewChild("input", { static: true }) input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
@@ -64,10 +64,10 @@ export class ManageUsersComponent {
   }
 
   searchFirebase(val) {
-    if (val !== "") {
+    if (val !== '') {
       this.userOrder = {};
       this.db
-        .collection("users") // Here is where we set the docID to the email so its accessible in the database.
+        .collection('users') // Here is where we set the docID to the email so its accessible in the database.
         .doc(val)
         .get()
         .toPromise()
@@ -78,7 +78,7 @@ export class ManageUsersComponent {
   }
 
   save(event) {
-    console.log("You entered: ", event.target.value);
+    console.log('You entered: ', event.target.value);
     this.searchFirebase(event.target.value);
   }
 
@@ -86,21 +86,21 @@ export class ManageUsersComponent {
 
   assignUserResult(user) {
     this.user = Object.assign(this.userOrder, user);
-    console.log(this.user.faculties)
-    this.facultyService.getSingleFac(this.user.faculties[0])
+    console.log(this.user.faculties);
+    this.facultyService.getSingleFac(this.user.faculties[0]);
   }
 
   editRole(email, val) {
-    console.log("Email: ", email, " val: ", val.target.value);
+    console.log('Email: ', email, ' val: ', val.target.value);
 
     this.db
-      .collection("users")
+      .collection('users')
       .doc(email) // Here is where we set the docID to the email so its accessible in the database.
       .update({ role: val.target.value });
 
     this.userOrder = {};
     this.db
-      .collection("users") // Here is where we set the docID to the email so its accessible in the database.
+      .collection('users') // Here is where we set the docID to the email so its accessible in the database.
       .doc(email)
       .get()
       .toPromise()
@@ -111,17 +111,17 @@ export class ManageUsersComponent {
 
   public onFacChange(event) {
     this.db
-    .collection("users")
-    .doc("jackson.keet@knowledge-basket.co.nz") // Here is where we set the docID to the email so its accessible in the database.
-    .update({faculties: event.source.value})
+    .collection('users')
+    .doc('jackson.keet@knowledge-basket.co.nz') // Here is where we set the docID to the email so its accessible in the database.
+    .update({faculties: event.source.value});
   }
 
   public onDeptChange(event) {
     this.db
-    .collection("users")
-    .doc("jackson.keet@knowledge-basket.co.nz") // Here is where we set the docID to the email so its accessible in the database.
-    .update({department: event.source.value})
-    console.log(event.source.value)
+    .collection('users')
+    .doc('jackson.keet@knowledge-basket.co.nz') // Here is where we set the docID to the email so its accessible in the database.
+    .update({department: event.source.value});
+    console.log(event.source.value);
   }
 
 }

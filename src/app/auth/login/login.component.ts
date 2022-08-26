@@ -37,13 +37,13 @@ export class NgxLoginComponent {
     this.submitted = true;
     this.auth.signInWithEmail(this.user.email, this.user.password)
       .then((res) => {
-        this.getAdminRole(res).then((sub) => {if (sub === "admin") {
+        this.getAdminRole(res).then((sub) => {if (sub === 'admin') {
           this.submitted = false;
           this.messages = [res.user.displayName];
           this.redirectToDashboard();
         } else {
           this.submitted = false;
-          this.errors = ["Sorry only Admin users can access this site"];
+          this.errors = ['Sorry only Admin users can access this site'];
           this.redirectToLogin();
         }
       });
@@ -53,22 +53,22 @@ export class NgxLoginComponent {
         this.errors = [err];
       });
   }
-  
+
   loginSocial(name) {
-    if (name === "google") {
+    if (name === 'google') {
       this.loginGoogle();
-    } else if (name === "facebook") {
+    } else if (name === 'facebook') {
       this.loginFb();
-    } else{
-      console.warn("No login for " + name);
+    } else {
+      console.warn('No login for ' + name);
     }
   }
 
   loginGoogle() {
-    console.log("Auth: ", this.auth)
+    console.log('Auth: ', this.auth);
     this.auth.signInWithGoogle()
       .then((success) => {
-        this.redirectToDashboard()
+        this.redirectToDashboard();
       })
       .catch((err) => {
         this.errors = [err];
@@ -78,20 +78,20 @@ export class NgxLoginComponent {
   loginFb() {
     this.auth.signInWithFacebook()
       .then((success) => {
-        this.redirectToDashboard()
+        this.redirectToDashboard();
       })
       .catch((err) => {
         this.errors = [err];
       });
   }
 
-  redirectToDashboard(){
+  redirectToDashboard() {
     setTimeout(() => {
       this.router.navigate(['/pages/dashboard']);
     }, this.redirectDelay);
   }
 
-  redirectToLogin(){
+  redirectToLogin() {
     setTimeout(() => {
       this.router.navigate(['/auth/login']);
     }, this.redirectDelay);
@@ -104,10 +104,10 @@ export class NgxLoginComponent {
   getAdminRole(res) {
   return new Promise<any>((resolve) => {
     this.db
-    .collection("users") // Here is where we set the docID to the email so its accessible in the database.
+    .collection('users') // Here is where we set the docID to the email so its accessible in the database.
     .doc(res.user.email)
     .get()
     .toPromise()
-    .then((result) => resolve(result.get("role")))})
+    .then((result) => resolve(result.get('role')));});
   }
 }

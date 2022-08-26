@@ -10,7 +10,7 @@ const routes: Routes = [{
   children: [{
     path: 'manage-users',
     component: ManageUsersComponent,
-  }
+  },
 ],
 }];
 
@@ -23,5 +23,5 @@ export class AdministrationRoutingModule { }
 
 export const routedComponents = [
     AdministrationComponent,
-    ManageUsersComponent
+    ManageUsersComponent,
 ];

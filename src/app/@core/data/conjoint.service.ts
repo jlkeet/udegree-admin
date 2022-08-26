@@ -4,13 +4,13 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConjointService {
-  
+
     messages: AngularFireList<any>;
    public conjoint;
-  
+
    constructor(private http: HttpClient, private db: AngularFireDatabase) { }
 
    /**
@@ -18,8 +18,8 @@ export class ConjointService {
      */
     getMessages() {
     return new Promise(resolve => {
-      this.db.list('/').valueChanges().subscribe(result => { resolve(result) });
-         })
+      this.db.list('/').valueChanges().subscribe(result => { resolve(result); });
+         });
     }
 
 //     searchFirebase() {

@@ -33,11 +33,11 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NbAuthModule } from '@nebular/auth';
-import { 
+import {
   NbAlertModule,
   NbButtonModule,
   NbCheckboxModule,
-  NbInputModule
+  NbInputModule,
 } from '@nebular/theme';
 import { AuthService } from './auth/auth-service.service';
 
@@ -85,7 +85,7 @@ import { MatOptionModule } from '@angular/material/core';
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
-    
+
     // Firebase Authentication
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // firestore

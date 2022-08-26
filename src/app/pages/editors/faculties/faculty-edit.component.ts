@@ -4,14 +4,14 @@ import {
   EventEmitter,
   Output,
   ViewChild,
-} from "@angular/core";
-import { AngularFireDatabase } from "@angular/fire/database";
-import { FacultyService } from "../../../@core/data/faculty.service";
+} from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { FacultyService } from '../../../@core/data/faculty.service';
 import { FacultyNewComponent } from './faculty-new.component';
 
 @Component({
-  selector: "faculty-edit",
-  styleUrls: ["./faculty-edit.component.scss"],
+  selector: 'faculty-edit',
+  styleUrls: ['./faculty-edit.component.scss'],
   template: `
     <nb-card>
       <nb-card-header> Degree Editor </nb-card-header>
@@ -258,7 +258,7 @@ import { FacultyNewComponent } from './faculty-new.component';
           class="form-control"
           (keydown.enter)="courseDescEdit($event)"
         />
-        
+
         <BR />
         <div *ngIf="facultyKeys[6] === 'doubleMajorRequirements'">
         <b>Second Major Requirements</b>
@@ -371,15 +371,15 @@ export class FacultyEditComponent {
   public canEditReqCourse = false;
   public canAddReqCourse = false;
 
-  public canEditSecReqFac = false;  
+  public canEditSecReqFac = false;
   public canEditSecReqPoints = false;
   public canEditSecReqAboveStage = false;
 
   constructor(
     public facultyService: FacultyService,
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
   ) {
-    this.listRef = this.db.list("/", (ref) => ref.orderByChild("id"));
+    this.listRef = this.db.list('/', (ref) => ref.orderByChild('id'));
 
     this.facultyOrder = {
       abbrv: null,
@@ -393,7 +393,7 @@ export class FacultyEditComponent {
     };
   }
 
-  @ViewChild("input", { static: true }) input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
@@ -422,11 +422,11 @@ export class FacultyEditComponent {
   }
 
   searchFirebase(val) {
-    if (val !== "") {
+    if (val !== '') {
       //   this.db.list('/', ref => ref.orderByChild('name').equalTo(val)).valueChanges().subscribe(result => {this.course = Object.assign(this.departmentOrder, result[0]), this.orderCourse(this.course)})
       this.db
-        .list("/" + "1" + "/" + "faculties_admin" + "/", (ref) =>
-          ref.orderByChild("name").equalTo(val)
+        .list('/' + '1' + '/' + 'faculties_admin' + '/', (ref) =>
+          ref.orderByChild('name').equalTo(val),
         )
         .valueChanges()
         .subscribe((result) => {
@@ -439,7 +439,7 @@ export class FacultyEditComponent {
   }
 
   save(event) {
-    console.log("You entered: ", event.target.value);
+    console.log('You entered: ', event.target.value);
     this.searchFirebase(event.target.value);
     this.showCourse = true;
   }
@@ -473,62 +473,62 @@ export class FacultyEditComponent {
 
   facultyNameEdit(newName) {
     console.log(newName.target.value);
-    this.db.list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1)).set("name", newName.target.value);
+    this.db.list('/' + '1' + '/' + 'faculties_admin' + '/' + (this.faculty.id - 1)).set('name', newName.target.value);
   }
 
   facultyNameEditSaveBtn() {
     console.log(this.inputValue);
-    this.db.list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1)).set("name", this.inputValue);
+    this.db.list('/' + '1' + '/' + 'faculties_admin' + '/' + (this.faculty.id - 1)).set('name', this.inputValue);
   }
 
   facultyDeactivate() {
     console.log(this.faculty.name);
-    this.db.list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1)).set("isActive", false);
+    this.db.list('/' + '1' + '/' + 'faculties_admin' + '/' + (this.faculty.id - 1)).set('isActive', false);
   }
 
   facultyActivate() {
     console.log(this.faculty.name);
-    this.db.list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1)).set("isActive", true);
+    this.db.list('/' + '1' + '/' + 'faculties_admin' + '/' + (this.faculty.id - 1)).set('isActive', true);
   }
 
   facultyFacEdit(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1) + "/" + "faculties")
-      .set("0", newName.target.value);
+      .list('/' + '1' + '/' + 'faculties_admin' + '/' + (this.faculty.id - 1) + '/' + 'faculties')
+      .set('0', newName.target.value);
   }
 
   facultyFacEditSaveBtn() {
     console.log(this.inputValue);
     this.db
-      .list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1) + "/" + "faculties")
-      .set("0", this.inputValue);
+      .list('/' + '1' + '/' + 'faculties_admin' + '/' + (this.faculty.id - 1) + '/' + 'faculties')
+      .set('0', this.inputValue);
   }
 
   facultyFacAdd(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + "1" + "/" + "faculties_admin" + "/" + (this.faculty.id - 1) + "/" + "faculties")
-      .set("" + this.faculty.faculties.length, newName.target.value);
+      .list('/' + '1' + '/' + 'faculties_admin' + '/' + (this.faculty.id - 1) + '/' + 'faculties')
+      .set('' + this.faculty.faculties.length, newName.target.value);
   }
 
   facultyReqCourseEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "1" + "/" + "faculties_admin" + "/" +
+          '/' + '1' + '/' + 'faculties_admin' + '/' +
             (this.faculty.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "papers"
+            '/' +
+            'papers',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -536,20 +536,20 @@ export class FacultyEditComponent {
   facultyReqCourseEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "1" + "/" + "faculties_admin" + "/" +
+          '/' + '1' + '/' + 'faculties_admin' + '/' +
             (this.faculty.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "papers"
+            '/' +
+            'papers',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -558,38 +558,38 @@ export class FacultyEditComponent {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" + "1" + "/" + "faculties_admin" + "/" +
+        '/' + '1' + '/' + 'faculties_admin' + '/' +
           (this.faculty.id - 1) +
-          "/" +
-          "requirements" +
-          "/" +
+          '/' +
+          'requirements' +
+          '/' +
           index +
-          "/" +
-          "papers"
+          '/' +
+          'papers',
       )
       .set(
-        "" + this.faculty.requirements[index].papers.length,
-        newName.target.value
+        '' + this.faculty.requirements[index].papers.length,
+        newName.target.value,
       );
   }
 
   facultyReqFlagEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "1" + "/" + "faculties_admin" + "/" +
+          '/' + '1' + '/' + 'faculties_admin' + '/' +
             (this.faculty.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "flags"
+            '/' +
+            'flags',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -598,68 +598,68 @@ export class FacultyEditComponent {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" + "1" + "/" + "faculties_admin" + "/" +
+        '/' + '1' + '/' + 'faculties_admin' + '/' +
           (this.faculty.id - 1) +
-          "/" +
-          "requirements" +
-          "/" +
+          '/' +
+          'requirements' +
+          '/' +
           index +
-          "/" +
-          "flags"
+          '/' +
+          'flags',
       )
       .set(
-        "" + this.faculty.requirements[index].flags.length,
-        newName.target.value
+        '' + this.faculty.requirements[index].flags.length,
+        newName.target.value,
       );
   }
 
   facultySecReqPointsEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-            "/" +
-            +"1" +
-            "/" +
-            "faculties_admin" +
-            "/" +
+            '/' +
+            +'1' +
+            '/' +
+            'faculties_admin' +
+            '/' +
             (this.faculty.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "required"
+            '/' +
+            'required',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
 
   facultySecReqPointsEditSaveBtn(index) {
     console.log(this.inputValue);
-    console.log(index)
+    console.log(index);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-            "/" +
-            +"1" +
-            "/" +
-            "faculties_admin" +
-            "/" +
+            '/' +
+            +'1' +
+            '/' +
+            'faculties_admin' +
+            '/' +
             (this.faculty.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "required"
+            '/' +
+            'required',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
@@ -667,20 +667,20 @@ export class FacultyEditComponent {
   facultySecReqFacEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "1" + "/" + "faculties_admin" + "/" +
+          '/' + '1' + '/' + 'faculties_admin' + '/' +
             (this.faculty.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "faculties"
+            '/' +
+            'faculties',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -688,20 +688,20 @@ export class FacultyEditComponent {
   facultySecReqFacEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "1" + "/" + "faculties_admin" + "/" +
+          '/' + '1' + '/' + 'faculties_admin' + '/' +
             (this.faculty.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "faculties"
+            '/' +
+            'faculties',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -709,20 +709,20 @@ export class FacultyEditComponent {
   facultySecReqAboveStageEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "1" + "/" + "faculties_admin" + "/" +
+          '/' + '1' + '/' + 'faculties_admin' + '/' +
             (this.faculty.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "aboveStage"
+            '/' +
+            'aboveStage',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
@@ -730,20 +730,20 @@ export class FacultyEditComponent {
   facultySecReqAboveStageEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "1" + "/" + "faculties_admin" + "/" +
+          '/' + '1' + '/' + 'faculties_admin' + '/' +
             (this.faculty.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "aboveStage"
+            '/' +
+            'aboveStage',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }

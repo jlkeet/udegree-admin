@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
@@ -16,11 +16,10 @@ export class AuthService {
       (user) => {
         if (user) {
           this.userDetails = user;
-        }
-        else {
+        } else {
           this.userDetails = null;
         }
-      }
+      },
     );
   }
 
@@ -31,16 +30,16 @@ export class AuthService {
           // Update the profile in firebase auth
           afUser.updateProfile({
             displayName: fullName,
-            photoURL: ""
+            photoURL: '',
           }).then(() => afUser.sendEmailVerification());
           // Create the user in firestore
-          this._firestore.firestore.collection("users").doc(afUser.uid).set(
+          this._firestore.firestore.collection('users').doc(afUser.uid).set(
             {
               uid: afUser.uid,
-              company: company
-            }
+              company: company,
+            },
           );
-        }});
+        };});
   }
 
   requestPass(email) {
@@ -60,18 +59,18 @@ export class AuthService {
   }
   signInWithTwitter() {
     return this._firebaseAuth.signInWithPopup(
-      new firebase.auth.TwitterAuthProvider()
-    )
+      new firebase.auth.TwitterAuthProvider(),
+    );
   }
   signInWithFacebook() {
     return this._firebaseAuth.signInWithPopup(
-      new firebase.auth.FacebookAuthProvider()
-    )
+      new firebase.auth.FacebookAuthProvider(),
+    );
   }
   signInWithGoogle() {
     return this._firebaseAuth.signInWithPopup(
-      new firebase.auth.GoogleAuthProvider()
-    )
+      new firebase.auth.GoogleAuthProvider(),
+    );
   }
 
   isLoggedIn() {

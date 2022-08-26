@@ -14,7 +14,7 @@ import { EditorsRoutingModule, routedComponents } from './editors-routing.module
     EditorsRoutingModule,
     CKEditorModule,
     NbSearchModule,
-    NbActionsModule
+    NbActionsModule,
   ],
   declarations: [
     ...routedComponents,

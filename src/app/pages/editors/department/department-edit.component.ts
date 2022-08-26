@@ -4,14 +4,14 @@ import {
   EventEmitter,
   Output,
   ViewChild,
-} from "@angular/core";
-import { AngularFireDatabase } from "@angular/fire/database";
-import { DepartmentService } from "../../../@core/data/department.service";
+} from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { DepartmentService } from '../../../@core/data/department.service';
 import { DepartmentNewComponent } from './department-new.component';
 
 @Component({
-  selector: "department-edit",
-  styleUrls: ["./department-edit.component.scss"],
+  selector: 'department-edit',
+  styleUrls: ['./department-edit.component.scss'],
   template: `
     <nb-card>
       <nb-card-header> Department Editor </nb-card-header>
@@ -396,9 +396,9 @@ export class DepartmentEditComponent {
 
   constructor(
     public departmentService: DepartmentService,
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
   ) {
-    this.listRef = this.db.list("/", (ref) => ref.orderByChild("id"));
+    this.listRef = this.db.list('/', (ref) => ref.orderByChild('id'));
 
     this.departmentOrder = {
       conjointRequirements: null,
@@ -409,7 +409,7 @@ export class DepartmentEditComponent {
     };
   }
 
-  @ViewChild("input", { static: true }) input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
@@ -431,18 +431,18 @@ export class DepartmentEditComponent {
   ngOnInit() {}
 
   orderCourse(department) {
-    console.log(department)
+    console.log(department);
     // console.log(Object.keys(course), Object.values(course))
     this.departmentKeys = Object.keys(department);
     this.departmentValues = Object.values(department);
   }
 
   searchFirebase(val) {
-    if (val !== "") {
+    if (val !== '') {
       //   this.db.list('/', ref => ref.orderByChild('name').equalTo(val)).valueChanges().subscribe(result => {this.course = Object.assign(this.departmentOrder, result[0]), this.orderCourse(this.course)})
       this.db
-        .list("/" + "2" + "/" + "departments_admin" + "/", (ref) =>
-          ref.orderByChild("name").equalTo(val)
+        .list('/' + '2' + '/' + 'departments_admin' + '/', (ref) =>
+          ref.orderByChild('name').equalTo(val),
         )
         .valueChanges()
         .subscribe((result) => {
@@ -455,7 +455,7 @@ export class DepartmentEditComponent {
   }
 
   save(event) {
-    console.log("You entered: ", event.target.value);
+    console.log('You entered: ', event.target.value);
     this.searchFirebase(event.target.value);
     this.showCourse = true;
   }
@@ -486,138 +486,138 @@ export class DepartmentEditComponent {
   departmentNameEdit(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + "2" + "/" + "departments_admin" + "/" + (this.department.id - 1))
-      .set("name", newName.target.value);
+      .list('/' + '2' + '/' + 'departments_admin' + '/' + (this.department.id - 1))
+      .set('name', newName.target.value);
   }
 
   departmentNameEditSaveBtn() {
     console.log(this.inputValue);
     this.db
       .list(
-        "/" + "2" + "/" + "departments_admin" + "/" + (this.department.id - 1)
+        '/' + '2' + '/' + 'departments_admin' + '/' + (this.department.id - 1),
       )
-      .set("name", this.inputValue);
+      .set('name', this.inputValue);
   }
 
   departmentDeactivate() {
     console.log(this.department.name);
     this.db
       .list(
-        "/" + "2" + "/" + "departments_admin" + "/" + (this.department.id - 1)
+        '/' + '2' + '/' + 'departments_admin' + '/' + (this.department.id - 1),
       )
-      .set("isActive", false);
+      .set('isActive', false);
   }
 
   departmentActivate() {
     console.log(this.department.name);
     this.db
       .list(
-        "/" + "2" + "/" + "departments_admin" + "/" + (this.department.id - 1)
+        '/' + '2' + '/' + 'departments_admin' + '/' + (this.department.id - 1),
       )
-      .set("isActive", true);
+      .set('isActive', true);
   }
 
   departmentPapersEdit(newName) {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" +
-          "2" +
-          "/" +
-          "departments_admin" +
-          "/" +
+        '/' +
+          '2' +
+          '/' +
+          'departments_admin' +
+          '/' +
           (this.department.id - 1) +
-          "/" +
-          "papers"
+          '/' +
+          'papers',
       )
-      .set("0", newName.target.value);
+      .set('0', newName.target.value);
   }
 
   departmentPapersEditSaveBtn() {
     console.log(this.inputValue);
     this.db
       .list(
-        "/" +
-          "2" +
-          "/" +
-          "departments_admin" +
-          "/" +
+        '/' +
+          '2' +
+          '/' +
+          'departments_admin' +
+          '/' +
           (this.department.id - 1) +
-          "/" +
-          "papers"
+          '/' +
+          'papers',
       )
-      .set("0", this.inputValue);
+      .set('0', this.inputValue);
   }
 
   departmentFacEdit(newName) {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" +
-          "2" +
-          "/" +
-          "departments_admin" +
-          "/" +
+        '/' +
+          '2' +
+          '/' +
+          'departments_admin' +
+          '/' +
           (this.department.id - 1) +
-          "/" +
-          "faculties"
+          '/' +
+          'faculties',
       )
-      .set("0", newName.target.value);
+      .set('0', newName.target.value);
   }
 
   departmentFacEditSaveBtn() {
     console.log(this.inputValue);
     this.db
       .list(
-        "/" +
-          "2" +
-          "/" +
-          "departments_admin" +
-          "/" +
+        '/' +
+          '2' +
+          '/' +
+          'departments_admin' +
+          '/' +
           (this.department.id - 1) +
-          "/" +
-          "faculties"
+          '/' +
+          'faculties',
       )
-      .set("0", this.inputValue);
+      .set('0', this.inputValue);
   }
 
   departmentFacAdd(newName) {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" +
-          "2" +
-          "/" +
-          "departments_admin" +
-          "/" +
+        '/' +
+          '2' +
+          '/' +
+          'departments_admin' +
+          '/' +
           (this.department.id - 1) +
-          "/" +
-          "faculties"
+          '/' +
+          'faculties',
       )
-      .set("" + this.department.faculties.length, newName.target.value);
+      .set('' + this.department.faculties.length, newName.target.value);
   }
 
   departmentReqDeptEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "departments"
+            '/' +
+            'departments',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -625,24 +625,24 @@ export class DepartmentEditComponent {
   departmentReqDeptEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "departments"
+            '/' +
+            'departments',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -650,24 +650,24 @@ export class DepartmentEditComponent {
   departmentReqCourseEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "papers"
+            '/' +
+            'papers',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -675,24 +675,24 @@ export class DepartmentEditComponent {
   departmentReqCourseEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "papers"
+            '/' +
+            'papers',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -701,46 +701,46 @@ export class DepartmentEditComponent {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" +
-          +"2" +
-          "/" +
-          "departments_admin" +
-          "/" +
+        '/' +
+          +'2' +
+          '/' +
+          'departments_admin' +
+          '/' +
           (this.department.id - 1) +
-          "/" +
-          "requirements" +
-          "/" +
+          '/' +
+          'requirements' +
+          '/' +
           index +
-          "/" +
-          "papers"
+          '/' +
+          'papers',
       )
       .set(
-        "" + this.department.requirements[index].papers.length,
-        newName.target.value
+        '' + this.department.requirements[index].papers.length,
+        newName.target.value,
       );
   }
 
   departmentReqPointsEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "required"
+            '/' +
+            'required',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -748,24 +748,24 @@ export class DepartmentEditComponent {
   departmentReqPointsEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "required"
+            '/' +
+            'required',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -773,24 +773,24 @@ export class DepartmentEditComponent {
   departmentReqAboveStageEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "aboveStage"
+            '/' +
+            'aboveStage',
         )
-        .set("" + i, newName.target.value);
+        .set('' + i, newName.target.value);
       console.log(i);
     }
   }
@@ -798,24 +798,24 @@ export class DepartmentEditComponent {
   departmentReqAboveStageEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "aboveStage"
+            '/' +
+            'aboveStage',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -823,50 +823,50 @@ export class DepartmentEditComponent {
   departmentConReqPointsEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-            "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+            '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "conjointRequirements" +
-            "/" +
+            '/' +
+            'conjointRequirements' +
+            '/' +
             index +
-            "/" +
-            "required"
+            '/' +
+            'required',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
 
   departmentConReqPointsEditSaveBtn(index) {
     console.log(this.inputValue);
-    console.log(index)
+    console.log(index);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "conjointRequirements" +
-            "/" +
+            '/' +
+            'conjointRequirements' +
+            '/' +
             index +
-            "/" +
-            "required"
+            '/' +
+            'required',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
@@ -874,24 +874,24 @@ export class DepartmentEditComponent {
   departmentConReqPapersEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-            "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+            '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "conjointRequirements" +
-            "/" +
+            '/' +
+            'conjointRequirements' +
+            '/' +
             index +
-            "/" +
-            "papers"
+            '/' +
+            'papers',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -899,24 +899,24 @@ export class DepartmentEditComponent {
   departmentConReqPapersEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "conjointRequirements" +
-            "/" +
+            '/' +
+            'conjointRequirements' +
+            '/' +
             index +
-            "/" +
-            "papers"
+            '/' +
+            'papers',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -924,24 +924,24 @@ export class DepartmentEditComponent {
   departmentConReqDeptEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-            "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+            '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "conjointRequirements" +
-            "/" +
+            '/' +
+            'conjointRequirements' +
+            '/' +
             index +
-            "/" +
-            "departments"
+            '/' +
+            'departments',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -949,24 +949,24 @@ export class DepartmentEditComponent {
   departmentConReqDeptEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "conjointRequirements" +
-            "/" +
+            '/' +
+            'conjointRequirements' +
+            '/' +
             index +
-            "/" +
-            "departments"
+            '/' +
+            'departments',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -974,24 +974,24 @@ export class DepartmentEditComponent {
   departmentConReqStageEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-            "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+            '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "conjointRequirements" +
-            "/" +
+            '/' +
+            'conjointRequirements' +
+            '/' +
             index +
-            "/" +
-            "stage"
+            '/' +
+            'stage',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
@@ -999,24 +999,24 @@ export class DepartmentEditComponent {
   departmentConReqStageEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" +
-            +"2" +
-            "/" +
-            "departments_admin" +
-            "/" +
+          '/' +
+            +'2' +
+            '/' +
+            'departments_admin' +
+            '/' +
             (this.department.id - 1) +
-            "/" +
-            "conjointRequirements" +
-            "/" +
+            '/' +
+            'conjointRequirements' +
+            '/' +
             index +
-            "/" +
-            "stage"
+            '/' +
+            'stage',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }

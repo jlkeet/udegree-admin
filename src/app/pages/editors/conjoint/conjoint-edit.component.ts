@@ -4,14 +4,14 @@ import {
   EventEmitter,
   Output,
   ViewChild,
-} from "@angular/core";
-import { AngularFireDatabase } from "@angular/fire/database";
-import { ConjointService } from "../../../@core/data/conjoint.service"
+} from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { ConjointService } from '../../../@core/data/conjoint.service';
 import { ConjointNewComponent } from './conjoint-new.component';
 
 @Component({
-  selector: "conjoint-edit",
-  styleUrls: ["./conjoint-edit.component.scss"],
+  selector: 'conjoint-edit',
+  styleUrls: ['./conjoint-edit.component.scss'],
   template: `
     <nb-card>
       <nb-card-header> Conjoint Editor </nb-card-header>
@@ -230,7 +230,7 @@ import { ConjointNewComponent } from './conjoint-new.component';
           class="form-control"
           (keydown.enter)="conjointDescEdit($event)"
         />
-        
+
       </div>
       </ul>
     </nb-card>
@@ -260,15 +260,15 @@ export class ConjointEditComponent {
   public canEditReqCourse = false;
   public canAddReqCourse = false;
 
-  public canEditSecReqFac = false;  
+  public canEditSecReqFac = false;
   public canEditSecReqPoints = false;
   public canEditSecReqAboveStage = false;
 
   constructor(
     public conjointService: ConjointService,
-    private db: AngularFireDatabase
+    private db: AngularFireDatabase,
   ) {
-    this.listRef = this.db.list("/", (ref) => ref.orderByChild("id"));
+    this.listRef = this.db.list('/', (ref) => ref.orderByChild('id'));
 
     this.conjointOrder = {
       abbrv: null,
@@ -282,7 +282,7 @@ export class ConjointEditComponent {
     };
   }
 
-  @ViewChild("input", { static: true }) input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
 
@@ -308,7 +308,7 @@ export class ConjointEditComponent {
     //   ref.orderByChild("name")
     // )
     // .valueChanges()
-    // .subscribe((result) => { 
+    // .subscribe((result) => {
     //   console.log(result);
     // });
 
@@ -321,14 +321,14 @@ export class ConjointEditComponent {
   }
 
   searchFirebase(val) {
-    if (val !== "") {
+    if (val !== '') {
       //   this.db.list('/', ref => ref.orderByChild('name').equalTo(val)).valueChanges().subscribe(result => {this.course = Object.assign(this.departmentOrder, result[0]), this.orderCourse(this.course)})
       this.db
-        .list("/" + "3" + "/" + "conjoints_admin" + "/", (ref) =>
-          ref.orderByChild("name").equalTo(val)
+        .list('/' + '3' + '/' + 'conjoints_admin' + '/', (ref) =>
+          ref.orderByChild('name').equalTo(val),
         )
         .valueChanges()
-        .subscribe((result) => { 
+        .subscribe((result) => {
           (this.conjoint = Object.assign(this.conjointOrder, result[0])),
             this.orderCourse(this.conjoint);
         });
@@ -338,7 +338,7 @@ export class ConjointEditComponent {
   }
 
   save(event) {
-    console.log("You entered: ", event.target.value);
+    console.log('You entered: ', event.target.value);
     this.searchFirebase(event.target.value);
     this.showCourse = true;
   }
@@ -372,62 +372,62 @@ export class ConjointEditComponent {
 
   conjointNameEdit(newName) {
     console.log(newName.target.value);
-    this.db.list("/" + "3" + "/" + "conjoints_admin" + "/" + (this.conjoint.id - 1)).set("name", newName.target.value);
+    this.db.list('/' + '3' + '/' + 'conjoints_admin' + '/' + (this.conjoint.id - 1)).set('name', newName.target.value);
   }
 
   conjointNameEditSaveBtn() {
     console.log(this.inputValue);
-    this.db.list("/" + "3" + "/" + "conjoints_admin" + "/" + (this.conjoint.id - 1)).set("name", this.inputValue);
+    this.db.list('/' + '3' + '/' + 'conjoints_admin' + '/' + (this.conjoint.id - 1)).set('name', this.inputValue);
   }
 
   conjointDeactivate() {
     console.log(this.conjoint.name);
-    this.db.list("/" + "3" + "/" + "conjoints_admin" + "/" + (this.conjoint.id - 1)).set("isActive", false);
+    this.db.list('/' + '3' + '/' + 'conjoints_admin' + '/' + (this.conjoint.id - 1)).set('isActive', false);
   }
 
   conjointActivate() {
     console.log(this.conjoint.name);
-    this.db.list("/" + "3" + "/" + "conjoints_admin" + "/" + (this.conjoint.id - 1)).set("isActive", true);
+    this.db.list('/' + '3' + '/' + 'conjoints_admin' + '/' + (this.conjoint.id - 1)).set('isActive', true);
   }
 
   conjointFacEdit(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + "3" + "/" + "conjoints_admin" + "/" + (this.conjoint.id - 1) + "/" + "faculties")
-      .set("0", newName.target.value);
+      .list('/' + '3' + '/' + 'conjoints_admin' + '/' + (this.conjoint.id - 1) + '/' + 'faculties')
+      .set('0', newName.target.value);
   }
 
   conjointFacEditSaveBtn() {
     console.log(this.inputValue);
     this.db
-      .list("/" + "3" + "/" + "conjoints_admin" + "/" + (this.conjoint.id - 1) + "/" + "faculties")
-      .set("0", this.inputValue);
+      .list('/' + '3' + '/' + 'conjoints_admin' + '/' + (this.conjoint.id - 1) + '/' + 'faculties')
+      .set('0', this.inputValue);
   }
 
   conjointFacAdd(newName) {
     console.log(newName.target.value);
     this.db
-      .list("/" + "3" + "/" + "conjoints_admin" + "/" + (this.conjoint.id - 1) + "/" + "faculties")
-      .set("" + this.conjoint.faculties.length, newName.target.value);
+      .list('/' + '3' + '/' + 'conjoints_admin' + '/' + (this.conjoint.id - 1) + '/' + 'faculties')
+      .set('' + this.conjoint.faculties.length, newName.target.value);
   }
 
   conjointReqCourseEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "3" + "/" + "conjoints_admin" + "/" +
+          '/' + '3' + '/' + 'conjoints_admin' + '/' +
             (this.conjoint.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "papers"
+            '/' +
+            'papers',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -435,20 +435,20 @@ export class ConjointEditComponent {
   conjointReqCourseEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "3" + "/" + "conjoints_admin" + "/" +
+          '/' + '3' + '/' + 'conjoints_admin' + '/' +
             (this.conjoint.id - 1) +
-            "/" +
-            "requirements" +
-            "/" +
+            '/' +
+            'requirements' +
+            '/' +
             index +
-            "/" +
-            "papers"
+            '/' +
+            'papers',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -457,68 +457,68 @@ export class ConjointEditComponent {
     console.log(newName.target.value);
     this.db
       .list(
-        "/" + "3" + "/" + "conjoints_admin" + "/" +
+        '/' + '3' + '/' + 'conjoints_admin' + '/' +
           (this.conjoint.id - 1) +
-          "/" +
-          "requirements" +
-          "/" +
+          '/' +
+          'requirements' +
+          '/' +
           index +
-          "/" +
-          "papers"
+          '/' +
+          'papers',
       )
       .set(
-        "" + this.conjoint.requirements[index].papers.length,
-        newName.target.value
+        '' + this.conjoint.requirements[index].papers.length,
+        newName.target.value,
       );
   }
 
   conjointSecReqPointsEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-            "/" +
-            +"3" +
-            "/" +
-            "conjoints_admin" +
-            "/" +
+            '/' +
+            +'3' +
+            '/' +
+            'conjoints_admin' +
+            '/' +
             (this.conjoint.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "required"
+            '/' +
+            'required',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
 
   conjointSecReqPointsEditSaveBtn(index) {
     console.log(this.inputValue);
-    console.log(index)
+    console.log(index);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-            "/" +
-            +"3" +
-            "/" +
-            "conjoints_admin" +
-            "/" +
+            '/' +
+            +'3' +
+            '/' +
+            'conjoints_admin' +
+            '/' +
             (this.conjoint.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "required"
+            '/' +
+            'required',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
@@ -526,20 +526,20 @@ export class ConjointEditComponent {
   conjointSecReqFacEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "3" + "/" + "conjoints_admin" + "/" +
+          '/' + '3' + '/' + 'conjoints_admin' + '/' +
             (this.conjoint.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "faculties"
+            '/' +
+            'faculties',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -547,20 +547,20 @@ export class ConjointEditComponent {
   conjointSecReqFacEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "3" + "/" + "conjoints_admin" + "/" +
+          '/' + '3' + '/' + 'conjoints_admin' + '/' +
             (this.conjoint.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "faculties"
+            '/' +
+            'faculties',
         )
-        .set("" + i, newArray[i]);
+        .set('' + i, newArray[i]);
       console.log(i);
     }
   }
@@ -568,20 +568,20 @@ export class ConjointEditComponent {
   conjointSecReqAboveStageEdit(newName, index) {
     console.log(newName.target.value);
     let i;
-    let newArray = newName.target.value.split(",");
+    const newArray = newName.target.value.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "3" + "/" + "conjoints_admin" + "/" +
+          '/' + '3' + '/' + 'conjoints_admin' + '/' +
             (this.conjoint.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "aboveStage"
+            '/' +
+            'aboveStage',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
@@ -589,20 +589,20 @@ export class ConjointEditComponent {
   conjointSecReqAboveStageEditSaveBtn(index) {
     console.log(this.inputValue);
     let i;
-    let newArray = this.inputValue.split(",");
+    const newArray = this.inputValue.split(',');
     for (i = 0; i < newArray.length; i++) {
       this.db
         .list(
-          "/" + "3" + "/" + "conjoints_admin" + "/" +
+          '/' + '3' + '/' + 'conjoints_admin' + '/' +
             (this.conjoint.id - 1) +
-            "/" +
-            "doubleMajorRequirements" +
-            "/" +
+            '/' +
+            'doubleMajorRequirements' +
+            '/' +
             index +
-            "/" +
-            "aboveStage"
+            '/' +
+            'aboveStage',
         )
-        .set("" + i, parseInt(newArray[i]));
+        .set('' + i, parseInt(newArray[i]));
       console.log(i);
     }
   }
