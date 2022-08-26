@@ -20,7 +20,7 @@
             <div *ngIf="userOrder.role">
                 <b>Role</b>: {{ userOrder.role }}
                 <button class="btn_edit" (click)="this.canEditRole = true">
-                    Edit Role
+                    Edit Admin Role
                 </button>
             </div>
             <input (keyup)="onKey($event)" *ngIf="this.canEditRole" type="text" class="form-control"
