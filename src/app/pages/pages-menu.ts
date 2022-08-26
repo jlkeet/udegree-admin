@@ -68,6 +68,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Plans',
     icon: 'book-outline',
-    link: '/pages/plans',
+    children: [
+      {
+        title: 'User Plans',
+        link: '/pages/plans/user-plans',
+      },
+    ],
   },
 ];

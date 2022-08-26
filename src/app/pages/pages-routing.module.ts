@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { PlansComponent } from './plans/plans.component';
 
 const routes: Routes = [{
   path: '',
@@ -25,7 +24,8 @@ const routes: Routes = [{
     },
     {
       path: 'plans',
-      component: PlansComponent,
+      loadChildren: () => import('./plans/plans.module')
+      .then(m => m.PlansModule),
     },
     {
       path: '',
