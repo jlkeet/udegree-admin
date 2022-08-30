@@ -57,6 +57,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { MatTableModule } from '@angular/material/table'  
+
+
 import { NotificationIconComponent } from './pages/notification-counter/notification-counter.component';
 import { UserPlansComponent } from './pages/plans/user-plans/user-plans.component';
 
@@ -114,6 +117,7 @@ import { UserPlansComponent } from './pages/plans/user-plans/user-plans.componen
     MatListModule,
     MatFormFieldModule,
     MatOptionModule,
+    MatTableModule,
 
   ],
   providers: [AuthService, NotificationIconComponent, UserPlansComponent],

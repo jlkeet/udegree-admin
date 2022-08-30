@@ -8,6 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+
 
 @NgModule({
   imports: [
@@ -20,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
     MatSelectModule,
     FormsModule,
     MatInputModule,
+    MatTableModule
   ],
   declarations: [
     ...routedComponents,

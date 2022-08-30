@@ -106,7 +106,7 @@ export class NotificationIconComponent {
       });
 
       //   console.log(this.plansService.pendingPlans.length);
-    }, 4000);
+    }, 5000);
   }
 
   public getAdminListFilter() {

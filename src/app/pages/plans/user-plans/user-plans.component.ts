@@ -10,6 +10,7 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { FacultyService } from "app/@core/data/faculty.service";
 import { DepartmentService } from "app/@core/data/department.service";
+import { PlansService } from "app/@core/data/plans.service";
 
 @Component({
   selector: "user-plans",
@@ -17,10 +18,18 @@ import { DepartmentService } from "app/@core/data/department.service";
   templateUrl: "user-plans.component.html",
 })
 export class UserPlansComponent {
+
+  public user_data = this.plansService.pendingPlans;
+
+
   public allPlans = [];
   public pendingPlans = [];
   public showPlans = false;
   public displayPlans = false;
+
+  public count = 0;
+
+  public displayedColumns: string[] = ['position', 'name', 'email', 'faculty', 'department', 'date', 'notes' , 'edit', 'approve'];
 
   public userCourses = [];
 
@@ -28,7 +37,8 @@ export class UserPlansComponent {
     private db: AngularFirestore,
     public afAuth: AngularFireAuth,
     public facultyService: FacultyService,
-    public departmentService: DepartmentService
+    public departmentService: DepartmentService,
+    public plansService: PlansService
   ) {}
 
   ngOnInit() {
@@ -61,12 +71,17 @@ export class UserPlansComponent {
 
   public getPendingPlans() {
     this.pendingPlans = [];
+    this.user_data = []
+    // console.log(this.plansService.pendingPlans)
+    this.count = 0;
     for (let i = 0; i < this.allPlans.length; i++) {
       if (this.allPlans[i].status === 2) {
+        // console.log(this.plansService.pendingPlans[count])
+        this.user_data.push({position: this.count + 1, name: this.plansService.pendingPlans[this.count].name, email: this.plansService.pendingPlans[this.count].email, faculty: this.plansService.pendingPlans[this.count].faculty, department: this.plansService.pendingPlans[this.count].department, date: null, edit: null, approve: this.plansService.pendingPlans[this.count].status});
         this.pendingPlans.push(this.allPlans[i]);
+        this.count++;
       }
     }
-    // console.log(this.pendingPlans);
   }
 
   public displayUserPlans(userID) {
