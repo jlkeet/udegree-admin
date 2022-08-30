@@ -84,4 +84,16 @@ export class AuthService {
     this._firebaseAuth.signOut()
       .then((res) => this.router.navigate(['/auth/login']));
   }
+
+  getAdminRole(authID) {
+    return new Promise((resolve) => {
+    this._firestore
+    .collection('users')
+    .doc(authID)
+    .get()
+    .toPromise()
+    .then( (result) => resolve(result.data()) )
+  })}
+
+
 }

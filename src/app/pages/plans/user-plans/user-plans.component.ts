@@ -55,6 +55,7 @@ export class UserPlansComponent {
       .toPromise()
       .then((result) => {
         this.allPlans.push(result.data());
+        this.getPendingPlans();
       });
   }
 
@@ -65,7 +66,7 @@ export class UserPlansComponent {
         this.pendingPlans.push(this.allPlans[i]);
       }
     }
-    console.log(this.pendingPlans);
+    // console.log(this.pendingPlans);
   }
 
   public displayUserPlans(userID) {

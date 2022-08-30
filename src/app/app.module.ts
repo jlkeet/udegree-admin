@@ -57,10 +57,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
+import { NotificationIconComponent } from './pages/notification-counter/notification-counter.component';
+import { UserPlansComponent } from './pages/plans/user-plans/user-plans.component';
 
 
 @NgModule({
-  declarations: [AppComponent, NgxLoginComponent],
+  declarations: [AppComponent, NgxLoginComponent, NotificationIconComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -114,7 +116,7 @@ import { MatOptionModule } from '@angular/material/core';
     MatOptionModule,
 
   ],
-  providers: [AuthService],
+  providers: [AuthService, NotificationIconComponent, UserPlansComponent],
   bootstrap: [AppComponent],
 })
 

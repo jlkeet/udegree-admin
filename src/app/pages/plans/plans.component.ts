@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
   selector: 'plans',
   template: `
     <router-outlet></router-outlet>
+
   `,
 })
 export class PlansComponent {

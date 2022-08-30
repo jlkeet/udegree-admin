@@ -5,6 +5,9 @@ import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
+import { NotificationIconComponent } from './notification-counter/notification-counter.component';
+import { UserPlansComponent } from './plans/user-plans/user-plans.component';
+
 
 @NgModule({
   imports: [
@@ -14,8 +17,11 @@ import { PagesRoutingModule } from './pages-routing.module';
     DashboardModule,
   ],
   declarations: [
-    PagesComponent,
+    PagesComponent
   ],
+  providers: [
+    UserPlansComponent,
+  ]
 })
 export class PagesModule {
 }
