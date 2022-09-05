@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { AngularFireList } from "@angular/fire/database";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
+import { AdminService } from "./admin.service";
 
 @Injectable({
   providedIn: "root",
@@ -14,9 +15,27 @@ export class PlansService {
   public pendingPlans = [];
   public counter = 0;
 
-  constructor(private http: HttpClient, private db: AngularFirestore) {}
+  constructor(
+    private http: HttpClient,
+    private db: AngularFirestore,
+    private adminService: AdminService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
+
+  public getFilteredFac() {
+    console.log("firing 1")
+    for (let i = 0; i < this.pendingPlans.length; i++) {
+      console.log("firing 2")
+      if (this.pendingPlans[i].faculty === this.adminService.adminFac) {
+        let newArray = this.pendingPlans.map( obj => ({...obj}) )
+        this.pendingPlans = newArray.splice(i, 1)
+        console.log("firing 3")
+      }
+    }
+  }
 
   public getCount() {
     this.db
@@ -48,12 +67,14 @@ export class PlansService {
     for (let i = 0; i < this.allPlans.length; i++) {
       if (this.allPlans[i].status === 2) {
         this.pendingPlans.push(this.allPlans[i]);
+        this.pendingPlans[count] = Object.assign(this.pendingPlans[count], {
+          position: count + 1,
+        });
         this.assignUserFac(this.allPlans[i].email, count);
-        this.assignUserDept(this.allPlans[i].email, count)
+        this.assignUserDept(this.allPlans[i].email, count);
         count++;
       }
     }
-    // console.log(this.pendingPlans);
   }
 
   public getUserFaculty(userID) {
@@ -92,8 +113,8 @@ export class PlansService {
           if (result.data()) {
             if (result.data().name) {
               resolve(result.data().name);
-              }
             }
+          }
         });
     });
   }
@@ -104,5 +125,12 @@ export class PlansService {
         department: copy,
       });
     });
+  }
+
+  public setExportStatus() {
+    this.db
+      .collection("users")
+      .doc("jackson.keet1989@gmail.com")
+      .update({ status: 3 });
   }
 }

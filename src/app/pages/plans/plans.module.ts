@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MatTableModule } from '@angular/material/table';
     MatSelectModule,
     FormsModule,
     MatInputModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
   ],
   declarations: [
     ...routedComponents,

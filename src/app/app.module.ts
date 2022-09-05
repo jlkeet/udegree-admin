@@ -27,7 +27,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { NgxLoginComponent } from './auth/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule } from '@angular/forms';
 
 
 import { CommonModule } from '@angular/common';
@@ -40,6 +40,7 @@ import {
   NbInputModule,
 } from '@nebular/theme';
 import { AuthService } from './auth/auth-service.service';
+import { AdminService } from './@core/data/admin.service';
 
 
 import { MatButtonModule } from '@angular/material/button';
@@ -62,10 +63,11 @@ import { MatTableModule } from '@angular/material/table'
 
 import { NotificationIconComponent } from './pages/notification-counter/notification-counter.component';
 import { UserPlansComponent } from './pages/plans/user-plans/user-plans.component';
+import { DialogBoxComponent } from './@core/dialog/dialog-box.component';
 
 
 @NgModule({
-  declarations: [AppComponent, NgxLoginComponent, NotificationIconComponent],
+  declarations: [AppComponent, NgxLoginComponent, NotificationIconComponent, DialogBoxComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -117,10 +119,10 @@ import { UserPlansComponent } from './pages/plans/user-plans/user-plans.componen
     MatListModule,
     MatFormFieldModule,
     MatOptionModule,
-    MatTableModule,
+    MatTableModule
 
   ],
-  providers: [AuthService, NotificationIconComponent, UserPlansComponent],
+  providers: [AuthService, AdminService, NotificationIconComponent, UserPlansComponent, FormBuilder],
   bootstrap: [AppComponent],
 })
 
