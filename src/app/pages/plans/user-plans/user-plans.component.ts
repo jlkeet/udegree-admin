@@ -61,8 +61,11 @@ export class UserPlansComponent {
   ngOnInit() {
     this.getCount();
     // console.log(this.plansService.pendingPlans[0].faculty)
-    this.adminService.getAdminFaculty("jackson.keet@knowledge-basket.co.nz");
+    setTimeout(() => {
+    this.adminService.getAdminFaculty(this.authService.userDetails.email);
+  }, 1500);
 
+  
     setTimeout(() => {
       this.plansService.getFilteredFac();
     }, 3500);
@@ -111,15 +114,14 @@ export class UserPlansComponent {
     }
   }
 
-  public openDialog(student) {
+  public openDialog(studentEmail) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = {
-      id: 1,
-      title: "Angular For Beginners",
+      email: studentEmail
     };
 
     const dialogRef = this.dialog.open(DialogBoxComponent, dialogConfig);

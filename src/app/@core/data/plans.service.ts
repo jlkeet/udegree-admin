@@ -122,17 +122,17 @@ export class PlansService {
     });
   }
 
-  public setExportStatus() {
+  public setExportStatus(studentEmail) {
     this.db
       .collection("users")
-      .doc("jackson.keet1989@gmail.com")
+      .doc(studentEmail)
       .update({ status: 3 });
   }
 
-  public setNotes(notes) {
+  public setNotes(notes, studentEmail) {
     this.db
       .collection("users")
-      .doc("jackson.keet1989@gmail.com")
+      .doc(studentEmail)
       .collection("notes")
       .add({ notes: notes });
   }

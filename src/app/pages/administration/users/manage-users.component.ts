@@ -112,14 +112,14 @@ export class ManageUsersComponent {
   public onFacChange(event) {
     this.db
     .collection('users')
-    .doc('jackson.keet@knowledge-basket.co.nz') // Here is where we set the docID to the email so its accessible in the database.
+    .doc(this.authService.userDetails.email) // Here is where we set the docID to the email so its accessible in the database.
     .update({faculties: event.source.value});
   }
 
   public onDeptChange(event) {
     this.db
     .collection('users')
-    .doc('jackson.keet@knowledge-basket.co.nz') // Here is where we set the docID to the email so its accessible in the database.
+    .doc(this.authService.userDetails.email) // Here is where we set the docID to the email so its accessible in the database.
     .update({department: event.source.value});
     console.log(event.source.value);
   }
