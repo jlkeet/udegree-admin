@@ -54,6 +54,7 @@ export class UserPlansComponent {
     public facultyService: FacultyService,
     public departmentService: DepartmentService,
     public plansService: PlansService,
+    public authService: AuthService,
     public dialog: MatDialog
   ) {}
 
@@ -110,7 +111,7 @@ export class UserPlansComponent {
     }
   }
 
-  public openDialog() {
+  public openDialog(student) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;

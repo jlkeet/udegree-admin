@@ -185,10 +185,11 @@ export class PlansService {
       });
   }
 
-  public copyUserPlanToAdmin() {
+  // Note that in this instance personeOne is always admin and personTwo is always student
+  public copyUserPlanToAdmin(personOne, personTwo) {
     this.db
       .collection("users")
-      .doc("jackson.keet1989@gmail.com")
+      .doc(personTwo)
       .collection("degree")
       .doc("faculty")
       .get()
@@ -196,7 +197,7 @@ export class PlansService {
       .then((res) => {
         this.db
           .collection("users")
-          .doc("jackson.keet@knowledge-basket.co.nz")
+          .doc(personOne)
           .collection("degree")
           .doc("faculty")
           .set(res.data());
@@ -204,7 +205,7 @@ export class PlansService {
 
     this.db
       .collection("users")
-      .doc("jackson.keet1989@gmail.com")
+      .doc(personTwo)
       .collection("major")
       .doc("firstMajor")
       .get()
@@ -212,7 +213,7 @@ export class PlansService {
       .then((res) => {
         this.db
           .collection("users")
-          .doc("jackson.keet@knowledge-basket.co.nz")
+          .doc(personOne)
           .collection("major")
           .doc("firstMajor")
           .set(res.data());
@@ -220,7 +221,7 @@ export class PlansService {
 
     this.db
       .collection("users")
-      .doc("jackson.keet1989@gmail.com")
+      .doc(personTwo)
       .collection("courses")
       .get()
       .toPromise()
@@ -228,7 +229,7 @@ export class PlansService {
         for (let i = 0; i < result.docs.length; i++) {
           this.db
             .collection("users")
-            .doc("jackson.keet1989@gmail.com")
+            .doc(personTwo)
             .collection("courses")
             .doc(result.docs[i].id)
             .get()
@@ -236,11 +237,17 @@ export class PlansService {
             .then((course) => {
               this.db
                 .collection("users")
-                .doc("jackson.keet@knowledge-basket.co.nz")
+                .doc(personOne)
                 .collection("courses")
                 .add(course.data());
             });
         }
       });
+  }
+
+  public copyAdminToUserPlan(personOne, personTwo) {
+    
+    // Note that here we reverse the roles so that it now saves to user instead of admin
+    this.copyUserPlanToAdmin(personTwo, personOne)
   }
 }
