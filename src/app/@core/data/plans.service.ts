@@ -152,6 +152,39 @@ export class PlansService {
     });
   }
 
+  public deleteExistingAdminPlan() {
+    this.db
+      .collection("users")
+      .doc("jackson.keet@knowledge-basket.co.nz")
+      .collection("degree")
+      .doc("faculty")
+      .delete();
+
+    this.db
+      .collection("users")
+      .doc("jackson.keet@knowledge-basket.co.nz")
+      .collection("major")
+      .doc("firstMajor")
+      .delete();
+
+    this.db
+      .collection("users")
+      .doc("jackson.keet@knowledge-basket.co.nz")
+      .collection("courses")
+      .get()
+      .toPromise()
+      .then((result) => {
+        for (let i = 0; i < result.docs.length; i++) {
+          this.db
+            .collection("users")
+            .doc("jackson.keet@knowledge-basket.co.nz")
+            .collection("courses")
+            .doc(result.docs[i].id)
+            .delete();
+        }
+      });
+  }
+
   public copyUserPlanToAdmin() {
     this.db
       .collection("users")
@@ -161,13 +194,12 @@ export class PlansService {
       .get()
       .toPromise()
       .then((res) => {
-        console.log(res.data());
         this.db
-        .collection("users")
-        .doc("jackson.keet@knowledge-basket.co.nz")
-        .collection("degree")
-        .doc("faculty")
-        .set(res.data())
+          .collection("users")
+          .doc("jackson.keet@knowledge-basket.co.nz")
+          .collection("degree")
+          .doc("faculty")
+          .set(res.data());
       });
 
     this.db
@@ -178,13 +210,12 @@ export class PlansService {
       .get()
       .toPromise()
       .then((res) => {
-        console.log(res.data());
         this.db
-        .collection("users")
-        .doc("jackson.keet@knowledge-basket.co.nz")
-        .collection("major")
-        .doc("firstMajor")
-        .set(res.data())
+          .collection("users")
+          .doc("jackson.keet@knowledge-basket.co.nz")
+          .collection("major")
+          .doc("firstMajor")
+          .set(res.data());
       });
 
     this.db
@@ -203,12 +234,11 @@ export class PlansService {
             .get()
             .toPromise()
             .then((course) => {
-              console.log(course.data());
               this.db
-              .collection("users")
-              .doc("jackson.keet@knowledge-basket.co.nz")
-              .collection("courses")
-              .add(course.data())
+                .collection("users")
+                .doc("jackson.keet@knowledge-basket.co.nz")
+                .collection("courses")
+                .add(course.data());
             });
         }
       });

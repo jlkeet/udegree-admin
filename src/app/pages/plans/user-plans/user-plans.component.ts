@@ -110,30 +110,6 @@ export class UserPlansComponent {
     }
   }
 
-  public displayUserPlans(userID) {
-    this.db
-      .collection("users")
-      .doc(userID)
-      .collection("courses")
-      .get()
-      .toPromise()
-      .then((result) => {
-        for (let i = 0; i < result.docs.length; i++) {
-          this.db
-            .collection("users")
-            .doc(userID)
-            .collection("courses")
-            .doc(result.docs[i].id)
-            .get()
-            .toPromise()
-            .then((course) => {
-              this.userCourses.push(course.data());
-              console.log(this.userCourses);
-            });
-        }
-      });
-  }
-
   public openDialog() {
     const dialogConfig = new MatDialogConfig();
 
@@ -151,4 +127,8 @@ export class UserPlansComponent {
       .afterClosed()
       .subscribe((data) => console.log("Dialog output:", data));
   }
+
+ public openUdegMain(url) {
+    window.open(url, "_blank");
+}
 }
