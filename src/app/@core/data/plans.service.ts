@@ -26,13 +26,10 @@ export class PlansService {
   }
 
   public getFilteredFac() {
-    console.log("firing 1")
     for (let i = 0; i < this.pendingPlans.length; i++) {
-      console.log("firing 2")
       if (this.pendingPlans[i].faculty === this.adminService.adminFac) {
         let newArray = this.pendingPlans.map( obj => ({...obj}) )
         this.pendingPlans = newArray.splice(i, 1)
-        console.log("firing 3")
       }
     }
   }
@@ -132,5 +129,13 @@ export class PlansService {
       .collection("users")
       .doc("jackson.keet1989@gmail.com")
       .update({ status: 3 });
+  }
+
+  public setNotes(notes) {
+    this.db
+    .collection("users")
+    .doc("jackson.keet1989@gmail.com")
+    .collection("notes")
+    .add({notes: notes})
   }
 }
