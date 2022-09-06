@@ -21,15 +21,13 @@ export class PlansService {
     private adminService: AdminService
   ) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   public getFilteredFac() {
     for (let i = 0; i < this.pendingPlans.length; i++) {
       if (this.pendingPlans[i].faculty === this.adminService.adminFac) {
-        let newArray = this.pendingPlans.map( obj => ({...obj}) )
-        this.pendingPlans = newArray.splice(i, 1)
+        let newArray = this.pendingPlans.map((obj) => ({ ...obj }));
+        this.pendingPlans = newArray.splice(i, 1);
       }
     }
   }
@@ -133,26 +131,86 @@ export class PlansService {
 
   public setNotes(notes) {
     this.db
-    .collection("users")
-    .doc("jackson.keet1989@gmail.com")
-    .collection("notes")
-    .add({notes: notes})
+      .collection("users")
+      .doc("jackson.keet1989@gmail.com")
+      .collection("notes")
+      .add({ notes: notes });
   }
 
   public sendNotes(notes) {
-    const email = "jackson@mg.udegree.co"
-    const subject =  "Jackson's Plan Notes"
-    
-   this.db
-  .collection("mail")
-  .add({
-    from: email,
-    to: "jackson.keet@mac.com",
-    // cc: "jackson.keet@udegree.co",
-    message: {
+    const email = "jackson@mg.udegree.co";
+    const subject = "Jackson's Plan Notes";
+
+    this.db.collection("mail").add({
+      from: email,
+      to: "jackson.keet@mac.com",
+      // cc: "jackson.keet@udegree.co",
+      message: {
         subject: subject,
-        text: notes
-    },
-  })
+        text: notes,
+      },
+    });
+  }
+
+  public copyUserPlanToAdmin() {
+    this.db
+      .collection("users")
+      .doc("jackson.keet1989@gmail.com")
+      .collection("degree")
+      .doc("faculty")
+      .get()
+      .toPromise()
+      .then((res) => {
+        console.log(res.data());
+        this.db
+        .collection("users")
+        .doc("jackson.keet@knowledge-basket.co.nz")
+        .collection("degree")
+        .doc("faculty")
+        .set(res.data())
+      });
+
+    this.db
+      .collection("users")
+      .doc("jackson.keet1989@gmail.com")
+      .collection("major")
+      .doc("firstMajor")
+      .get()
+      .toPromise()
+      .then((res) => {
+        console.log(res.data());
+        this.db
+        .collection("users")
+        .doc("jackson.keet@knowledge-basket.co.nz")
+        .collection("major")
+        .doc("firstMajor")
+        .set(res.data())
+      });
+
+    this.db
+      .collection("users")
+      .doc("jackson.keet1989@gmail.com")
+      .collection("courses")
+      .get()
+      .toPromise()
+      .then((result) => {
+        for (let i = 0; i < result.docs.length; i++) {
+          this.db
+            .collection("users")
+            .doc("jackson.keet1989@gmail.com")
+            .collection("courses")
+            .doc(result.docs[i].id)
+            .get()
+            .toPromise()
+            .then((course) => {
+              console.log(course.data());
+              this.db
+              .collection("users")
+              .doc("jackson.keet@knowledge-basket.co.nz")
+              .collection("courses")
+              .add(course.data())
+            });
+        }
+      });
   }
 }
