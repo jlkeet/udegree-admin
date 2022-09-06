@@ -152,24 +152,24 @@ export class PlansService {
     });
   }
 
-  public deleteExistingAdminPlan() {
+  public deleteExistingAdminPlan(person) {
     this.db
       .collection("users")
-      .doc("jackson.keet@knowledge-basket.co.nz")
+      .doc(person)
       .collection("degree")
       .doc("faculty")
       .delete();
 
     this.db
       .collection("users")
-      .doc("jackson.keet@knowledge-basket.co.nz")
+      .doc(person)
       .collection("major")
       .doc("firstMajor")
       .delete();
 
     this.db
       .collection("users")
-      .doc("jackson.keet@knowledge-basket.co.nz")
+      .doc(person)
       .collection("courses")
       .get()
       .toPromise()
@@ -177,7 +177,7 @@ export class PlansService {
         for (let i = 0; i < result.docs.length; i++) {
           this.db
             .collection("users")
-            .doc("jackson.keet@knowledge-basket.co.nz")
+            .doc(person)
             .collection("courses")
             .doc(result.docs[i].id)
             .delete();
@@ -246,7 +246,7 @@ export class PlansService {
   }
 
   public copyAdminToUserPlan(personOne, personTwo) {
-    
+
     // Note that here we reverse the roles so that it now saves to user instead of admin
     this.copyUserPlanToAdmin(personTwo, personOne)
   }

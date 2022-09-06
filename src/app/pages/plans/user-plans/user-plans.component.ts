@@ -130,6 +130,7 @@ export class UserPlansComponent {
   }
 
  public openUdegMain(url) {
-    window.open(url, "_blank");
+    // window.open(url, "_blank");
+    window.open('http://localhost:4200/', "_blank");
 }
 }

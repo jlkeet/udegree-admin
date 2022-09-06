@@ -73,14 +73,14 @@
       <!-- Edit Column -->
       <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef> Edit Plan</th>
-        <td mat-cell *matCellDef="let element"> <button (click)="plansService.deleteExistingAdminPlan();plansService.copyUserPlanToAdmin(authService.userDetails.email, element.email);openUdegMain('http://www.udegree.co')">Edit</button> </td>
+        <td mat-cell *matCellDef="let element"> <button (click)="plansService.deleteExistingAdminPlan(authService.userDetails.email);plansService.copyUserPlanToAdmin(authService.userDetails.email, element.email);openUdegMain('http://www.udegree.co')">Edit</button> </td>
       </ng-container>
 
 
       <!-- Approve Column -->
       <ng-container matColumnDef="approve">
         <th mat-header-cell *matHeaderCellDef> Approve Plan</th>
-        <td mat-cell *matCellDef="let element"> <button (click)="openDialog();plansService.copyAdminToUserPlan(authService.userDetails.email, element.email)">Approve</button> </td>
+        <td mat-cell *matCellDef="let element"> <button (click)="openDialog();plansService.deleteExistingAdminPlan(element.email);plansService.copyAdminToUserPlan(authService.userDetails.email, element.email)">Approve</button> </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

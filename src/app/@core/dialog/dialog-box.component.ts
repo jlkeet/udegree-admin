@@ -51,7 +51,7 @@ saveNotes():any{
 
   save() {
     this.dialogRef.close();
-    // this.plansService.setExportStatus();
+    this.plansService.setExportStatus();
   }
 
   close() {
