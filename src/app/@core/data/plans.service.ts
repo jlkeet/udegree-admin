@@ -138,4 +138,21 @@ export class PlansService {
     .collection("notes")
     .add({notes: notes})
   }
+
+  public sendNotes(notes) {
+    const email = "jackson@mg.udegree.co"
+    const subject =  "Jackson's Plan Notes"
+    
+   this.db
+  .collection("mail")
+  .add({
+    from: email,
+    to: "jackson.keet@mac.com",
+    // cc: "jackson.keet@udegree.co",
+    message: {
+        subject: subject,
+        text: notes
+    },
+  })
+  }
 }

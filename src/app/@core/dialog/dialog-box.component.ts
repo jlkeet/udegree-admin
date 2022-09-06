@@ -40,6 +40,7 @@ export class DialogBoxComponent implements OnInit {
 
 saveNotes():any{
   this.plansService.setNotes(this.notes)
+  this.plansService.sendNotes(this.notes)
 }
 
   ngOnInit() {
