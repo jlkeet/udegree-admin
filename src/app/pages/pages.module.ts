@@ -7,6 +7,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { NotificationIconComponent } from './notification-counter/notification-counter.component';
 import { UserPlansComponent } from './plans/user-plans/user-plans.component';
+import { AuditLogComponent } from './plans/audit-log/audit-log.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { UserPlansComponent } from './plans/user-plans/user-plans.component';
   ],
   providers: [
     UserPlansComponent,
+    AuditLogComponent,
   ]
 })
 export class PagesModule {

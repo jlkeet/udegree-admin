@@ -64,6 +64,7 @@ import { MatTableModule } from '@angular/material/table'
 import { NotificationIconComponent } from './pages/notification-counter/notification-counter.component';
 import { UserPlansComponent } from './pages/plans/user-plans/user-plans.component';
 import { DialogBoxComponent } from './@core/dialog/dialog-box.component';
+import { AuditLogComponent } from './pages/plans/audit-log/audit-log.component';
 
 
 @NgModule({
@@ -122,7 +123,7 @@ import { DialogBoxComponent } from './@core/dialog/dialog-box.component';
     MatTableModule
 
   ],
-  providers: [AuthService, AdminService, NotificationIconComponent, UserPlansComponent, FormBuilder],
+  providers: [AuthService, AdminService, NotificationIconComponent, UserPlansComponent, FormBuilder, AuditLogComponent],
   bootstrap: [AppComponent],
 })
 

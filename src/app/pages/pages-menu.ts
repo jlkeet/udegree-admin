@@ -73,6 +73,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'User Plans',
         link: '/pages/plans/user-plans',
       },
+      {
+        title: 'Audit Log',
+        link: '/pages/plans/audit-log',
+      },
     ],
   },
 ];

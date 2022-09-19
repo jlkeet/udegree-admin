@@ -9,6 +9,9 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { PlansService } from "../data/plans.service";
 import { ThrowStmt } from "@angular/compiler";
 import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
+import { formatDate } from "@angular/common";
+import { AuthService } from "app/auth/auth-service.service";
+
 
 @Component({
   selector: "dialog-box",
@@ -33,6 +36,7 @@ export class DialogBoxComponent implements OnInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<DialogBoxComponent>,
     private plansService: PlansService,
+    private authService: AuthService,
 
     @Inject(MAT_DIALOG_DATA) data
   ) {
@@ -42,8 +46,10 @@ export class DialogBoxComponent implements OnInit {
   }
 
 saveNotes():any{
-  this.plansService.setNotes(this.notes, this.studentEmail)
-  this.plansService.sendNotes(this.notes)
+  let timestamp = Date.now();
+  let timestampString = formatDate(timestamp, 'dd/MM/yyyy, h:mm a', 'en')
+  this.plansService.setNotes(this.notes, this.studentEmail, timestampString, this.authService.userDetails.email)
+  // this.plansService.sendNotes(this.notes)
 }
 
   ngOnInit() {

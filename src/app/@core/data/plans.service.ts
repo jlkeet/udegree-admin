@@ -13,6 +13,7 @@ export class PlansService {
   public plans;
   public allPlans = [];
   public pendingPlans = [];
+  public approvedPlans = [];
   public counter = 0;
 
   constructor(
@@ -72,6 +73,89 @@ export class PlansService {
     }
   }
 
+  public getApprovedPlans() {
+    this.approvedPlans = [];
+    let count = 0;
+    for (let i = 0; i < this.allPlans.length; i++) {
+      if (this.allPlans[i].status === 3) {
+        // console.log(this.allPlans[i])
+        this.approvedPlans.push(this.allPlans[i]);
+        this.approvedPlans[count] = Object.assign(this.approvedPlans[count], {
+          position: count + 1,
+        });
+        this.assignTimestamp(this.allPlans[i].email, count)
+        this.assignUserFac(this.allPlans[i].email, count);
+        this.assignUserDept(this.allPlans[i].email, count);
+        this.assignAdmin(this.allPlans[i].email, count)
+        count++;
+      }
+    }
+  }
+
+  public assignTimestamp(userID, index) {
+    this.getTimestamp(userID).then((copy) => {
+      this.approvedPlans[index] = Object.assign(this.approvedPlans[index], {
+        timestamp: copy,
+      });
+    });
+  }
+
+  public getTimestamp(userID) {
+    return new Promise<any>(async (resolve) => {
+      this.db
+        .collection("users")
+        .doc(userID)
+        .collection("notes")
+        .get()
+        .toPromise()
+        .then( (doc) => {
+          doc.forEach((element) => {
+            this.db
+            .collection("users")
+            .doc(userID)
+            .collection("notes")
+            .doc(element.id)
+            .get()
+            .toPromise()
+            .then((result) => {
+              resolve(result.data().timestamp);
+          });
+        })})
+    });
+  }
+
+  public assignAdmin(userID, index) {
+    this.getAdmin(userID).then((copy) => {
+      this.approvedPlans[index] = Object.assign(this.approvedPlans[index], {
+        admin: copy,
+      });
+    });
+  }
+
+  public getAdmin(userID) {
+    return new Promise<any>(async (resolve) => {
+      this.db
+        .collection("users")
+        .doc(userID)
+        .collection("notes")
+        .get()
+        .toPromise()
+        .then( (doc) => {
+          doc.forEach((element) => {
+            this.db
+            .collection("users")
+            .doc(userID)
+            .collection("notes")
+            .doc(element.id)
+            .get()
+            .toPromise()
+            .then((result) => {
+              resolve(result.data().admin);
+          });
+        })})
+    });
+  }
+
   public getUserFaculty(userID) {
     return new Promise<any>(async (resolve) => {
       this.db
@@ -129,12 +213,16 @@ export class PlansService {
       .update({ status: 3 });
   }
 
-  public setNotes(notes, studentEmail) {
+  public setNotes(notes, studentEmail, timestamp, admin) {
     this.db
       .collection("users")
       .doc(studentEmail)
       .collection("notes")
-      .add({ notes: notes });
+      .add({ 
+        notes: notes,
+        timestamp: timestamp,
+        admin: admin,
+       });
   }
 
   public sendNotes(notes) {
