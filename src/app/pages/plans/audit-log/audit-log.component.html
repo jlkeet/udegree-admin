@@ -1,27 +1,6 @@
-<!-- <nb-card>
-  <nb-card-header> Plans </nb-card-header>
-  <nb-card-body>
-    <button class="" (click)="getPendingPlans(); showPlans = true"> Get Pending Plans </button>
-    <div *ngIf="showPlans">
-      <div *ngFor="let displayPendingPlans of pendingPlans">
-        {{ displayPendingPlans.email }}
-        <button (click)="displayUserPlans(displayPendingPlans.email); displayPlans = true">Show Plan</button>
-
-        <div *ngIf="displayPlans">
-          <div *ngFor="let courses of userCourses">
-            {{ courses.name }}
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-
-
-
 <nb-card>
   <nb-card-header> Audit Log </nb-card-header>
   <nb-card-body>
-    <button (click)="plansService.getFilteredFac()">Filter</button>
     <table mat-table [dataSource]="plansService.approvedPlans">
 
       <ng-container matColumnDef="time">
