@@ -84,8 +84,8 @@ export class PlansService {
           position: count + 1,
         });
         this.assignTimestamp(this.allPlans[i].email, count)
-        this.assignUserFac(this.allPlans[i].email, count);
-        this.assignUserDept(this.allPlans[i].email, count);
+        // this.assignUserFac(this.allPlans[i].email, count);
+        // this.assignUserDept(this.allPlans[i].email, count);
         this.assignAdmin(this.allPlans[i].email, count)
         count++;
       }

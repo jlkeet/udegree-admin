@@ -120,7 +120,7 @@ import { AuditLogComponent } from './pages/plans/audit-log/audit-log.component';
     MatListModule,
     MatFormFieldModule,
     MatOptionModule,
-    MatTableModule
+    MatTableModule,
 
   ],
   providers: [AuthService, AdminService, NotificationIconComponent, UserPlansComponent, FormBuilder, AuditLogComponent],
