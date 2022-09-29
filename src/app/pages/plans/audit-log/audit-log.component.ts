@@ -14,11 +14,20 @@ import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { DialogBoxComponent } from "app/@core/dialog/dialog-box.component";
 import { AuthService } from "app/auth/auth-service.service";
 import { AdminService } from "app/@core/data/admin.service";
+import { animate, state, style, transition, trigger } from "@angular/animations";
+import { M } from "@angular/cdk/keycodes";
 
 @Component({
   selector: "audit-log",
   styleUrls: ["./audit-log.component.scss"],
   templateUrl: "audit-log.component.html",
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 
 export class AuditLogComponent {
@@ -35,16 +44,19 @@ export class AuditLogComponent {
   public count = 0;
 
   public displayedColumns: string[] = [
-    "time",
+    "timestamp",
     "admin",
-    "student",
-    "event",
-    "change",
-    "item",
-    "actions",
+    "email",
+    "action",
+    "previous",
+    "new"
   ];
 
+  public columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  public expandedElement: AuditLog | null;
+
   public userCourses = [];
+  
 
   constructor(
     public adminService: AdminService,
@@ -55,6 +67,8 @@ export class AuditLogComponent {
     public authService: AuthService,
     public dialog: MatDialog
   ) {}
+
+  
 
   ngOnInit() {
     this.getCount();
@@ -134,4 +148,19 @@ export class AuditLogComponent {
     // window.open(url, "_blank");
     window.open('http://localhost:4200/', "_blank");
 }
+
+public clickMe(element) {
+  console.log(element)
+}
+
+}
+
+export interface AuditLog {
+  timestamp: string,
+  admin: string,
+  student: string,
+  event: string,
+  change: string,
+  item: string,
+  actions: string,
 }

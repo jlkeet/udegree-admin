@@ -333,6 +333,38 @@ export class PlansService {
       });
   }
 
+  public getNotes(userID) {
+    return new Promise<any>(async (resolve) => {
+      this.db
+        .collection("users")
+        .doc(userID)
+        .collection("notes")
+        .get()
+        .toPromise()
+        .then( (doc) => {
+          doc.forEach((element) => {
+            this.db
+            .collection("users")
+            .doc(userID)
+            .collection("notes")
+            .doc(element.id)
+            .get()
+            .toPromise()
+            .then((result) => {
+              resolve(result.data().notes);
+          });
+        })})
+    });
+  }
+
+  public assignNotes(userID, index) {
+    this.getNotes(userID).then((copy) => {
+      this.approvedPlans[index] = Object.assign(this.approvedPlans[index], {
+        notes: copy,
+      });
+    });
+  }
+
   public copyAdminToUserPlan(personOne, personTwo) {
 
     // Note that here we reverse the roles so that it now saves to user instead of admin
