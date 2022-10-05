@@ -1,3 +1,4 @@
+import { T } from "@angular/cdk/keycodes";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AngularFireList } from "@angular/fire/database";
@@ -14,6 +15,7 @@ export class PlansService {
   public allPlans = [];
   public pendingPlans = [];
   public approvedPlans = [];
+  public auditLogHistoryArray = [];
   public counter = 0;
 
   constructor(
@@ -22,7 +24,59 @@ export class PlansService {
     private adminService: AdminService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  public getAuditLog(userID) {
+    this.searchForAuditLog(userID)
+    this.getAuditLogActionsID(userID)
+  }
+
+  public searchForAuditLog(userID) {
+    this.db
+      .collection("audit-log")
+      .doc(userID)
+      .get()
+      .toPromise()
+      .then((result) => {
+        this.auditLogHistoryArray = [];
+        this.auditLogHistoryArray.push(result.data())
+        // console.log(this.auditLogHistoryArray)
+      });
+  }
+
+  public getAuditLogActionsID(userID) {
+    this.db
+      .collection("audit-log")
+      .doc(userID)
+      .collection("actions")
+      .get()
+      .toPromise()
+      .then( (result) => {
+        for (let i = 0; i < result.docs.length; i++) {
+        this.getAuditLogActionsData(userID, result.docs[i].id)
+        }
+      })
+  }
+
+  public getAuditLogActionsData(userID, docID) {
+    this.db
+    .collection("audit-log")
+    .doc(userID)
+    .collection("actions")
+    .doc(docID)
+    .get()
+    .toPromise()
+    .then( (result) => {
+      this.auditLogHistoryArray[0].actions.push(result.data())
+      console.log(this.auditLogHistoryArray)
+    })
+  }
+
+  public clickMe(element) {
+    console.log(element)
+    console.log(this.auditLogHistoryArray)
+  }
 
   public getFilteredFac() {
     for (let i = 0; i < this.pendingPlans.length; i++) {

@@ -54,7 +54,7 @@
 -->
 
 
-    <table mat-table
+    <!-- <table mat-table
        [dataSource]="plansService.approvedPlans" multiTemplateDataRows
        class="mat-elevation-z0">
   <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
@@ -71,7 +71,6 @@
     </td>
   </ng-container>
 
-  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
       <div class="example-element-detail"
@@ -112,6 +111,69 @@
       (click)="expandedElement = expandedElement === element ? null : element">
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table> -->
+
+
+
+<table mat-table
+[dataSource]="plansService.auditLogHistoryArray" multiTemplateDataRows
+class="mat-elevation-z0">
+<ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+<th mat-header-cell *matHeaderCellDef> {{column}}</th>
+<td mat-cell *matCellDef="let element"> {{element[column]}}</td>
+</ng-container>
+<ng-container matColumnDef="expand">
+<th mat-header-cell *matHeaderCellDef aria-label="row actions">Action Summary</th>
+<td mat-cell *matCellDef="let element">
+<button mat-icon-button aria-label="expand row" (click)="plansService.assignNotes(element.email, 0); (expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+ <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+ <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+</button>
+</td>
+</ng-container>
+
+<ng-container matColumnDef="expandedDetail">
+<td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+  <div *ngFor="let actionElement of element.actions">
+<div class="example-element-detail"
+    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+<table class="detail-table">
+<tr> 
+ <td class="expanded-timestamp">
+   {{element.timestamp}}
+ </td>
+ <td class="expanded-admin">
+   {{element.admin}}
+ </td>
+ <td class="expanded-email">
+   {{element.email}}
+ </td>
+ <td class="expanded-action">
+  {{actionElement.action}}
+ </td>
+ <td class="expanded-previous">
+  {{actionElement.previous}}
+ </td>
+ <td class="expanded-new">
+  {{actionElement.new}}
+ </td>
+ <td class="expanded-summary">
+   &nbsp; &nbsp; &nbsp;
+ </td>
+</tr>
+</table>  
+      </div>
+</div>
+</td>
+</ng-container>
+
+<tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+<tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+class="example-element-row"
+[class.example-expanded-row]="expandedElement === element"
+(click)="expandedElement = expandedElement === element ? null : element">
+</tr>
+<tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
 
   </nb-card-body>

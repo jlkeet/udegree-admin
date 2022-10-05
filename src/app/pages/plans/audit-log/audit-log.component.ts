@@ -72,6 +72,7 @@ export class AuditLogComponent {
 
   ngOnInit() {
     this.getCount();
+    this.getAuditHistory();
     // console.log(this.plansService.pendingPlans[0].faculty)
     setTimeout(() => {
     this.adminService.getAdminFaculty(this.authService.userDetails.email);
@@ -81,6 +82,19 @@ export class AuditLogComponent {
     setTimeout(() => {
       this.plansService.getFilteredFac();
     }, 3500);
+  }
+
+  public getAuditHistory() {
+    // this.plansService.auditLogHistoryArray = [];
+    this.db
+    .collection("audit-log")
+    .get()
+    .toPromise()
+    .then((result) => {
+      for (let i = 0; i < result.docs.length; i++) {
+        this.plansService.getAuditLog(result.docs[i].id);
+      }
+    });
   }
 
   public getCount() {
