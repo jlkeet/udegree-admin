@@ -16,6 +16,9 @@ import { AuthService } from "app/auth/auth-service.service";
 import { AdminService } from "app/@core/data/admin.service";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { M } from "@angular/cdk/keycodes";
+import { Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+
 
 @Component({
   selector: "audit-log",
@@ -56,7 +59,9 @@ export class AuditLogComponent {
   public expandedElement: AuditLog | null;
 
   public userCourses = [];
-  
+
+  public sortedData;
+  public dataSource;
 
   constructor(
     public adminService: AdminService,
@@ -66,13 +71,54 @@ export class AuditLogComponent {
     public plansService: PlansService,
     public authService: AuthService,
     public dialog: MatDialog
-  ) {}
+  ) {
+    
+    this.sortedData = this.plansService.auditLogHistoryArray.slice();
+    // this.dataSource = new MatTableDataSource(this.sortedData);
+  }
 
-  
+  public applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.plansService.dataSource.filter = filterValue;
+  }
+
+  public sortData(sort: Sort) {
+    const data = this.plansService.auditLogHistoryArray.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.plansService.dataSource = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'timestamp':
+          return this.compare(a.timestamp, b.timestamp, isAsc);
+        case 'admin':
+          return this.compare(a.admin, b.admin, isAsc);
+        case 'student':
+          return this.compare(a.student, b.student, isAsc);
+        case 'event':
+          return this.compare(a.event, b.event, isAsc);
+        case 'item':
+          return this.compare(a.item, b.item, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+public compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+
+
 
   ngOnInit() {
     this.getCount();
     this.getAuditHistory();
+
     // console.log(this.plansService.pendingPlans[0].faculty)
     setTimeout(() => {
     this.adminService.getAdminFaculty(this.authService.userDetails.email);
@@ -163,8 +209,7 @@ export class AuditLogComponent {
     window.open('http://localhost:4200/', "_blank");
 }
 
-public clickMe(element) {
-  console.log(element)
+public clickMe() {
 }
 
 }

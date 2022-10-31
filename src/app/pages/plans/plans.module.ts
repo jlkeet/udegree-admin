@@ -12,6 +12,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSortModule } from '@angular/material/sort';
+// import { MatTableFilterModule } from 'mat-table-filter';
 
 @NgModule({
   imports: [
@@ -28,6 +30,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatDialogModule,
     MatIconModule,
     MatButtonModule,
+    MatSortModule,
+    // MatTableFilterModule,
   ],
   declarations: [
     ...routedComponents,

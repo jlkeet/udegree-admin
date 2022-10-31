@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AngularFireList } from "@angular/fire/database";
 import { AngularFirestore } from "@angular/fire/firestore";
+import { MatTableDataSource } from "@angular/material/table";
 import { Observable } from "rxjs";
 import { AdminService } from "./admin.service";
 
@@ -17,6 +18,7 @@ export class PlansService {
   public approvedPlans = [];
   public auditLogHistoryArray = [];
   public counter = 0;
+  public dataSource;
 
   constructor(
     private http: HttpClient,
@@ -29,23 +31,27 @@ export class PlansService {
 
   public getAuditLog(userID) {
     this.searchForAuditLog(userID)
-    this.getAuditLogActionsID(userID)
+    // this.getAuditLogActionsID(userID)
   }
 
   public searchForAuditLog(userID) {
+  if (this.auditLogHistoryArray.length < 1) {
     this.db
       .collection("audit-log")
       .doc(userID)
       .get()
       .toPromise()
       .then((result) => {
-        this.auditLogHistoryArray = [];
+        // this.auditLogHistoryArray = [];
         this.auditLogHistoryArray.push(result.data())
-        // console.log(this.auditLogHistoryArray)
+        this.auditLogHistoryArray[this.counter].id = this.counter;
+        this.getAuditLogActionsID(userID, this.counter)
+        this.counter++;
       });
+    }
   }
 
-  public getAuditLogActionsID(userID) {
+  public getAuditLogActionsID(userID, index) {
     this.db
       .collection("audit-log")
       .doc(userID)
@@ -54,12 +60,13 @@ export class PlansService {
       .toPromise()
       .then( (result) => {
         for (let i = 0; i < result.docs.length; i++) {
-        this.getAuditLogActionsData(userID, result.docs[i].id)
+        this.getAuditLogActionsData(userID, result.docs[i].id, index)
         }
       })
   }
 
-  public getAuditLogActionsData(userID, docID) {
+  public getAuditLogActionsData(userID, docID, index) {
+    if (this.auditLogHistoryArray[index].actions.length < 1) {
     this.db
     .collection("audit-log")
     .doc(userID)
@@ -68,9 +75,11 @@ export class PlansService {
     .get()
     .toPromise()
     .then( (result) => {
-      this.auditLogHistoryArray[0].actions.push(result.data())
-      console.log(this.auditLogHistoryArray)
+      this.auditLogHistoryArray[index].actions.push(result.data())
     })
+    // console.log(this.auditLogHistoryArray)
+    this.dataSource = new MatTableDataSource(this.auditLogHistoryArray);
+}
   }
 
   public clickMe(element) {
@@ -329,6 +338,9 @@ export class PlansService {
 
   // Note that in this instance personeOne is always admin and personTwo is always student
   public copyUserPlanToAdmin(personOne, personTwo) {
+
+    this.setStudentEmailToAdmin(personOne, personTwo)
+
     this.db
       .collection("users")
       .doc(personTwo)
@@ -337,6 +349,7 @@ export class PlansService {
       .get()
       .toPromise()
       .then((res) => {
+        console.log(res.data())
         this.db
           .collection("users")
           .doc(personOne)
@@ -423,5 +436,23 @@ export class PlansService {
 
     // Note that here we reverse the roles so that it now saves to user instead of admin
     this.copyUserPlanToAdmin(personTwo, personOne)
+  }
+
+  public setStudentEmailToAdmin(admin, studentEmail) {
+    this.db
+      .collection("users")
+      .doc(admin)
+      .update({ student: studentEmail })
+  }
+
+  public setDataSource(dataSource) {
+    this.dataSource = dataSource;
+
+  }
+
+  public getDataSource() {
+    console.log(this.dataSource)
+    return this.dataSource;
+
   }
 }

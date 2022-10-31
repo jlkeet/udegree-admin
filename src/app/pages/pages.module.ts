@@ -5,7 +5,6 @@ import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
-import { NotificationIconComponent } from './notification-counter/notification-counter.component';
 import { UserPlansComponent } from './plans/user-plans/user-plans.component';
 import { AuditLogComponent } from './plans/audit-log/audit-log.component';
 
