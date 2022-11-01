@@ -79,7 +79,7 @@ export class NotificationIconComponent {
     setTimeout(() => {
       this.getAdminListFilter();
       this.plans = this.plansService.pendingPlans;
-    }, 1500);
+    }, 2000);
 
     setTimeout(() => {
       this.messageCount = this.plansService.pendingPlans.length;

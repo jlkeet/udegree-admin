@@ -1,7 +1,7 @@
 <nb-card>
   <nb-card-header> Plans </nb-card-header>
   <nb-card-body>
-    <button (click)="plansService.getFilteredFac()">Filter</button>
+    <!-- <button (click)="plansService.getFilteredFac()">Filter</button> -->
     <table mat-table [dataSource]="plansService.pendingPlans">
 
       <ng-container matColumnDef="position">
@@ -46,7 +46,7 @@
       <!-- Notes Column -->
       <ng-container matColumnDef="notes">
         <th mat-header-cell *matHeaderCellDef> Notes </th>
-        <td mat-cell *matCellDef="let element"> <button>View notes </button></td>
+        <td mat-cell *matCellDef="let element"> <button [routerLink]="'/pages/plans/audit-log'">View notes </button></td>
       </ng-container>
 
 

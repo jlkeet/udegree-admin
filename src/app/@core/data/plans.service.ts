@@ -91,7 +91,7 @@ export class PlansService {
     for (let i = 0; i < this.pendingPlans.length; i++) {
       if (this.pendingPlans[i].faculty === this.adminService.adminFac) {
         let newArray = this.pendingPlans.map((obj) => ({ ...obj }));
-        this.pendingPlans = newArray.splice(i, 1);
+        // this.pendingPlans = newArray.splice(i, 2);
       }
     }
   }
