@@ -96,4 +96,8 @@ export class AuthService {
     .toPromise()
     .then( (result) => resolve(result.data()) )
   })}
+
+  getAdminEmail() {
+    console.log(this.userDetails.email)
+  }
 }
