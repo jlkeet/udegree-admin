@@ -6,40 +6,40 @@
 
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element; let i = index;"> {{plansService.pendingPlans[i].position}} </td>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{plansService.pendingPlans[i]?.position}} </td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element; let i = index;"> {{plansService.pendingPlans[i].name}} </td>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{plansService.pendingPlans[i]?.name}} </td>
       </ng-container>
 
       <!-- Email Column -->
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let element; let i = index;"> {{plansService.pendingPlans[i].email}} </td>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{plansService.pendingPlans[i]?.email}} </td>
       </ng-container>
 
       <!-- Faculty Column -->
       <ng-container matColumnDef="faculty">
         <th mat-header-cell *matHeaderCellDef> Faculty </th>
         <td mat-cell *matCellDef="let element; let i = index;">
-          {{plansService.pendingPlans[i].faculty}}</td>
+          {{plansService.pendingPlans[i]?.faculty}}</td>
       </ng-container>
 
       <!-- Department Column -->
       <ng-container matColumnDef="department">
         <th mat-header-cell *matHeaderCellDef> Department </th>
         <td mat-cell *matCellDef="let element; let i = index;">
-          {{plansService.pendingPlans[i].department}}</td>
+          {{plansService.pendingPlans[i]?.department}}</td>
       </ng-container>
 
 
       <!-- Date Column -->
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> Date </th>
-        <td mat-cell *matCellDef="let element; let i = index;"> {{plansService.pendingPlans[i].timestamp}} </td>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{plansService.pendingPlans[i]?.timestamp}} </td>
       </ng-container>
 
 

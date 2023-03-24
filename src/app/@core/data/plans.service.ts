@@ -124,7 +124,8 @@ export class PlansService {
     this.pendingPlans = [];
     let count = 0;
     for (let i = 0; i < this.allPlans.length; i++) {
-      if (this.allPlans[i].status === 2) {
+      // if (this.allPlans[i].status === 2) {
+        if (this.allPlans[i].name !== undefined) {
         this.pendingPlans.push(this.allPlans[i]);
         this.pendingPlans[count] = Object.assign(this.pendingPlans[count], {
           position: count + 1,
@@ -229,7 +230,13 @@ export class PlansService {
         .get()
         .toPromise()
         .then((result) => {
-          resolve(result.data().name);
+          if (result.data()) {
+            if (result.data().name) {
+              resolve(result.data().name);
+            }
+          } else {
+            resolve("No degree selected");
+          }
         });
     });
   }
@@ -256,6 +263,8 @@ export class PlansService {
             if (result.data().name) {
               resolve(result.data().name);
             }
+          } else {
+            resolve("No major selected");
           }
         });
     });
